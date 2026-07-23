@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Технические работы — Портал СКС</title>
+<style>
+  :root{
+    --bg:#130d0e; --bg2:#1b1314; --ink:#f6ece9; --muted:#c3a9a4;
+    --brand:#e31e24; --brand2:#e0a32a;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%}
+  body{
+    background:radial-gradient(1200px 600px at 50% -10%, #241819 0%, var(--bg) 60%);
+    color:var(--ink);
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    display:grid; place-items:center; text-align:center; padding:28px;
+  }
+  .wrap{max-width:560px; animation:fadein .8s ease both}
+  @keyframes fadein{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+  .mark{
+    display:inline-block; font-weight:900; letter-spacing:.14em; font-size:.82rem;
+    color:var(--brand2); border:1px solid rgba(224,163,42,.35);
+    padding:6px 14px; border-radius:999px; margin-bottom:26px;
+  }
+
+  /* сцена с уткой */
+  .stage{width:260px;height:240px;margin:0 auto 10px}
+  .duck{transform-origin:118px 150px; animation:bob 1.6s ease-in-out infinite}
+  @keyframes bob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-6px) rotate(-1.5deg)}}
+
+  h1{font-size:1.5rem; line-height:1.3; margin:14px 0 10px}
+  h1 .grad{background:linear-gradient(135deg,var(--brand),var(--brand2));
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  p{color:var(--muted); font-size:1.02rem; line-height:1.55; margin:0 auto}
+
+  .uptime{
+    margin-top:24px; display:inline-flex; align-items:center; gap:10px;
+    background:var(--bg2); border:1px solid rgba(224,163,42,.28);
+    border-radius:14px; padding:13px 20px; font-size:1rem;
+  }
+  .uptime b{color:var(--brand2)}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--brand2);
+    box-shadow:0 0 0 0 rgba(224,163,42,.6); animation:pulse 1.8s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(224,163,42,.55)}
+    70%{box-shadow:0 0 0 12px rgba(224,163,42,0)}100%{box-shadow:0 0 0 0 rgba(224,163,42,0)}}
+
+  .foot{margin-top:26px;font-size:.82rem;color:#8f7a76}
+
+  @media(prefers-reduced-motion:reduce){
+    .duck,.dot,.wrap{animation:none!important}
+    .broom *{animation:none!important}
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <span class="mark">◆ ПОРТАЛ СКС</span>
+
+    <div class="stage">
+      <svg viewBox="0 0 260 240" width="260" height="240" role="img" aria-label="Уточка подметает метлой">
+        <!-- тень -->
+        <ellipse cx="120" cy="214" rx="74" ry="12" fill="rgba(0,0,0,.28)"/>
+
+        <g class="duck">
+          <!-- лапки -->
+          <path d="M104 192 l-8 22 M126 196 l3 20" stroke="#F58020" stroke-width="7" stroke-linecap="round" fill="none"/>
+          <!-- хвостик -->
+          <path d="M64 148 q-24 -8 -34 4 q20 6 30 16 z" fill="#F5B916"/>
+          <!-- туловище -->
+          <ellipse cx="116" cy="150" rx="58" ry="46" fill="#FFCE2B"/>
+          <!-- крыло -->
+          <path d="M92 140 q32 -16 60 2 q-26 28 -60 10 z" fill="#F5B916"/>
+          <!-- шея/голова -->
+          <circle cx="160" cy="94" r="31" fill="#FFCE2B"/>
+          <!-- бликовый животик -->
+          <ellipse cx="104" cy="162" rx="30" ry="22" fill="rgba(255,255,255,.18)"/>
+          <!-- глаз -->
+          <circle cx="171" cy="86" r="5" fill="#3a2b12"/>
+          <circle cx="173" cy="84.5" r="1.6" fill="#fff"/>
+          <!-- клюв -->
+          <path d="M184 88 q30 1 33 13 q-19 13 -33 7 q-5 -11 0 -20 z" fill="#F58020"/>
+          <path d="M186 101 q15 4 28 3" stroke="#d96a12" stroke-width="2" fill="none"/>
+
+          <!-- метла (метёт), поворот вокруг «руки» у крыла -->
+          <g class="broom">
+            <!-- ручка -->
+            <line x1="150" y1="150" x2="200" y2="205" stroke="#8a5a2b" stroke-width="7" stroke-linecap="round"/>
+            <line x1="150" y1="150" x2="200" y2="205" stroke="#a9743c" stroke-width="3" stroke-linecap="round"/>
+            <!-- перевязка -->
+            <rect x="192" y="196" width="18" height="9" rx="3" transform="rotate(48 201 200)" fill="#6f4522"/>
+            <!-- прутья -->
+            <path d="M201 202 l26 22 M204 200 l24 26 M198 205 l22 28 M207 199 l20 30 M195 208 l18 30"
+                  stroke="#d9a441" stroke-width="4" stroke-linecap="round" fill="none"/>
+            <animateTransform attributeName="transform" attributeType="XML" type="rotate"
+              values="-11 150 150; 13 150 150; -11 150 150" dur="1.6s" repeatCount="indefinite"
+              calcMode="spline" keyTimes="0;0.5;1" keySplines="0.42 0 0.58 1; 0.42 0 0.58 1"/>
+          </g>
+        </g>
+
+        <!-- пыль от метлы -->
+        <g fill="#c3a9a4">
+          <circle cx="214" cy="216" r="4">
+            <animate attributeName="opacity" values="0;.8;0" dur="1.6s" repeatCount="indefinite" keyTimes="0;.3;1"/>
+            <animate attributeName="cx" values="210;226;236" dur="1.6s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="214;208;210" dur="1.6s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="206" cy="220" r="3">
+            <animate attributeName="opacity" values="0;.7;0" dur="1.6s" begin="0.2s" repeatCount="indefinite" keyTimes="0;.3;1"/>
+            <animate attributeName="cx" values="204;218;230" dur="1.6s" begin="0.2s" repeatCount="indefinite"/>
+            <animate attributeName="cy" values="218;214;218" dur="1.6s" begin="0.2s" repeatCount="indefinite"/>
+          </circle>
+          <circle cx="200" cy="222" r="2.4">
+            <animate attributeName="opacity" values="0;.6;0" dur="1.6s" begin="0.45s" repeatCount="indefinite" keyTimes="0;.3;1"/>
+            <animate attributeName="cx" values="198;210;222" dur="1.6s" begin="0.45s" repeatCount="indefinite"/>
+          </circle>
+        </g>
+      </svg>
+    </div>
+
+    <h1>Над порталом проводятся <span class="grad">технические работы</span></h1>
+    <p>Мы наводим порядок и скоро всё заработает. Загляните чуть позже 🧹</p>
+
+    <div class="uptime">
+      <span class="dot"></span>
+      <span>Доступность будет обеспечена <b>в воскресенье, 26 июля, в 20:00</b></span>
+    </div>
+
+    <div class="foot">Группа компаний СКС · Портал адаптации</div>
+  </div>
+</body>
+</html>

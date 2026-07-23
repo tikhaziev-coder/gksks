@@ -17,7 +17,9 @@
   (переименован из `sks-claude-academy` 23.07.2026 — старый Pages-URL отдаёт 404,
   автоredirect GitHub НЕ поставил; коллегам раздать новую ссылку).
 - **Живой сайт (GitHub Pages):** https://tikhaziev-coder.github.io/gksks/
-  (портал-хаб: https://tikhaziev-coder.github.io/gksks/portal/)
+  → корень редиректит на **портал-хаб** (старт): `.../gksks/portal/`.
+  **Академия Claude** переехала в подпапку: `.../gksks/claude/` (там логин-вход).
+  Схема адресов: `gksks/<подразделение>/` (claude, дальше callcenter, hr, …).
 - **Папка на Mac:** `~/sks-claude-academy` (локальная папка НЕ переименовывалась)
 - **Публикация:** GitHub Pages раздаёт из ветки **`main`**.
   Чтобы обновить сайт — коммит и `git push origin main`. НЕ в фиче-ветку
@@ -27,11 +29,15 @@
 - **gh / git:** `gh` установлен в `~/.local/bin` (PATH прописан в `~/.zshrc`),
   залогинен как `tikhaziev-coder`, git-auth через `gh auth setup-git`.
 
-## Структура файлов
-- `index.html` — весь сайт (~1420 строк, инлайн CSS+JS, один файл).
-- `logo.svg` — логотип СКС (красный #E31E24), используется как заставка видео.
-- `metodichka.pdf` — методичка, доступна для скачивания/печати с сайта.
-- `kb/` — материалы базы знаний (напр. «Связка GitHub и Obsidian.md»).
+## Структура файлов (после реорганизации 24.07.2026)
+- `index.html` (корень) — лёгкий **редирект** на `portal/` (старт = хаб).
+- `portal/index.html` — приветственный хаб группы компаний.
+- `claude/` — **академия Claude** (переехала сюда из корня): `index.html`
+  (~1420 строк, инлайн CSS+JS, авторизация), `logo.svg`, `metodichka.pdf`,
+  `game/`, `game-sb/` (две игры), `kb/` (материалы базы знаний).
+  ⚠️ В `claude/index.html`: `KB_DIR='claude/kb'` (путь к базе на GitHub, root-relative);
+  `repoInfo()` берёт repo из 1-го сегмента пути (=`gksks`), при добавлении подпапок не ломается.
+- `supabase-auth.sql` — схема авторизации (таблица `profiles`, триггер, RLS).
 - `РАЗВЕРТЫВАНИЕ.md` — заметки по деплою.
 - `supabase-auth.sql` — схема авторизации (таблица `profiles`, триггер, RLS).
   Уже выполнен в базе 21.07.2026 — повторно запускать не нужно (безопасен для повтора).
@@ -78,10 +84,11 @@ start · what · onramp · cap · slides · obsidian · github · kb · library 
   (лимит бесплатного тарифа ~3–4 письма/час). Ошибки переведены на русский (`ruError`).
 - Supabase-проект: `iwlmgebsfmkfqcwtuyac`. В Auth → URL Configuration прописаны
   Site URL (Pages) и redirect `http://localhost:8765/` для локальных тестов.
-- **⚠️ TODO после переименования репо в `gksks` (23.07.2026):** Site URL и Redirect
-  URLs в Supabase всё ещё указывают на СТАРЫЙ URL `.../sks-claude-academy/` (даёт 404).
-  Обновить на `https://tikhaziev-coder.github.io/gksks/` (+ redirect `.../gksks/**`),
-  иначе письма подтверждения/сброса пароля ведут на мёртвую ссылку.
+- **⚠️ TODO Supabase URL (после переименования в `gksks` + переезда академии в /claude/):**
+  Site URL и Redirect URLs всё ещё на СТАРОМ `.../sks-claude-academy/` (404). Логин-вход
+  живёт в академии → Site URL выставить `https://tikhaziev-coder.github.io/gksks/claude/`,
+  Redirect URLs добавить `https://tikhaziev-coder.github.io/gksks/**`. Иначе письма
+  подтверждения/сброса пароля ведут на мёртвую ссылку. НЕ СДЕЛАНО.
 - Таблица `public.profiles` (ФИО, email, дата) заполняется триггером
   `on_auth_user_created`; RLS: свой профиль — каждый, весь список — только
   админ из `public.is_admin()`.

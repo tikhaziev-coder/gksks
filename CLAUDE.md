@@ -84,11 +84,10 @@ start · what · onramp · cap · slides · obsidian · github · kb · library 
   (лимит бесплатного тарифа ~3–4 письма/час). Ошибки переведены на русский (`ruError`).
 - Supabase-проект: `iwlmgebsfmkfqcwtuyac`. В Auth → URL Configuration прописаны
   Site URL (Pages) и redirect `http://localhost:8765/` для локальных тестов.
-- **⚠️ TODO Supabase URL (после переименования в `gksks` + переезда академии в /claude/):**
-  Site URL и Redirect URLs всё ещё на СТАРОМ `.../sks-claude-academy/` (404). Логин-вход
-  живёт в академии → Site URL выставить `https://tikhaziev-coder.github.io/gksks/claude/`,
-  Redirect URLs добавить `https://tikhaziev-coder.github.io/gksks/**`. Иначе письма
-  подтверждения/сброса пароля ведут на мёртвую ссылку. НЕ СДЕЛАНО.
+- **✅ Supabase URL настроен (24.07.2026):** Site URL = `https://tikhaziev-coder.github.io/gksks/claude/`,
+  Redirect allow-list = `https://tikhaziev-coder.github.io/gksks/**,http://localhost:8765/**`
+  (правилось через Management API разовым токеном). Письма подтверждения/сброса
+  теперь ведут на живой адрес академии.
 - Таблица `public.profiles` (ФИО, email, дата) заполняется триггером
   `on_auth_user_created`; RLS: свой профиль — каждый, весь список — только
   админ из `public.is_admin()`.

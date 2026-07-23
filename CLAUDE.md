@@ -13,13 +13,16 @@
 - **Аудитория:** коллеги разных профессий и уровней подготовки.
 
 ## Где живёт и как публикуется
-- **Репозиторий:** https://github.com/tikhaziev-coder/sks-claude-academy
-- **Живой сайт (GitHub Pages):** https://tikhaziev-coder.github.io/sks-claude-academy/
-- **Папка на Mac:** `~/sks-claude-academy`
+- **Репозиторий:** https://github.com/tikhaziev-coder/gksks
+  (переименован из `sks-claude-academy` 23.07.2026 — старый Pages-URL отдаёт 404,
+  автоredirect GitHub НЕ поставил; коллегам раздать новую ссылку).
+- **Живой сайт (GitHub Pages):** https://tikhaziev-coder.github.io/gksks/
+  (портал-хаб: https://tikhaziev-coder.github.io/gksks/portal/)
+- **Папка на Mac:** `~/sks-claude-academy` (локальная папка НЕ переименовывалась)
 - **Публикация:** GitHub Pages раздаёт из ветки **`main`**.
   Чтобы обновить сайт — коммит и `git push origin main`. НЕ в фиче-ветку
   (иначе сайт не обновится). После пуша Pages пересобирается ~1–2 мин.
-- **Проверка сборки:** `gh api repos/tikhaziev-coder/sks-claude-academy/pages/builds/latest`
+- **Проверка сборки:** `gh api repos/tikhaziev-coder/gksks/pages/builds/latest`
   (ждём `"status": "built"` и нужный commit sha).
 - **gh / git:** `gh` установлен в `~/.local/bin` (PATH прописан в `~/.zshrc`),
   залогинен как `tikhaziev-coder`, git-auth через `gh auth setup-git`.
@@ -75,6 +78,10 @@ start · what · onramp · cap · slides · obsidian · github · kb · library 
   (лимит бесплатного тарифа ~3–4 письма/час). Ошибки переведены на русский (`ruError`).
 - Supabase-проект: `iwlmgebsfmkfqcwtuyac`. В Auth → URL Configuration прописаны
   Site URL (Pages) и redirect `http://localhost:8765/` для локальных тестов.
+- **⚠️ TODO после переименования репо в `gksks` (23.07.2026):** Site URL и Redirect
+  URLs в Supabase всё ещё указывают на СТАРЫЙ URL `.../sks-claude-academy/` (даёт 404).
+  Обновить на `https://tikhaziev-coder.github.io/gksks/` (+ redirect `.../gksks/**`),
+  иначе письма подтверждения/сброса пароля ведут на мёртвую ссылку.
 - Таблица `public.profiles` (ФИО, email, дата) заполняется триггером
   `on_auth_user_created`; RLS: свой профиль — каждый, весь список — только
   админ из `public.is_admin()`.

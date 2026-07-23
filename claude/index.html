@@ -1,0 +1,1866 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light" data-level="1">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Code для офиса — интерактивный курс</title>
+<meta name="description" content="Интерактивный курс по работе с Claude Code для офисных сотрудников разных профессий. Материалы для всех уровней.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#130d0e; --bg2:#1b1314; --card:#231819; --card2:#2b1e1f;
+  --ink:#f6ece9; --muted:#c3a9a4; --line:rgba(255,255,255,.10);
+  --brand:#e31e24; --brand2:#e0a32a; --accent:#e8833a; --ok:#34d399; --warn:#fbbf24;
+  --glass:rgba(28,18,18,.62); --shadow:0 18px 50px -20px rgba(0,0,0,.7);
+  --r:18px; --maxw:1180px;
+  --grad:linear-gradient(135deg,var(--brand),var(--brand2));
+}
+[data-theme="light"]{
+  --bg:#fbf7f6; --bg2:#fff4f3; --card:#ffffff; --card2:#fff8f7;
+  --ink:#1c1414; --muted:#7a6a67; --line:rgba(30,18,18,.10);
+  --glass:rgba(255,255,255,.82); --shadow:0 18px 50px -24px rgba(150,40,40,.16);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  background:radial-gradient(1200px 700px at 80% -10%,rgba(225,25,35,.18),transparent 60%),
+             radial-gradient(900px 600px at -10% 20%,rgba(224,163,42,.12),transparent 55%),
+             var(--bg);
+  color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+h1,h2,h3{line-height:1.15;margin:0 0 .4em}
+h2{font-size:clamp(1.5rem,3.4vw,2.4rem);font-weight:800;letter-spacing:-.02em}
+h3{font-size:1.18rem;font-weight:700}
+.muted{color:var(--muted)}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+/* progress + nav */
+#bar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:60;transition:width .1s}
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:var(--glass);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:center;gap:4px;min-height:0;padding:5px 0;flex-wrap:wrap}
+.logo{display:flex;align-items:center;justify-content:center;flex-basis:100%;gap:9px;font-weight:800;letter-spacing:-.02em;font-size:1.18rem;margin-bottom:1px}
+.logo .mark{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;font-size:16px;box-shadow:0 6px 18px -6px var(--brand)}
+.nav-links{display:flex;gap:2px 2px;flex-basis:100%;flex-wrap:wrap;justify-content:center;align-items:center}
+.nav-links a{font-size:.9rem;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:8px;transition:.2s;font-weight:600;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--ink);background:rgba(225,25,35,.14)}
+.icon-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:grid;place-items:center;font-size:17px;transition:.2s}
+.icon-btn:hover{transform:translateY(-2px);border-color:var(--brand)}
+.burger{display:none}
+
+/* hero */
+header.hero{padding:78px 0 40px;position:relative}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;color:var(--brand2);background:rgba(224,163,42,.1);border:1px solid rgba(224,163,42,.25);padding:6px 14px;border-radius:999px;margin-bottom:22px}
+.hero h1{font-size:clamp(2.2rem,6vw,4rem);font-weight:900;letter-spacing:-.03em}
+.hero p.lead{font-size:clamp(1.05rem,2.2vw,1.3rem);color:var(--muted);max-width:none;margin:.4em 0 0}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.btn{appearance:none;border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:.98rem;padding:14px 26px;border-radius:14px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:.22s}
+.btn.primary{background:var(--grad);color:#fff;box-shadow:0 14px 34px -12px var(--brand)}
+.btn.primary:hover{transform:translateY(-3px);box-shadow:0 22px 44px -14px var(--brand)}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--brand);transform:translateY(-3px)}
+.stats{display:flex;gap:30px;margin-top:46px;flex-wrap:wrap;justify-content:center;text-align:center}
+.stat b{font-size:1.9rem;font-weight:800;display:block;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:.85rem;color:var(--muted)}
+.warnbar{display:flex;align-items:center;gap:10px;background:rgba(225,25,35,.1);border:1px solid rgba(225,25,35,.4);border-left:4px solid var(--brand);border-radius:12px;padding:14px 18px;margin:26px 0 0;font-size:1.02rem}
+.warnbar b{color:var(--brand)}
+.evo{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:stretch;margin-top:28px}
+.evo-item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center}
+.evo-item .tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-bottom:8px}
+.evo-item b{display:block;font-size:1.12rem;font-weight:800;margin:2px 0}
+.evo-item small{color:var(--muted);font-size:.82rem;display:block}
+.evo-item.past{opacity:.6}
+.evo-item.past b{text-decoration:line-through;text-decoration-color:var(--brand)}
+.evo-item.past .tag{background:rgba(150,150,150,.2);color:var(--muted)}
+.evo-item.now .tag{background:rgba(224,163,42,.18);color:var(--brand2)}
+.evo-item.future{border-color:var(--brand);box-shadow:0 16px 40px -18px var(--brand)}
+.evo-item.future .tag{background:var(--grad);color:#fff}
+.evo-arrow{display:grid;place-items:center;font-size:1.4rem;color:var(--brand);font-weight:800}
+.lvtag{font-size:.64rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:3px 9px;border-radius:999px;background:rgba(150,150,150,.2);color:var(--muted);vertical-align:middle}
+.lvtag.now{background:rgba(224,163,42,.18);color:var(--brand2)}
+.lvtag.pro{background:var(--grad);color:#fff}
+.compare.three{grid-template-columns:repeat(3,1fr)}
+.compare .chat{opacity:.82}
+.compare .cowork{background:linear-gradient(160deg,rgba(224,163,42,.12),rgba(224,163,42,.04));border-color:rgba(224,163,42,.38)}
+.compare .cowork li:before{background:var(--brand2);box-shadow:0 0 0 4px rgba(224,163,42,.18)}
+@media(max-width:760px){.evo{grid-template-columns:1fr}.evo-arrow{transform:rotate(90deg)}}
+@media(max-width:880px){.compare.three{grid-template-columns:1fr}}
+code{font-family:'JetBrains Mono',monospace;font-size:.85em;background:rgba(225,25,35,.1);padding:1px 6px;border-radius:6px;color:var(--brand)}
+.badge{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:5px}
+.badge.base{background:rgba(150,150,150,.18);color:var(--muted)}
+.badge.lv2{background:rgba(224,163,42,.18);color:var(--brand2)}
+.badge.lv3{background:rgba(225,25,35,.13);color:var(--brand)}
+.badge.new{background:var(--grad);color:#fff}
+.dodont{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.dd{border-radius:var(--r);padding:22px;border:1px solid var(--line)}
+.dd.do{background:rgba(52,211,153,.07);border-color:rgba(52,211,153,.3)}
+.dd.dont{background:rgba(225,25,35,.06);border-color:rgba(225,25,35,.3)}
+.dd h3{display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.dd ul{list-style:none;padding:0;margin:12px 0 0}
+.dd li{padding:7px 0 7px 26px;position:relative;font-size:.93rem;color:var(--muted);border-top:1px solid var(--line)}
+.dd.do li:before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:800}
+.dd.dont li:before{content:"✕";position:absolute;left:0;color:var(--brand);font-weight:800}
+@media(max-width:880px){.dodont{grid-template-columns:1fr}}
+
+/* print / PDF methodichka */
+@media print{
+  @page{margin:13mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html{--bg:#fff;--bg2:#fff;--card:#fff;--card2:#fff;--ink:#1a1414;--muted:#444;--line:#dcdcdc}
+  body{background:#fff!important;color:#1a1414!important}
+  .levelbar,.prog,#bar,.burger,.icon-btn,#theme,.cta,#quiz,.copy,.nav-links{display:none!important}
+  nav{position:static!important;background:#fff!important;border:none!important;backdrop-filter:none!important;box-shadow:none!important;height:auto!important}
+  .nav-in{height:auto!important;padding:2px 0}
+  section{padding:12px 0!important;break-inside:avoid}
+  .reveal{opacity:1!important;transform:none!important}
+  [data-min]{display:block!important}
+  .hero{padding:6px 0!important}
+  .hero h1{font-size:26pt!important}
+  .hero p.lead{font-size:12pt!important}
+  .grid.cols-3,.grid.cols-4{grid-template-columns:1fr 1fr!important}
+  .compare.three,.dodont{grid-template-columns:1fr 1fr!important}
+  .prof-tabs{display:none!important}
+  .prof-panel{display:block!important;break-inside:avoid;border-top:2px solid var(--brand);padding-top:10px;margin-top:14px}
+  .prof-body{grid-template-columns:1fr!important}
+  .faq-a{max-height:none!important}
+  .faq-a div{padding:0 22px 14px!important}
+  .card,.step,.evo-item,.dd,.prompt,.obs{box-shadow:none!important;break-inside:avoid}
+  .obs:after{display:none}
+  a{text-decoration:none;color:inherit}
+  .grad-text{color:var(--brand)!important;-webkit-text-fill-color:var(--brand)!important}
+}
+
+/* level switcher */
+.levelbar{position:sticky;top:64px;z-index:40;background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 0}
+.levelbar .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.levelbar .lbl{font-size:.82rem;color:var(--muted);font-weight:600}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:4px;gap:4px}
+.seg button{appearance:none;border:0;background:transparent;color:var(--muted);font-family:inherit;font-weight:600;font-size:.86rem;padding:8px 16px;border-radius:10px;cursor:pointer;transition:.2s}
+.seg button[aria-pressed="true"]{background:var(--grad);color:#fff;box-shadow:0 8px 20px -8px var(--brand)}
+.level-hint{font-size:.82rem;color:var(--muted);margin-left:auto}
+
+/* sections */
+section{padding:40px 0;scroll-margin-top:130px}
+.eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brand2);margin-bottom:10px}
+.section-head{max-width:none;margin-bottom:38px}
+.section-head p{color:var(--muted);font-size:1.05rem}
+
+.grid{display:grid;gap:18px}
+.cols-2{grid-template-columns:repeat(2,1fr)}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+.cols-4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;transition:.25s;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-4px);border-color:rgba(225,25,35,.4);box-shadow:var(--shadow)}
+.card .ic{font-size:26px;width:52px;height:52px;border-radius:13px;display:grid;place-items:center;background:rgba(225,25,35,.13);margin-bottom:14px}
+.card h3{margin-bottom:6px}
+.card p{color:var(--muted);font-size:.94rem;margin:0}
+
+/* compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.compare .col{border-radius:var(--r);padding:26px;border:1px solid var(--line)}
+.compare .chat{background:var(--card)}
+.compare .code{background:linear-gradient(160deg,rgba(225,25,35,.14),rgba(224,163,42,.07));border-color:rgba(225,25,35,.35)}
+.compare h3{display:flex;align-items:center;gap:10px}
+.compare ul{list-style:none;padding:0;margin:14px 0 0}
+.compare li{padding:9px 0 9px 28px;position:relative;font-size:.94rem;color:var(--muted);border-top:1px solid var(--line)}
+.compare li:before{content:"";position:absolute;left:0;top:14px;width:16px;height:16px;border-radius:50%}
+.compare .chat li:before{background:rgba(154,167,194,.4)}
+.compare .code li:before{background:var(--ok);box-shadow:0 0 0 4px rgba(52,211,153,.18)}
+
+/* obsidian */
+.obs{background:linear-gradient(155deg,rgba(225,25,35,.16),rgba(224,163,42,.06));border:1px solid rgba(225,25,35,.3);border-radius:26px;padding:40px;position:relative;overflow:hidden}
+.obs:after{content:"🧠";position:absolute;right:-10px;bottom:-30px;font-size:200px;opacity:.06}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:22px}
+.flow .node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:8px}
+.flow .arr{color:var(--brand2);font-weight:800;font-size:1.3rem}
+
+/* professions */
+.prof-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.prof-tab{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:12px 16px;cursor:pointer;font-weight:600;font-size:.9rem;display:flex;align-items:center;gap:9px;transition:.2s;color:var(--muted)}
+.prof-tab:hover{transform:translateY(-2px);color:var(--ink)}
+.prof-tab.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 10px 26px -10px var(--brand)}
+.prof-panel{display:none;animation:fade .4s ease}
+.prof-panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.prof-body{display:grid;grid-template-columns:1fr 1.1fr;gap:22px}
+.task-list{list-style:none;padding:0;margin:0}
+.task-list li{padding:11px 0 11px 30px;position:relative;border-bottom:1px solid var(--line);font-size:.95rem}
+.task-list li:before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:800}
+
+/* prompt block */
+.prompt{background:var(--bg2);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:14px}
+.prompt-top{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:rgba(225,25,35,.08);border-bottom:1px solid var(--line)}
+.prompt-top span{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand2)}
+.copy{background:var(--card);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:.78rem;font-weight:600;padding:5px 12px;border-radius:8px;cursor:pointer;transition:.2s}
+.copy:hover{border-color:var(--brand)}
+.copy.done{color:var(--ok);border-color:var(--ok)}
+.prompt pre{margin:0;padding:16px;font-family:'JetBrains Mono',monospace;font-size:.84rem;white-space:pre-wrap;color:var(--ink)}
+
+/* level-gated */
+[data-min]{display:none}
+.tip{margin-top:14px;background:rgba(224,163,42,.08);border:1px solid rgba(224,163,42,.25);border-radius:12px;padding:13px 16px;font-size:.9rem}
+.tip b{color:var(--brand2)}
+.adv{background:rgba(255,122,89,.08);border-color:rgba(255,122,89,.28)}
+.adv b{color:var(--accent)}
+
+/* steps */
+.steps{counter-reset:s;display:grid;gap:14px}
+.step{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;align-items:flex-start}
+.step:before{counter-increment:s;content:counter(s);min-width:40px;height:40px;border-radius:11px;background:var(--grad);color:#fff;font-weight:800;display:grid;place-items:center}
+.step h3{margin-bottom:4px}.step p{margin:0;color:var(--muted);font-size:.94rem}
+
+/* quiz */
+.quiz{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:28px}
+.q{margin-bottom:22px}.q:last-child{margin-bottom:0}
+.q p.qt{font-weight:600;margin:0 0 12px}
+.opt{display:block;width:100%;text-align:left;background:var(--bg2);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:.92rem;padding:12px 16px;border-radius:11px;margin-bottom:9px;cursor:pointer;transition:.18s}
+.opt:hover{border-color:var(--brand)}
+.opt.correct{background:rgba(52,211,153,.15);border-color:var(--ok)}
+.opt.wrong{background:rgba(255,122,89,.13);border-color:var(--accent)}
+.qfb{font-size:.86rem;margin-top:6px;display:none}
+
+/* faq */
+.faq-item{border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden;background:var(--card)}
+.faq-q{width:100%;text-align:left;background:none;border:0;color:var(--ink);font-family:inherit;font-weight:600;font-size:1rem;padding:18px 22px;cursor:pointer;display:flex;justify-content:space-between;gap:12px}
+.faq-q .chev{transition:.3s;color:var(--brand2)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;color:var(--muted);font-size:.94rem}
+.faq-a div{padding:0 22px 20px}
+.faq-item.open .chev{transform:rotate(180deg)}
+
+/* progress widget */
+.prog{position:fixed;right:20px;bottom:20px;z-index:45;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
+.ring{--p:0;width:46px;height:46px;border-radius:50%;background:conic-gradient(var(--brand) calc(var(--p)*1%),rgba(255,255,255,.1) 0);display:grid;place-items:center}
+.ring i{width:34px;height:34px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-style:normal;font-size:.72rem;font-weight:800}
+.prog small{font-size:.74rem;color:var(--muted);max-width:120px}
+
+footer{border-top:1px solid var(--line);padding:46px 0;color:var(--muted);font-size:.9rem}
+footer .wrap{text-align:center}
+footer .logo{justify-content:center}
+footer .contacts{margin-left:auto;margin-right:auto}
+.reveal{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:880px){
+  .cols-2,.cols-3,.cols-4,.compare,.prof-body{grid-template-columns:1fr}
+  .nav-links{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--bg2);padding:14px;border-bottom:1px solid var(--line)}
+  .nav-links.show{display:flex}
+  .burger{display:grid}
+  .level-hint{display:none}
+  .prog small{display:none}
+}
+
+/* ===== слайды (презентация) ===== */
+.deck{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.slides-wrap{position:relative;aspect-ratio:16/9;min-height:300px}
+.slide{position:absolute;inset:0;padding:clamp(24px,4vw,52px);display:none;flex-direction:column;justify-content:center;gap:14px}
+.slide.active{display:flex;animation:fade .4s ease}
+.slide .kicker{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brand2)}
+.slide h3{font-size:clamp(1.4rem,3.2vw,2.2rem);font-weight:800;margin:0}
+.slide p{color:var(--muted);font-size:clamp(1rem,1.6vw,1.15rem);margin:0;max-width:760px}
+.slide ul{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:11px}
+.slide ul li{padding-left:28px;position:relative;font-size:clamp(.95rem,1.5vw,1.08rem)}
+.slide ul li:before{content:"◆";position:absolute;left:0;color:var(--brand)}
+.slide .big{font-size:clamp(2.4rem,7vw,4.6rem);font-weight:900;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.deck-ctrl{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-top:1px solid var(--line);background:var(--bg2)}
+.deck-ctrl button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);font-family:inherit;font-weight:700;font-size:.86rem;padding:9px 16px;border-radius:10px;cursor:pointer;transition:.2s}
+.deck-ctrl button:hover{border-color:var(--brand);transform:translateY(-1px)}
+.dots{display:flex;gap:7px;flex-wrap:wrap}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line);cursor:pointer;transition:.2s}
+.dots i.on{background:var(--brand);transform:scale(1.3)}
+.deck:fullscreen{background:var(--bg)}
+.deck:fullscreen .slides-wrap{height:calc(100vh - 60px);aspect-ratio:auto}
+.video-player{position:relative;aspect-ratio:16/9;background:#000;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow);cursor:pointer}
+.video-player .video-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:.3s}
+.video-player:hover .video-thumb{transform:scale(1.03);filter:brightness(.82)}
+.video-player .video-play{position:absolute;inset:0;margin:auto;width:84px;height:84px;border:0;border-radius:50%;background:var(--grad);color:#fff;font-size:1.7rem;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 10px 30px -6px rgba(227,30,36,.6);transition:.25s}
+.video-player .video-play span{margin-left:5px;line-height:1}
+.video-player:hover .video-play{transform:scale(1.08)}
+.video-player.playing{cursor:default}
+.video-player iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px;margin-top:16px}
+.vid-item{display:flex;flex-direction:column;padding:0;overflow:hidden;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:12px;cursor:pointer;color:var(--ink);font-family:inherit;transition:.2s}
+.vid-item:hover{border-color:var(--brand);transform:translateY(-2px)}
+.vid-item.is-active{border-color:var(--brand);box-shadow:0 0 0 1px var(--brand) inset}
+.vid-item .vid-thumb{position:relative;width:100%;aspect-ratio:16/9;display:block}
+.vid-item .vid-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.vid-item.is-active .vid-thumb:after{content:"▶ Сейчас";position:absolute;left:8px;bottom:8px;font-size:.7rem;font-weight:700;background:var(--grad);color:#fff;padding:3px 8px;border-radius:6px}
+.vid-item .vid-title{font-weight:700;font-size:.9rem;line-height:1.3;padding:10px 12px 2px}
+.vid-item .vid-meta{font-size:.78rem;color:var(--muted);padding:0 12px 12px}
+.video-poster{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(120% 120% at 50% 32%,var(--card2),var(--bg))}
+.video-poster img{width:min(46%,380px);height:auto;filter:drop-shadow(0 10px 30px rgba(0,0,0,.55))}
+.vid-thumb.poster{display:grid;place-items:center;background:radial-gradient(120% 120% at 50% 35%,var(--card2),var(--bg))}
+.vid-thumb.poster img{width:64%;height:auto}
+.mat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media(max-width:880px){.mat-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.mat-grid{grid-template-columns:1fr}}
+.mat-card{display:flex;flex-direction:column;gap:10px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;text-decoration:none;color:var(--ink);transition:.2s}
+.mat-card:hover{border-color:var(--brand);transform:translateY(-3px);box-shadow:var(--shadow)}
+.mat-src{display:inline-flex;align-items:center;gap:7px;font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand2)}
+.mat-card h3{margin:0;font-size:1.1rem;line-height:1.3}
+.mat-card p{margin:0;color:var(--muted);font-size:.92rem;flex:1}
+.mat-card .mat-go{font-weight:700;color:var(--brand);font-size:.9rem}
+
+/* ===== библиотека (база знаний) ===== */
+.lib-head{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:18px}
+.lib-add{display:inline-flex;align-items:center;gap:8px;background:var(--grad);color:#fff;border:0;font-family:inherit;font-weight:700;font-size:.92rem;padding:11px 18px;border-radius:12px;cursor:pointer;text-decoration:none;transition:.2s}
+.lib-add:hover{transform:translateY(-2px);box-shadow:0 12px 28px -10px var(--brand)}
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(235px,1fr));gap:16px}
+.lib-card{text-align:left;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;transition:.2s;font-family:inherit;color:var(--ink);display:block;width:100%;text-decoration:none}
+.lib-card:hover{transform:translateY(-3px);border-color:var(--brand);box-shadow:var(--shadow)}
+.lib-card .ficon{font-size:24px;margin-bottom:8px}
+.lib-card h4{margin:0 0 4px;font-size:1.02rem;font-weight:700}
+.lib-card small{color:var(--muted)}
+.lib-empty{grid-column:1/-1;color:var(--muted);padding:34px;text-align:center;border:1px dashed var(--line);border-radius:14px}
+.lib-drop{border:2px dashed var(--line);border-radius:14px;padding:22px;text-align:center;color:var(--muted);cursor:pointer;transition:.2s;margin-bottom:12px}
+.lib-drop:hover,.lib-drop.drag{border-color:var(--brand);background:rgba(225,25,35,.05);color:var(--ink)}
+.lib-drop p{margin:0;font-size:.95rem}
+.modal{position:fixed;inset:0;z-index:80;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;padding:22px}
+.modal.open{display:flex}
+.modal-box{background:var(--card);border:1px solid var(--line);border-radius:18px;max-width:840px;width:100%;max-height:88vh;overflow:auto;box-shadow:var(--shadow)}
+.modal-top{position:sticky;top:0;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:15px 22px;background:var(--glass);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.modal-top h3{margin:0;font-size:1.1rem}
+.modal-x{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);width:36px;height:36px;border-radius:10px;cursor:pointer;font-size:17px}
+.md-body{padding:22px 28px;line-height:1.7}
+.md-body h1,.md-body h2,.md-body h3{margin:1.1em 0 .4em;line-height:1.25}
+.md-body h1{font-size:1.5rem}.md-body h2{font-size:1.25rem}.md-body h3{font-size:1.08rem}
+.md-body code{font-family:'JetBrains Mono',monospace;font-size:.85em}
+.md-body pre{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:14px;overflow:auto}
+.md-body pre code{background:none;color:var(--ink);padding:0}
+/* ИГРА */
+.game-card{display:flex;gap:22px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;cursor:pointer;transition:.2s;box-shadow:var(--shadow);max-width:720px;margin:0 auto}
+.game-card:hover{transform:translateY(-3px);border-color:var(--brand)}
+.game-card:focus-visible{outline:2px solid var(--brand);outline-offset:3px}
+.game-card-art{flex:0 0 150px;height:104px;border-radius:14px;background:linear-gradient(180deg,#5c94fc,#9ec3ff);display:grid;place-items:center;position:relative;overflow:hidden}
+.game-card-art:after{content:"";position:absolute;left:0;right:0;bottom:0;height:26px;background:linear-gradient(180deg,#6abe30 0 8px,#a05a2c 8px)}
+.game-emoji{font-size:48px;filter:drop-shadow(0 3px 4px rgba(0,0,0,.3));position:relative;z-index:1}
+.game-card-body h3{margin:0 0 6px;font-size:1.18rem}
+.game-card-body p{margin:0 0 12px}
+@media(max-width:560px){.game-card{flex-direction:column;text-align:center}.game-card-art{flex-basis:auto;width:100%}}
+/* модал игры */
+.game-modal{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.74);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;padding:18px}
+
+/* ЭКРАН ВХОДА (авторизация) */
+#authGate{position:fixed;inset:0;z-index:2000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
+#authGate.hidden{display:none}
+.auth-card{width:100%;max-width:430px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:36px 30px;text-align:center;box-shadow:var(--shadow)}
+.auth-card h2{margin:16px 0 6px;font-size:1.45rem}
+.auth-card .auth-sub{margin:0;font-size:.92rem}
+.auth-tabs{display:flex;gap:6px;margin:22px 0 16px;background:var(--card2);border-radius:12px;padding:4px}
+.auth-tabs button{flex:1;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:700;padding:10px;border-radius:9px;cursor:pointer;transition:.15s}
+.auth-tabs button.on{background:var(--grad);color:#fff}
+.auth-card form{display:flex;flex-direction:column;gap:10px;text-align:left}
+.auth-card input{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink);font:inherit;width:100%}
+.auth-card input:focus{outline:none;border-color:var(--brand)}
+.auth-card form .btn{justify-content:center;margin-top:4px}
+#authMsg{min-height:1.3em;margin:14px 0 0;font-size:.9rem;font-weight:600;line-height:1.45}
+.auth-link{border:0;background:none;color:var(--muted);font:inherit;font-size:.86rem;font-weight:600;cursor:pointer;padding:2px;align-self:center;text-decoration:underline;text-underline-offset:3px}
+.auth-link:hover{color:var(--brand)}
+#authGate.checking .auth-ui{display:none}
+#authGate:not(.checking) .auth-wait{display:none}
+.stat-table{width:100%;border-collapse:collapse;font-size:.92rem}
+.stat-table th,.stat-table td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
+.stat-table th{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
+.game-modal.open{display:flex}
+.game-modal-box{width:min(1180px,100%);height:94vh;display:flex;flex-direction:column;background:#0b1224;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+.game-modal-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 16px;background:#16234a;color:#fff;border-bottom:1px solid rgba(255,255,255,.1);flex:0 0 auto}
+.game-modal-top h3{margin:0;font-size:1.02rem;color:#fff}
+.game-modal-frame{position:relative;width:100%;flex:1 1 auto;min-height:0;background:#000}
+.game-modal-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0;display:block}
+.md-body table{border-collapse:collapse;width:100%;margin:1em 0;font-size:.92rem}
+.md-body th,.md-body td{border:1px solid var(--line);padding:8px 12px;text-align:left}
+.md-body a{color:var(--brand)}
+.md-body ul,.md-body ol{padding-left:22px}
+.md-body blockquote{border-left:3px solid var(--brand);margin:1em 0;padding:6px 16px;background:var(--bg2);border-radius:8px;color:var(--muted)}
+
+/* ===== поля теста ===== */
+.quiz-id{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:22px}
+.quiz-id input{width:100%;background:var(--bg2);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:.95rem;padding:12px 14px;border-radius:11px}
+.quiz-id input:focus{outline:none;border-color:var(--brand)}
+.quiz-submit{margin-top:18px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.quiz-result{font-weight:700}
+.quiz-pagebar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.quiz-pagebar #quizPageTitle{font-weight:800;font-size:1.08rem}
+.quiz-dots{display:flex;gap:6px;margin-bottom:18px}
+.quiz-dots i{height:5px;flex:1;border-radius:99px;background:var(--line);transition:.25s}
+.quiz-dots i.on{background:var(--grad)}
+.quiz-dots i.done{background:var(--ok)}
+.quiz-nav{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:22px;flex-wrap:wrap}
+@media(max-width:640px){.quiz-id{grid-template-columns:1fr}}
+
+/* ===== контакты в подвале ===== */
+.contacts{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);border-radius:14px;padding:18px 22px;margin:6px 0 4px;max-width:560px}
+.contacts h3{margin:0 0 8px;font-size:1.06rem;color:var(--ink)}
+.contacts p{margin:0 0 6px;color:var(--ink)}
+.contacts p:last-child{margin-bottom:0}
+.contacts a{color:var(--brand);font-weight:700;text-decoration:none;white-space:nowrap}
+.contacts a:hover{text-decoration:underline}
+
+/* ===== переключатель темы ===== */
+.theme-toggle{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 11px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;font-family:inherit;font-size:.82rem;font-weight:600;transition:.2s}
+.theme-toggle:hover{border-color:var(--brand);transform:translateY(-1px)}
+.theme-toggle .ico{font-size:15px;opacity:.38;transition:.2s;line-height:1}
+.theme-toggle .ico.active{opacity:1;transform:scale(1.18)}
+.theme-wrap{flex-basis:100%;display:flex;justify-content:center}
+.theme-label{color:var(--muted);white-space:nowrap}
+@media(max-width:980px){.theme-label{display:none}}
+
+/* ===== результат теста ===== */
+.quiz-result-box{margin-top:22px;background:var(--bg2);border:1px solid var(--line);border-radius:16px;padding:24px}
+.qr-score{font-size:1.7rem;font-weight:900;margin-bottom:6px}
+.qr-advice{color:var(--ink);margin:0 0 16px;font-size:1.02rem}
+.qr-breakdown{list-style:none;padding:0;margin:0 0 18px;display:grid;gap:9px}
+.qr-breakdown li{font-size:.95rem}
+.qr-breakdown a{color:var(--brand);font-weight:700;text-decoration:none}
+.qr-breakdown a:hover{text-decoration:underline}
+.qr-cta{display:flex;align-items:center;gap:14px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:18px}
+.qr-cta .muted{font-size:.95rem}
+</style>
+</head>
+<body>
+
+<!-- ЭКРАН ВХОДА: сайт скрыт, пока сотрудник не авторизуется -->
+<div id="authGate" class="checking">
+  <div class="auth-card">
+    <img src="logo.svg" alt="СКС" style="height:44px;width:auto">
+    <h2>Академия СКС</h2>
+    <p class="muted auth-sub">Корпоративный обучающий портал.<br>Доступ только для сотрудников группы компаний.</p>
+    <p class="muted auth-wait" style="margin-top:22px">Проверяем доступ…</p>
+    <div class="auth-ui">
+      <div class="auth-tabs">
+        <button type="button" id="authTabIn" class="on">Вход</button>
+        <button type="button" id="authTabUp">Регистрация</button>
+      </div>
+      <form id="authFormIn">
+        <input type="email" id="inEmail" placeholder="E-mail" required autocomplete="email">
+        <input type="password" id="inPass" placeholder="Пароль" required autocomplete="current-password">
+        <button class="btn primary" type="submit">Войти</button>
+        <button class="auth-link" type="button" id="forgotLink">Забыли пароль?</button>
+      </form>
+      <form id="authFormReset" style="display:none">
+        <p class="muted" style="margin:0;font-size:.9rem;text-align:center">Пришлём на почту ссылку для смены пароля.</p>
+        <input type="email" id="resetEmail" placeholder="E-mail, указанный при регистрации" required autocomplete="email">
+        <button class="btn primary" type="submit">Отправить ссылку</button>
+        <button class="auth-link" type="button" id="resetBack">← Назад ко входу</button>
+      </form>
+      <form id="authFormNew" style="display:none">
+        <p class="muted" style="margin:0;font-size:.9rem;text-align:center">Придумайте новый пароль для входа.</p>
+        <input type="password" id="newPass1" placeholder="Новый пароль (минимум 6 символов)" required minlength="6" autocomplete="new-password">
+        <input type="password" id="newPass2" placeholder="Повторите новый пароль" required minlength="6" autocomplete="new-password">
+        <button class="btn primary" type="submit">Сохранить и войти</button>
+      </form>
+      <form id="authFormUp" style="display:none">
+        <input type="text" id="upName" placeholder="ФИО сотрудника (например: Иванов Иван Иванович)" required autocomplete="name">
+        <input type="email" id="upEmail" placeholder="E-mail" required autocomplete="email">
+        <input type="password" id="upPass" placeholder="Пароль (минимум 6 символов)" required minlength="6" autocomplete="new-password">
+        <button class="btn primary" type="submit">Зарегистрироваться</button>
+      </form>
+      <p id="authMsg"></p>
+    </div>
+  </div>
+</div>
+
+<div id="bar"></div>
+
+<nav>
+  <div class="wrap nav-in">
+    <div class="logo"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgODIxIDEwOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNC4wNyAxMDMuOTYzaDEwNS4yMTNWNC4wMzdINC4wNzF2OTkuOTI2em0xMDguNzE0IDMuNDcySC41N1YuNTY1aDExMi4yMTR2MTA2Ljg3em04NS43MzktNTkuNDk2aC0yMy45NzlWMzQuNjljMC0zLjg1Mi0uMjU2LTYuMjU2LS43NjktNy4yMTEtLjUxMi0uOTU1LTEuNjQzLTEuNDMzLTMuMzg4LTEuNDMzLTEuOTc1IDAtMy4yMjkuNTgxLTMuNzYgMS43NDItLjUzMSAxLjE2MS0uNzk3IDMuNjcyLS43OTcgNy41MzJ2MzUuNDA0YzAgMy43MDQuMjY2IDYuMTIuNzk3IDcuMjVzMS43MjggMS42OTUgMy41ODggMS42OTVjMS43ODUgMCAyLjk1My0uNTY2IDMuNTAzLTEuNjk4LjU1MS0xLjEzMy44MjYtMy43OTIuODI2LTcuOTc3di05LjU4aDIzLjk3OXYyLjk3YzAgNy44OS0uNjc1IDEzLjQ4NS0yLjAyMiAxNi43ODQtMS4zNDggMy4zMDEtNC4zMjggNi4xOTItOC45NDIgOC42NzYtNC42MTMgMi40ODMtMTAuMyAzLjcyNC0xNy4wNTkgMy43MjQtNy4wMjUgMC0xMi44MTUtMS4wNTItMTcuMzcxLTMuMTU0LTQuNTU3LTIuMTAyLTcuNTc1LTUuMDE0LTkuMDU2LTguNzMzLTEuNDgyLTMuNzItMi4yMjItOS4zMTQtMi4yMjItMTYuNzg0VjQxLjYzYzAtNS40OTIuMjI4LTkuNjExLjY4NC0xMi4zNTguNDU1LTIuNzQ2IDEuODEzLTUuMzkgNC4wNzItNy45MzMgMi4yNTgtMi41NDIgNS4zOTEtNC41NDMgOS4zOTgtNi4wMDMgNC4wMDYtMS40NTkgOC42MDktMi4xODkgMTMuODEyLTIuMTg5IDcuMDYzIDAgMTIuODkxIDEuMTI5IDE3LjQ4NiAzLjM4NiA0LjU5NCAyLjI1NiA3LjYxMiA1LjA3IDkuMDU2IDguNDQgMS40NDIgMy4zNjggMi4xNjQgOC42MSAyLjE2NCAxNS43MjV2Ny4yNHptOC42MDEtMzMuMjM4aDI0LjAzNmwuMTE0IDMyLjIwMmM0LjUxOC0uMDk0IDYuODU0LTIuMTY2IDcuMDA2LTYuMjE0bC40NTUtMTQuODc3Yy4xNTEtNS40OTIgMS40NDMtOS4xOTYgMy44NzMtMTEuMTFoMjIuMTU2Yy0yLjE2NCAxLjg1MS0zLjIyNyA1LjY4LTMuMTg5IDExLjQ4NmwuMTE0IDEzLjA4OGMuMDc1IDcuOTEtNS4zMTcgMTIuNDE0LTE2LjE3NiAxMy41MTIgMTAuODU5IDEuMDk5IDE2LjI1MSA1LjY2NiAxNi4xNzYgMTMuN2wtLjExNCAxMi4xNDZjLS4wMzggNS43NzUgMS4wMjUgOS44ODcgMy4xODkgMTIuMzM1aC0yMi4xNTZjLTIuNTgyLTEuOTE0LTMuODczLTUuNjE4LTMuODczLTExLjExVjY0Ljk4MWMwLTEuODg0LS42OTMtMy4zOTgtMi4wNzktNC41NDQtMS4zODYtMS4xNDUtMy4xOC0xLjczNC01LjM4Mi0xLjc2NWwtLjExNCAzMi4yOTZoLTI0LjAzNlYxNC43MDF6TTMyNS42NSA0Ny45MzloLTIzLjk3OFYzNC42OWMwLTMuODUyLS4yNTYtNi4yNTYtLjc2OS03LjIxMS0uNTEzLS45NTUtMS42NDMtMS40MzMtMy4zODktMS40MzMtMS45NzUgMC0zLjIyOC41ODEtMy43NTkgMS43NDItLjUzMiAxLjE2MS0uNzk4IDMuNjcyLS43OTggNy41MzJ2MzUuNDA0YzAgMy43MDQuMjY2IDYuMTIuNzk4IDcuMjUuNTMxIDEuMTMgMS43MjcgMS42OTUgMy41ODggMS42OTUgMS43ODUgMCAyLjk1Mi0uNTY2IDMuNTAzLTEuNjk4LjU1LTEuMTMzLjgyNi0zLjc5Mi44MjYtNy45Nzd2LTkuNThoMjMuOTc4djIuOTdjMCA3Ljg5LS42NzQgMTMuNDg1LTIuMDIxIDE2Ljc4NC0xLjM0OSAzLjMwMS00LjMyOSA2LjE5Mi04Ljk0MiA4LjY3Ni00LjYxNCAyLjQ4My0xMC4zMDEgMy43MjQtMTcuMDU5IDMuNzI0LTcuMDI1IDAtMTIuODE1LTEuMDUyLTE3LjM3Mi0zLjE1NC00LjU1Ni0yLjEwMi03LjU3NS01LjAxNC05LjA1Ni04LjczMy0xLjQ4MS0zLjcyLTIuMjIxLTkuMzE0LTIuMjIxLTE2Ljc4NFY0MS42M2MwLTUuNDkyLjIyOC05LjYxMS42ODMtMTIuMzU4LjQ1Ni0yLjc0NiAxLjgxMy01LjM5IDQuMDczLTcuOTMzIDIuMjU5LTIuNTQyIDUuMzkxLTQuNTQzIDkuMzk3LTYuMDAzIDQuMDA2LTEuNDU5IDguNjEtMi4xODkgMTMuODEyLTIuMTg5IDcuMDYzIDAgMTIuODkxIDEuMTI5IDE3LjQ4NiAzLjM4NiA0LjU5NCAyLjI1NiA3LjYxMyA1LjA3IDkuMDU3IDguNDQgMS40NDIgMy4zNjggMi4xNjMgOC42MSAyLjE2MyAxNS43MjV2Ny4yNHptODcuNzE0IDQzLjAzMWgtMjQuMDM1VjI5Ljk1NGgtNy4wMDZ2NDMuMTdjMCA1LjY4Mi0uODg2IDkuNzYzLTIuNjU5IDEyLjI0Mi0xLjc3MiAyLjQ4LTQuNDYxIDQuMDMzLTguMDY1IDQuNjYtMy42MDUuNjI5LTkuMzUzLjk0Mi0xNy4yNDUuOTQyaC0zLjc1NlY3Ny44MzRjMi45MjMgMCA0LjkzNS0uMjk4IDYuMDM3LS44OTUgMS4xMDEtLjU5NSAxLjY1Mi0yLjYzNiAxLjY1Mi02LjEyVjE0LjdoNTUuMDc3djc2LjI3em00MC4zODItNTYuNjM3YzAtMy41NDctLjIzOC01LjgxNC0uNzEyLTYuODAzLS40NzUtLjk4OS0xLjQ1My0xLjQ4My0yLjkzNC0xLjQ4My0xLjI1MiAwLTIuMjEyLjQtMi44NzYgMS4yLS42NjUuOC0uOTk2IDMuMTYzLS45OTYgNy4wODZ2MzUuNTkxYzAgNC40MjYuMjE4IDcuMTU3LjY1NSA4LjE5Mi40MzYgMS4wMzYgMS40NTIgMS41NTQgMy4wNDcgMS41NTQgMS42MzIgMCAyLjY3Ny0uNTk2IDMuMTMyLTEuNzg5LjQ1Ni0xLjE5Mi42ODQtNC4wMzMuNjg0LTguNTIxVjM0LjMzM3ptMjMuOTc4IDI1LjA0NmMwIDcuNjU4LS4yMTggMTMuMDgtLjY1NCAxNi4yNjYtLjQzOCAzLjE4NS0xLjgwNCA2LjA5Ni00LjEwMSA4LjczMy0yLjI5OCAyLjYzNi01LjQwMiA0LjY2LTkuMzEzIDYuMDczLTMuOTExIDEuNDEyLTguNDY4IDIuMTE4LTEzLjY2OSAyLjExOC00LjkzNyAwLTkuMzctLjY2Ny0xMy4zLTItMy45My0xLjMzNC03LjA5MS0zLjMzNS05LjQ4My02LjAwMy0yLjM5Mi0yLjY2OC0zLjgxNi01LjU3LTQuMjcyLTguNzEtLjQ1NS0zLjEzOC0uNjg0LTguNjMtLjY4NC0xNi40NzdWNDYuMzM4YzAtNy42NTguMjE5LTEzLjA4LjY1Ni0xNi4yNjYuNDM2LTMuMTg1IDEuODAzLTYuMDk2IDQuMTAxLTguNzMzIDIuMjk3LTIuNjM2IDUuNDAxLTQuNjYgOS4zMTItNi4wNzMgMy45MS0xLjQxMiA4LjQ2Ny0yLjExOSAxMy42Ny0yLjExOSA0LjkzNSAwIDkuMzY5LjY2OCAxMy4yOTkgMi4wMDEgMy45MyAxLjMzNSA3LjA5MSAzLjMzNSA5LjQ4MyA2LjAwMyAyLjM5MyAyLjY2OCAzLjgxNiA1LjU3MSA0LjI3MiA4LjcxLjQ1NiAzLjEzOC42ODMgOC42MzEuNjgzIDE2LjQ3N3YxMy4wNHptODIuOTI4LTQ0LjYzMXY3Ni4yMmgtMjAuOTU2bC0uMDMyLTUxLjQ1Ny04LjM0NSA1MS40NThoLTE0Ljg2M2wtOC44LTUwLjI4LS4wMjggNTAuMjhoLTIwLjk2VjE0Ljc0OGgzMS4wMjZjLjkyMSA0LjU4MyAxLjg2OSA5Ljk4NCAyLjg0NiAxNi4yMDRsMy40MDYgMTkuMzg4IDUuNTEyLTM1LjU5MmgzMS4xOTR6bTQxLjQ2OCA1Ni4wNzFWNTkuODAzYzAtMy4yMDItLjM5MS01LjE0OC0xLjE2OC01LjgzOC0uNzgyLS42OS0yLjk5MS0xLjA4My02LjYzOC0xLjE3N3YyNS4wNDZjMy4wMzkgMCA1LjEtLjMyMiA2LjE3OS0uOTY1IDEuMDgzLS42NDMgMS42MjctMi42NiAxLjYyNy02LjA1em0yNC4wMzMgMi4zMDdjMCA1LjY4LS44OTQgOS43NjItMi42NzUgMTIuMjQtMS43ODYgMi40OC00LjQ5MiA0LjAzNC04LjExOCA0LjY2MS0zLjYyNi42MjktOS40MDguOTQyLTE3LjM0MS45NDJoLTI3LjczN1YxNC43MDFoNDYuOTg2djEzLjIzaC0yMi45NTRWNDAuODNoMy43MDVjNy40MDUgMCAxMy4wMDIuMzYxIDE2LjgwMiAxLjA4MyAzLjc5NS43MjIgNi42MzMgMi4zMTUgOC41MTUgNC43NzggMS44NzYgMi40NjQgMi44MTcgNi4zMzIgMi44MTcgMTEuNjA1djE0Ljgzem0zNy4yMjktOS4zNjljLTEuMjE1LTguNjMzLTIuNDMxLTE5LjMwNC0zLjY1Mi0zMi4wMTQtMi40NDIgMTQuNTk2LTMuOTggMjUuMjY4LTQuNjAzIDMyLjAxNGg4LjI1NXptMTIuNzA2LTQ5LjAwOWwxMy43MTUgNzYuMjJoLTI0LjUwOGwtMS4yODQtMTMuN2gtOC41NzhsLTEuNDQzIDEzLjdoLTI0Ljc4OGwxMi4yMy03Ni4yMmgzNC42NTZ6bTQxLjc2NCAxMy4wNDF2MTkuMzk2YTM4Ljk5IDM4Ljk5IDAgMDAxLjc2Ni4wNDdjMi4yMDQgMCAzLjczMS0uNDQ3IDQuNTg3LTEuMzQxLjg1Ni0uODk1IDEuMjc5LTIuNzU0IDEuMjc5LTUuNTh2LTYuMjZjMC0yLjYwNS0uNDkxLTQuMy0xLjQ4LTUuMDg1LS45ODgtLjc4NC0zLjAzOS0xLjE3Ny02LjE1Mi0xLjE3N3ptLTIzLjk3NC0xMy4wNDFoMjQuMTQ5YzYuNTI3IDAgMTEuNTQ4LjQyNCAxNS4wNjMgMS4yNzEgMy41MTQuODQ4IDYuMTUyIDIuMDcyIDcuOTE3IDMuNjcyIDEuNzY1IDEuNjAxIDIuOTYgMy41NCAzLjU4OSA1LjgxNS42MjkgMi4yNzYuOTQxIDUuNzk4Ljk0MSAxMC41Njl2Ni42MzhjMCA0Ljg2NS0uNjA4IDguNDEyLTEuODI0IDEwLjY0LTEuMjE1IDIuMjI5LTMuNDQ2IDMuOTM5LTYuNjkxIDUuMTMxLTMuMjUgMS4xOTQtNy40ODkgMS43OS0xMi43MzIgMS43OWgtNi40Mzh2MzAuNjk1aC0yMy45NzRWMTQuNzQ4em05OC4xOSA2MC4yMTRWMjkuNzY2aC03LjExOXYuNTY1YzAgMTQuNTk1LTEuODk3IDI5LjQ3Mi01LjY5NyA0NC42M2gxMi44MTZ6TTgyMSAxMDQuMTA0aC0xNi41NjlWOTAuOTY5SDc2NS43djEzLjEzNWgtMTYuNTIyVjc1LjA1Nmg0LjljMi41ODQtNi4yNDUgNC42OTgtMTQuNDYgNi4zNTMtMjQuNjQ1IDEuNjQ5LTEwLjE4NSAyLjQ3My0yMS4zMiAyLjQ3My0zMy40MDNWMTQuN2g1My4yMDJ2NjAuMjZIODIxdjI5LjE0M3oiIGZpbGw9IiNFMzFFMjQiLz48cGF0aCBkPSJNNjAuMTE5IDQwLjE0MWwuNDY5LS4wODRjMy44NC0uNjgzIDYuODU1LTEuODMgOS4wODMtMy40MTFoLTUuODg4YTE0Ljg0IDE0Ljg0IDAgMDEtMi45MTMgMS4zMDNsLS43NTEuMjV2LTYuMTVINTUuMnY3LjAyN2wtLjUyMy4wNDJhNDYuMDg0IDQ2LjA4NCAwIDAxLTMuNzQ2LjE0NGMtNC44MjggMC04Ljk1OS0uODM1LTEyLjM3My0yLjUzNC0zLjI4Ny0xLjYyLTUuMTYzLTMuNjMyLTUuMTYzLTYuMTA3IDAtMi40MTggMS45NjctNC4zOCA1LjM2NC01Ljk3IDMuNDUtMS42MTcgNy41MTQtMi40MTYgMTIuMTcyLTIuNDE2IDUuNTgzIDAgMTAuMDE0LjkxIDEzLjIzIDIuNzg3aDUuNjA3Yy0xLjY1LTEuMjUxLTMuOTA3LTIuMjYyLTYuODAyLTMuMDEzLTMuNDI4LS44OTUtNy4zOTYtMS4zNDYtMTEuOTA4LTEuMzQ2LTYuMzYxIDAtMTEuNzkyIDEuMDI4LTE2LjMxNSAzLjA2My00LjU3MSAyLjA1OC02LjU4NiA0LjM4Ny02LjU4NiA2Ljg5NSAwIDIuNjE4IDEuOTc0IDUuMDA2IDYuNDAyIDcuMDg0IDQuMzkgMi4wNiA5LjgzOSAzLjEwMyAxNi4zNzIgMy4xMDMgMS4yNzQgMCAyLjQ5Ny0uMDMyIDMuNjY4LS4wOTRsLjYwMS0uMDMydjI2LjU1Nmg0LjkxOVY0MC4xNHoiIGZpbGw9IiNFMzFFMjQiLz48cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE0LjUyMSA4My44NTNoMzMuOTI2bC0yMy42NC00NC4xOTYtLjQ0NC0uODI4aDUuMjA2bC4xNi4zIDI1Ljk0NyA0OC41MDguNDQzLjgyOEgxMy45NXYtNC42MTJoLjU3em01Ni43NTUtNDguMzM2SDYzLjQ2bC0uMTM4LjA4NWMtLjYxNC4zNzctMS4zMDEuNzEzLTIuMDYzIDEuMDA3di01LjY4OGgtNy4ydjcuMTEyYy0uOTg3LjA2Ny0yLjAzLjEtMy4xMjguMS00LjY5OSAwLTguNjQ2LS44MTMtMTEuODYyLTIuNDE0LTMuMTc2LTEuNTY1LTQuNTMzLTMuMjg4LTQuNTMzLTUuMDk4IDAtMS43MTQgMS4zOS0zLjM5NSA0LjcxMi00Ljk1IDMuMjY2LTEuNTMxIDcuMTU1LTIuMzA3IDExLjY4My0yLjMwNyA1LjU2IDAgOS44LjkyMiAxMi43NzggMi43MDVsLjEzNi4wODJoOC43OWwtLjk1Mi0uOTZjLTEuODg0LTEuOS00LjcxNS0zLjMxLTguNDI1LTQuMjczLTMuNTQ1LS45MjUtNy42MTQtMS4zODQtMTIuMi0xLjM4NC02LjQ4MiAwLTEyLjA4MyAxLjA0Ny0xNi43ODcgMy4xNjUtNC42NTUgMi4wOTUtNy4yNTUgNC43MDMtNy4yNTUgNy45MjIgMCAzLjI5NiAyLjUxMiA1Ljk3MSA3LjA1NCA4LjEwNCA0LjU4NSAyLjE1IDEwLjIxMSAzLjIxMSAxNi44NiAzLjIxMSAxLjA3OCAwIDIuMTIyLS4wMjIgMy4xMy0uMDY2djI2LjQ5Nmg3LjE5OXYtMTQuNzlsOC4xOTMgMTMuMTNjLTIuNzYuNTI2LTUuMzAxIDEuMzEtNy42MjUgMi4zNTYtNC42NTQgMi4wOTQtNy4yNTQgNC43MDQtNy4yNTQgNy45MjMgMCAzLjI5NiAyLjUxMSA1Ljk3IDcuMDU1IDguMTAzIDQuNTg0IDIuMTUgMTAuMjExIDMuMjEyIDE2Ljg2IDMuMjEyIDkuNzI5IDAgMTYuNjk4LTEuNzYzIDIwLjczLTUuNDRsMS4wNzUtLjk4aC05LjI3NWwtLjEzOC4wODVjLTIuNzE4IDEuNjYzLTYuODIyIDIuNTMyLTEyLjM5MyAyLjUzMi00LjY5OCAwLTguNjQ0LS44MTQtMTEuODYyLTIuNDE0LTMuMTc1LTEuNTY1LTQuNTMzLTMuMjktNC41MzMtNS4wOTggMC0xLjcxNSAxLjM5MS0zLjM5NSA0LjcxMi00Ljk1YTIzLjAxOCAyMy4wMTggMCAwMTQuOTUtMS42NDJsMy4wODQgNC45NDEuMTY3LjI2OGg3Ljk4NGwtLjU4LS44NzQtMy4zMTQtNC45OTdjNS4yNjMuMDY1IDkuMzAzLjk4NCAxMi4xNzIgMi43MDJsLjEzNi4wODFoOC43ODhsLS45NTEtLjk1OWMtMS44ODQtMS45LTQuNzEzLTMuMzEyLTguNDI0LTQuMjc0LTMuNTQ1LS45MjUtNy42MTQtMS4zODMtMTIuMjAxLTEuMzgzLS42OSAwLTEuMzcuMDExLTIuMDQuMDM1TDY3LjgyNCA1Mi43NGwxNS40LTExLjczMiAxLjMyNy0xLjAxaC04LjE2M2wtLjE1Ny4xMjMtMTQuOTcgMTEuODI0VjQxLjA4MWM0LjQ4Ny0uODU3IDcuOTc0LTIuMzcgMTAuNDAyLTQuNTg1bDEuMDc1LS45NzloLTEuNDYxem0tMTYuNTk5IDMuNjAxbC41MjMtLjA0M1YzMi4wNWg0LjkxOXY2LjE0OWwuNzUxLS4yNWExNC43OCAxNC43OCAwIDAwMi45MTMtMS4zMDJoNS44ODhjLTIuMjI4IDEuNTgxLTUuMjQ0IDIuNzI4LTkuMDgzIDMuNDExbC0uNDcuMDg0djI3LjA5Nkg1NS4yVjQwLjY4MmwtLjYuMDMyYTY5LjQ3MSA2OS40NzEgMCAwMS0zLjY3LjA5NGMtNi41MzIgMC0xMS45OC0xLjA0NC0xNi4zNzEtMy4xMDMtNC40MjctMi4wNzgtNi40MDItNC40NjYtNi40MDItNy4wODQgMC0yLjUwOCAyLjAxNS00LjgzNyA2LjU4Ni02Ljg5NSA0LjUyMy0yLjAzNSA5Ljk1NC0zLjA2MyAxNi4zMTUtMy4wNjMgNC41MTIgMCA4LjQ4LjQ1MSAxMS45MDggMS4zNDYgMi44OTUuNzUgNS4xNTIgMS43NjIgNi44MDIgMy4wMTNoLTUuNjA2Yy0zLjIxOC0xLjg3Ny03LjY0OC0yLjc4Ny0xMy4yMzEtMi43ODctNC42NTggMC04LjcyMS43OTktMTIuMTcyIDIuNDE2LTMuMzk3IDEuNTktNS4zNjQgMy41NTItNS4zNjQgNS45NyAwIDIuNDc1IDEuODc2IDQuNDg3IDUuMTYzIDYuMTA3IDMuNDE0IDEuNjk5IDcuNTQ1IDIuNTM0IDEyLjM3MyAyLjUzNCAxLjMyMSAwIDIuNTctLjA0OCAzLjc0Ni0uMTQ0em0xNi41OTgtMy4wMzZoLS44NjVjLS4yMzYuMTk0LS40ODIuMzgyLS43NC41NjRoMS42MDd2LS41NjR6TTMuNTAxIDEwMy45NjN2LjU2NWgxMDYuMzUyVjMuNDcySDMuNTAxdjEwMC40OTF6TTExMi43ODQgMTA4aC41N1YwSDB2MTA4aDExMi43ODR6TTEwOC43MTMgNC42djk4LjhINC42NDFWNC42MDFoMTA0LjA3MnptMy41LTMuNDcydjEwNS43NDNIMS4xNDFWMS4xMjhoMTExLjA3MnoiIGZpbGw9IiNFMzFFMjQiLz48cGF0aCBkPSJNNzAuNjEzIDM2LjY0NmMuMjMtLjE4My40NS0uMzcxLjY2Mi0uNTY0aC0uODY1Yy0uMjM2LjE5NC0uNDgyLjM4Mi0uNzQuNTY0aC45NDN6IiBmaWxsPSIjRTMxRTI0Ii8+PHBhdGggZD0iTTcxLjI3NSAzNi4wODJhMTMuNTMgMTMuNTMgMCAwMS0uNjYyLjU2NGguNjYzdi0uNTY0eiIgZmlsbD0iI0UzMUUyNCIvPjwvc3ZnPg==" alt="СКС Ломбард" style="height:34px;width:auto"><span class="muted" style="font-weight:600">Академия</span></div>
+    <div class="nav-links" id="navlinks">
+      <a href="#what">Что это</a>
+      <a href="#onramp">Для новичков</a>
+      <a href="#cap">Возможности</a>
+      <a href="#slides">Презентации</a>
+      <a href="#obsidian">Obsidian</a>
+      <a href="#github">GitHub</a>
+      <a href="#kb">База знаний</a>
+      <a href="#library">Библиотека</a>
+      <a href="#video">Видео</a>
+      <a href="#prof">Профессии</a>
+      <a href="#prompts">Промпты</a>
+      <a href="#how">Как начать</a>
+      <a href="#materials">Материалы</a>
+      <a href="#run" style="display:none">Запуск</a>
+      <a href="#game">Игра</a>
+      <a href="#faq">FAQ</a>
+      <a href="#" id="navStats" style="display:none">📊 Статистика</a>
+    </div>
+    <button class="icon-btn burger" id="burger" aria-label="Меню">☰</button>
+    <div class="theme-wrap">
+      <button class="theme-toggle" id="theme" aria-label="Смена темы" title="Сменить тему"><span class="ico sun">☀️</span><span class="ico moon">🌙</span><span class="theme-label">Смена темы</span></button>
+      <button class="theme-toggle" id="logoutBtn" style="display:none" aria-label="Выйти" title="Выйти из аккаунта"><span class="theme-label">⎋ Выйти</span></button>
+    </div>
+  </div>
+</nav>
+
+<header class="hero">
+  <div class="wrap">
+    <span class="pill">● Корпоративный курс · СКС</span>
+    <h1>Перестань <span class="grad-text">просто переписываться</span><br>с искусственным интеллектом</h1>
+    <p class="lead">Чат — это вчерашний день. Сегодня ИИ работает <b>вместе с тобой</b> (Cowork) и <b>делает сам</b> на твоём компьютере (Claude Code): таблицы, документы, отчёты, рутина. Курс — под твою профессию и три уровня владения.</p>
+    <div class="warnbar">💡 Никогда не пробовал ничего, кроме обычного чата? <b>Отлично — начнём с простого и без страха.</b></div>
+    <div class="evo">
+      <div class="evo-item now"><span class="tag">старт</span><b>💬 Чат + Проекты</b><small>загрузил файлы → ИИ отвечает по ним</small></div>
+      <div class="evo-arrow">→</div>
+      <div class="evo-item now"><span class="tag">сегодня</span><b>🤝 Cowork</b><small>ИИ работает рядом над задачей</small></div>
+      <div class="evo-arrow">→</div>
+      <div class="evo-item future"><span class="tag">уровень профи</span><b>◆ Claude Code</b><small>делает работу на твоём ПК сам</small></div>
+    </div>
+    <div class="cta" style="display:none">
+      <a href="#prof" class="btn primary">Найти сценарии для моей профессии →</a>
+      <a href="#what" class="btn ghost">Разница: чат / Cowork / код</a>
+    </div>
+    <div class="stats" style="display:none">
+      <div class="stat"><b>10</b><span>профессий с готовыми сценариями</span></div>
+      <div class="stat"><b>3</b><span>уровня сложности материала</span></div>
+      <div class="stat"><b>∞</b><span>экономия времени на рутине</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="levelbar" style="display:none">
+  <div class="wrap">
+    <span class="lbl">Мой уровень:</span>
+    <div class="seg" id="seg" role="group" aria-label="Уровень владения">
+      <button data-lv="1" aria-pressed="true">🌱 Новичок</button>
+      <button data-lv="2" aria-pressed="false">⚡ Уверенный</button>
+      <button data-lv="3" aria-pressed="false">🚀 Продвинутый</button>
+    </div>
+    <span class="level-hint" id="lvhint">Показываем базовые материалы. Переключай уровень — глубина меняется по всему курсу.</span>
+  </div>
+</div>
+
+<!-- START -->
+<section id="start">
+  <div class="wrap">
+    <div class="section-head reveal" style="max-width:none">
+      <div class="eyebrow">С чего всё начинается</div>
+      <h2>Идея за 30 секунд</h2>
+      <p class="muted">Claude Code — это искусственный интеллект, который работает прямо на твоём компьютере: читает и создаёт файлы, разбирает таблицы и документы, пишет письма и отчёты, автоматизирует повторяющиеся действия. А <b>Obsidian</b> хранит знания и контекст, чтобы помощник всегда понимал, кто ты и над чем работаешь.</p>
+    </div>
+    <div class="grid cols-4">
+      <div class="card reveal"><div class="ic">📂</div><h3>Работает с файлами</h3><p>Excel, Word, PDF, картинки — открывает, анализирует, создаёт новые.</p></div>
+      <div class="card reveal"><div class="ic">⚡</div><h3>Делает, а не советует</h3><p>Не «вот инструкция», а сразу готовый результат у тебя на диске.</p></div>
+      <div class="card reveal"><div class="ic">🧠</div><h3>Помнит контекст</h3><p>Через Obsidian знает твои проекты и не переспрашивает заново.</p></div>
+      <div class="card reveal"><div class="ic">🔁</div><h3>Автоматизирует</h3><p>Рутину по расписанию: отчёты, бэкапы, напоминания.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT: chat vs code -->
+<section id="what">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Три уровня работы с ИИ</div>
+      <h2>Чат → Cowork → Claude Code</h2>
+      <p class="muted">Чат — отличное начало, особенно с «Проектами». Дальше открываются Cowork и Claude Code. Заходи с любого уровня — каждый следующий просто добавляет возможности.</p>
+    </div>
+    <div class="compare three">
+      <div class="col chat reveal">
+        <h3>💬 Чат + Проекты <span class="lvtag now">старт</span></h3>
+        <p class="muted" style="margin:.2em 0 0">С чего начать без страха</p>
+        <ul>
+          <li>Загружаешь документы в «Проект» — личную базу знаний</li>
+          <li>Задаёшь инструкцию — ИИ отвечает по твоим файлам</li>
+          <li>Помнит контекст в рамках проекта</li>
+          <li>Можно попробовать прямо в браузере, без установки</li>
+        </ul>
+      </div>
+      <div class="col cowork reveal">
+        <h3>🤝 Cowork <span class="lvtag now">сегодня</span></h3>
+        <p class="muted" style="margin:.2em 0 0">Коллега рядом с тобой</p>
+        <ul>
+          <li>Работает вместе над задачей в реальном времени</li>
+          <li>Видит контекст и файлы проекта</li>
+          <li>Ведёт тебя шаг за шагом</li>
+          <li>Ручной работы заметно меньше</li>
+        </ul>
+      </div>
+      <div class="col code reveal">
+        <h3>◆ Claude Code <span class="lvtag pro">профи</span></h3>
+        <p class="muted" style="margin:.2em 0 0">Сотрудник за твоим ПК</p>
+        <ul>
+          <li>Читает и создаёт файлы на диске</li>
+          <li>Запускает команды, ходит в браузер</li>
+          <li>Помнит контекст через Obsidian</li>
+          <li>Автоматизирует рутину по расписанию</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip reveal" data-min="2"><b>Уверенный уровень:</b> Claude Code умеет работать с целой папкой документов за раз — например, свести 20 актов в одну таблицу или сравнить десяток договоров.</div>
+    <div class="tip adv reveal" data-min="3"><b>Продвинутый уровень:</b> можно настроить хуки, скрипты по расписанию и собственные «навыки» (skills) — и Claude будет выполнять рутину сам, без твоего участия.</div>
+  </div>
+</section>
+
+<!-- ONRAMP: chat + projects -->
+<section id="onramp">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Без страха · для начинающих</div>
+      <h2>Начни с «Проектов» в чате</h2>
+      <p class="muted">Не обязательно сразу ставить программы. В чате Claude есть «Проекты» — это твоя личная база знаний прямо в браузере. Идеальный первый шаг, чтобы попробовать и убедиться: это просто и полезно.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card reveal"><div class="ic">📁</div><h3>Загрузи документы</h3><p>Перетащи в Проект свои файлы: регламенты, шаблоны, инструкции, примеры. ИИ будет отвечать строго по ним, а не «из головы».</p></div>
+      <div class="card reveal"><div class="ic">📝</div><h3>Дай инструкцию</h3><p>Один раз опиши: кто ты, чем занимаешься, как отвечать (тон, формат). Это «характер» помощника — он помнит это в каждом диалоге проекта.</p></div>
+      <div class="card reveal"><div class="ic">💬</div><h3>Просто спрашивай</h3><p>«Найди в договоре сроки», «составь письмо по шаблону», «сделай выжимку из этих файлов». ИИ работает по твоим документам.</p></div>
+    </div>
+    <div class="steps" style="margin-top:22px">
+      <div class="step reveal"><div><h3>Создай проект</h3><p>В приложении или на сайте Claude: «Проекты» → «Новый проект». Назови по теме: «Договоры», «Отчёты отдела», «Мои регламенты».</p></div></div>
+      <div class="step reveal"><div><h3>Наполни базой знаний</h3><p>Загрузи документы и впиши инструкцию проекта. Чем лучше наполнишь — тем точнее и полезнее ответы.</p></div></div>
+      <div class="step reveal"><div><h3>Работай в диалоге</h3><p>Задавай вопросы и задачи обычными словами. Контекст и файлы уже под рукой — повторять не нужно.</p></div></div>
+    </div>
+    <div class="tip reveal" style="margin-top:18px"><b>Когда захочется большего:</b> следующий шаг — Cowork и Claude Code: они работают с файлами прямо на твоём компьютере и автоматизируют рутину. Но начать с Проектов — абсолютно нормально.</div>
+    <div class="dd dont reveal" style="margin-top:14px"><h3>⚠️ Про персональные данные</h3><ul>
+      <li>Не загружай паспорта, телефоны и адреса клиентов</li>
+      <li>Не вставляй пароли, токены и реквизиты карт</li>
+      <li>Конфиденциальное — обезличивай перед загрузкой</li>
+      <li>Сомневаешься — лучше не грузить</li>
+    </ul></div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="cap">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Что он умеет</div>
+      <h2>Возможности и навыки</h2>
+      <p class="muted">Базовое нужно всем, продвинутое открывается с опытом. Значки показывают уровень и новизну.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card reveal"><div class="ic">📄</div><h3>Документы <span class="badge base">база</span></h3><p>Создаёт и редактирует Word, Excel, PDF, PowerPoint. Пример: свести 20 актов в одну таблицу.</p></div>
+      <div class="card reveal"><div class="ic">🔎</div><h3>Веб-поиск <span class="badge base">база</span></h3><p>Берёт свежие данные из интернета. Пример: найти и сравнить цены и контакты конкурентов.</p></div>
+      <div class="card reveal"><div class="ic">📊</div><h3>Извлечение данных <span class="badge base">база</span></h3><p>Вытаскивает нужное из десятков PDF и таблиц. Пример: собрать суммы и даты из 50 счетов.</p></div>
+      <div class="card reveal"><div class="ic">⌨️</div><h3>Навыки и команды <span class="badge lv2">уровень 2</span></h3><p>Готовые процедуры по команде: <code>/deep-research</code>, <code>/docx</code>, <code>/pdf</code>, <code>/schedule</code>. Можно создавать свои.</p></div>
+      <div class="card reveal"><div class="ic">🔌</div><h3>Коннекторы (MCP) <span class="badge lv2">уровень 2</span><span class="badge new">ново</span></h3><p>Подключение сервисов: Gmail, Google Calendar, Drive, Slack. Пример: найти письма клиента и подготовить ответ.</p></div>
+      <div class="card reveal"><div class="ic">🧭</div><h3>Режим плана <span class="badge lv2">уровень 2</span></h3><p>Сначала показывает план, потом делает — для крупных и рискованных задач. Меньше ошибок.</p></div>
+      <div class="card reveal"><div class="ic">🎙️</div><h3>Голосовой ввод <span class="badge lv2">уровень 2</span></h3><p>Диктуй задачи голосом (в приложении и вебе). Пример: наговорить план дел на ходу.</p></div>
+      <div class="card reveal"><div class="ic">🧠</div><h3>Память <span class="badge lv3">уровень 3</span></h3><p>Помнит факты и предпочтения между сессиями (CLAUDE.md + авто-память). Не нужно повторять одно и то же.</p></div>
+      <div class="card reveal"><div class="ic">⏰</div><h3>Автоматизация по расписанию <span class="badge lv3">уровень 3</span><span class="badge new">ново</span></h3><p>Отчёты, бэкапы, дайджесты — сами по расписанию. Пример: сводка в Telegram каждое утро.</p></div>
+      <div class="card reveal"><div class="ic">🪝</div><h3>Хуки <span class="badge lv3">уровень 3</span></h3><p>Автодействия в нужный момент: например, загрузка рабочего контекста при каждом старте.</p></div>
+      <div class="card reveal"><div class="ic">👥</div><h3>Субагенты <span class="badge lv3">уровень 3</span></h3><p>Параллельные помощники для больших задач: пока один работает, другой ищет и анализирует.</p></div>
+      <div class="card reveal"><div class="ic">🔬</div><h3>Deep research <span class="badge lv3">уровень 3</span><span class="badge new">ново</span></h3><p>Глубокое исследование из многих источников с проверкой фактов и ссылками.</p></div>
+    </div>
+    <div class="tip reveal" data-min="2">💡 Коннекторы (Gmail, Calendar, Drive, Slack) и часть автоматизаций требуют разовой настройки и доступа или подписки — это нормально, помощник подскажет шаги.</div>
+  </div>
+</section>
+
+<!-- SLIDES -->
+<section id="slides">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Презентация</div>
+      <h2>Курс на слайдах</h2>
+      <p class="muted">Краткая версия для показа на экране или планёрке. Листай стрелками ← → или кнопками; можно открыть на весь экран.</p>
+    </div>
+    <div class="deck reveal" id="deck">
+      <div class="slides-wrap" id="deckSlides">
+        <div class="slide active">
+          <span class="kicker">Академия СКС · Claude Code</span>
+          <h3>ИИ — это не страшно.<br>Это твой новый помощник</h3>
+          <p>Не нужно быть программистом. Ты говоришь обычными словами — «сделай», «сравни», «собери» — а ИИ выполняет. Этот курс покажет, как начать без страха.</p>
+        </div>
+        <div class="slide">
+          <span class="kicker">Главный страх — мимо</span>
+          <h3>Ты ничего не сломаешь</h3>
+          <ul>
+            <li>Работаешь словами, как в переписке с коллегой — никакого кода</li>
+            <li>Перед важными действиями (отправка, удаление) ИИ спрашивает подтверждение</li>
+            <li>Файлы под контролем: есть история версий, всегда можно откатить назад</li>
+            <li>Начать можно с одной простой задачи на копии файла</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <span class="kicker">Три уровня — заходи с любого</span>
+          <h3>Чат+Проекты → Cowork → Claude Code</h3>
+          <ul>
+            <li><b>💬 Чат с Проектами</b> — самый простой старт: загрузил документы, дал инструкцию — ИИ отвечает по ним.</li>
+            <li><b>🤝 Cowork</b> — ИИ работает рядом над задачей в реальном времени.</li>
+            <li><b>◆ Claude Code</b> — делает работу прямо на твоём компьютере и автоматизирует рутину.</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <span class="kicker">Возможность №1</span>
+          <h3>Работает с твоими файлами напрямую</h3>
+          <p>Claude Code подключается к компьютеру: сам открывает папки, читает, правит и создаёт документы — без копирования текста туда-сюда.</p>
+          <ul>
+            <li>Word, Excel, PDF, PowerPoint, картинки</li>
+            <li>Открывает, анализирует, создаёт новые файлы</li>
+            <li>Готовый результат сразу лежит у тебя на диске</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <span class="kicker">Возможность №2</span>
+          <h3>Сверка данных и работа с Excel</h3>
+          <p>Дай две таблицы — ИИ сверит их за секунды. Встраивается прямо в работу с твоими файлами Excel.</p>
+          <ul>
+            <li>Сверка выписок, актов, реестров — поиск дублей и расхождений</li>
+            <li>Контроль сумм, формул и контрольных итогов</li>
+            <li>Новые колонки, расчёты, сводные таблицы — по просьбе</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <span class="kicker">Возможность №3</span>
+          <h3>Большой объём данных — за один заход</h3>
+          <p>То, на что у человека уходит целый день, ИИ делает за минуты и без усталости.</p>
+          <ul>
+            <li>Свести 20 актов в одну таблицу</li>
+            <li>Вытащить суммы и даты из 50 счетов или PDF</li>
+            <li>Сравнить десяток договоров и подсветить риски</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <span class="kicker">Возможность №4</span>
+          <h3>Автоматизация рутины по расписанию</h3>
+          <p>Повторяющиеся задачи ИИ делает сам, по таймеру — без твоего участия.</p>
+          <ul>
+            <li>Утренние сводки, дайджесты, напоминания</li>
+            <li>Бэкапы и регулярные отчёты</li>
+            <li>Мониторинг изменений — например, новых нормативных документов</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <span class="kicker">Где запускать</span>
+          <h3>Терминал, приложение или VS Code</h3>
+          <p>Claude Code живёт в терминале — окне, через которое он управляет компьютером. Открыть его можно по-разному:</p>
+          <ul>
+            <li>🖥️ Десктоп-приложение — проще всего для старта</li>
+            <li>⌨️ PowerShell / терминал — максимум гибкости и автоматизации</li>
+            <li>🧩 VS Code — удобно работать с файлами и видеть изменения</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <span class="kicker">С чего начать новичку</span>
+          <h3>Чат с «Проектами» — это уже ОК</h3>
+          <p>Необязательно сразу ставить программы. В чате есть «Проекты» — личная база знаний прямо в браузере.</p>
+          <ul>
+            <li>Загрузил документы и регламенты в Проект</li>
+            <li>Написал инструкцию — кто ты и как отвечать</li>
+            <li>ИИ отвечает строго по твоим документам и помнит контекст</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <span class="kicker">Безопасность</span>
+          <h3>Что НЕ стоит загружать</h3>
+          <p>ИИ — мощный помощник, но к данным относись с головой.</p>
+          <ul>
+            <li>Персональные данные клиентов: паспорта, телефоны, адреса</li>
+            <li>Пароли, токены, реквизиты карт</li>
+            <li>Конфиденциальное — обезличивай перед загрузкой</li>
+            <li>Сомневаешься — лучше не грузить</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <span class="kicker">Старт</span>
+          <h3>Начни за 5 шагов</h3>
+          <ul>
+            <li>Открой чат и создай Проект (или поставь Claude Code)</li>
+            <li>Представься: расскажи ИИ, кто ты и чем занимаешься</li>
+            <li>Загрузи пару рабочих документов</li>
+            <li>Дай первую задачу простыми словами</li>
+            <li>Проверяй результат и уточняй — дальше будет проще</li>
+          </ul>
+        </div>
+      </div>
+      <div class="deck-ctrl">
+        <button id="prevSlide">← Назад</button>
+        <div class="dots" id="deckDots"></div>
+        <div style="display:flex;gap:8px">
+          <button id="fsSlide">⛶ Во весь экран</button>
+          <button id="nextSlide">Вперёд →</button>
+        </div>
+      </div>
+    </div>
+    <div class="tip reveal" style="margin-top:16px">💡 Добавить или изменить слайды просто: это блоки <code>&lt;div class="slide"&gt;</code> в коде страницы. Claude Code соберёт новую презентацию по твоему тексту за минуту.</div>
+  </div>
+</section>
+
+<!-- OBSIDIAN -->
+<section id="obsidian">
+  <div class="wrap">
+    <div class="obs reveal">
+      <div class="eyebrow">Фундамент всей системы</div>
+      <h2>Почему без Obsidian никуда</h2>
+      <p class="muted" style="max-width:720px;font-size:1.05rem">Obsidian — это твоя база знаний из обычных текстовых заметок на диске. Для Claude Code это «второй мозг»: единый источник правды о тебе, твоих проектах и задачах. Без него помощник каждый раз начинает с чистого листа.</p>
+      <div class="grid cols-3" style="margin-top:26px">
+        <div class="card reveal"><div class="ic">📌</div><h3>Единый контекст</h3><p>Кто ты, какие проекты, договорённости — Claude подгружает это при каждом старте.</p></div>
+        <div class="card reveal"><div class="ic">🔄</div><h3>Синхронизация</h3><p>Одни и те же заметки на ПК и телефоне + резервная копия в облаке.</p></div>
+        <div class="card reveal"><div class="ic">📥</div><h3>Захват задач</h3><p>Пишешь идею в Telegram → она падает в заметки → Claude её видит и берёт в работу.</p></div>
+      </div>
+      <div class="flow">
+        <div class="node">💬 Telegram / мысль</div><span class="arr">→</span>
+        <div class="node">🗒 Obsidian (заметки)</div><span class="arr">→</span>
+        <div class="node">◆ Claude Code (делает)</div><span class="arr">→</span>
+        <div class="node">📄 Готовый результат</div>
+      </div>
+      <div class="tip reveal" data-min="2" style="margin-top:22px"><b>Уверенный уровень:</b> храни в Obsidian шаблоны (договоров, писем, отчётов) и регламенты — Claude будет брать их как основу, и результаты станут единообразными по всей компании.</div>
+      <div class="tip adv reveal" data-min="3"><b>Продвинутый уровень:</b> заметки синхронизируются в Git — это даёт историю версий и общий контекст для всей команды на разных машинах.</div>
+    </div>
+  </div>
+</section>
+
+<!-- GITHUB + .md + СВЯЗКА -->
+<section id="github">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Общая память команды</div>
+      <h2>GitHub: зачем он нужен</h2>
+      <p class="muted">GitHub — это облачное хранилище ваших рабочих документов. Единый источник правды: у всех всегда одинаковая свежая копия с историей изменений. Для корректной работы с Claude Code он нужен каждому.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card reveal"><div class="ic">☁️</div><h3>Единое хранилище</h3><p>Все документы в одном месте в облаке. Изменил у себя — у коллег появилось само. Никаких «финал_v2_итог.docx» по почте.</p></div>
+      <div class="card reveal"><div class="ic">🕘</div><h3>История версий</h3><p>Каждое изменение сохраняется со временем и автором. Всегда видно, что и когда менялось, и можно откатиться назад.</p></div>
+      <div class="card reveal"><div class="ic">🤝</div><h3>Совместная работа</h3><p>Команда работает над одной базой знаний. Доступ выдаётся точечно — кому читать, кому редактировать.</p></div>
+    </div>
+    <div class="tip reveal" style="margin-top:18px"><b>Почему это важно для Claude Code:</b> помощник работает с твоими документами и контекстом. GitHub хранит их централизованно, синхронизирует между компьютерами и даёт безопасную историю — поэтому GitHub стоит завести каждому, кто хочет работать с Claude Code правильно.</div>
+
+    <div class="section-head reveal" style="margin-top:48px">
+      <div class="eyebrow">Формат документов</div>
+      <h2>Почему .md, а не Word или PDF</h2>
+      <p class="muted">Документы базы знаний хранятся в формате <code>.md</code> (Markdown — простой размеченный текст). Нейросети с ним работать заметно проще, и вот почему.</p>
+    </div>
+    <div class="compare">
+      <div class="col code reveal">
+        <h3>✅ Markdown (.md)</h3>
+        <ul>
+          <li>Чистый текст — ИИ читает его целиком, без потерь и «мусора»</li>
+          <li>Лёгкий: килобайты, мгновенная обработка и синхронизация</li>
+          <li>Git видит изменения построчно — удобно сравнивать версии</li>
+          <li>Работают связи [[между документами]] и теги</li>
+          <li>Откроется в любой программе и через 10 лет</li>
+        </ul>
+      </div>
+      <div class="col chat reveal">
+        <h3>⚠️ Word (.docx) и PDF</h3>
+        <ul>
+          <li>Это упакованный архив со стилями — ИИ тратит силы на «распаковку»</li>
+          <li>PDF часто без структуры: текст «картинкой», таблицы рассыпаются</li>
+          <li>Git не видит изменения внутри — нормальной истории нет</li>
+          <li>Тяжелее и медленнее, связи и теги не работают</li>
+          <li>Возможны ошибки распознавания и потеря форматирования</li>
+        </ul>
+      </div>
+    </div>
+    <div class="tip reveal" style="margin-top:14px">💡 Вывод: рабочие знания держим в <code>.md</code>. Пришёл документ в Word или PDF — Claude Code легко перенесёт содержимое в <code>.md</code>. А красивый <code>.docx</code> для отправки наружу всегда можно собрать отдельно.</div>
+
+    <div class="obs reveal" style="margin-top:48px">
+      <div class="eyebrow">Полная картина</div>
+      <h2>Связка Git + Claude + Obsidian</h2>
+      <p class="muted" style="max-width:760px;font-size:1.05rem">Три инструмента вместе дают общую базу знаний, которая обновляется у всех сама: пишешь в Obsidian → документы уезжают на GitHub → у коллег появляются через минуты → Claude Code работает с этим контекстом.</p>
+      <div class="flow">
+        <div class="node">🗒 Obsidian (пишешь .md)</div><span class="arr">→</span>
+        <div class="node">☁️ GitHub (хранит и синхронит)</div><span class="arr">→</span>
+        <div class="node">👥 У коллег те же файлы</div><span class="arr">→</span>
+        <div class="node">◆ Claude Code (работает с базой)</div>
+      </div>
+    </div>
+
+    <div class="section-head reveal" style="margin-top:42px">
+      <div class="eyebrow">Подключение</div>
+      <h2>Установка связки — по шагам</h2>
+      <p class="muted">Разовая настройка. Самый простой путь — отдать её Claude Code (промпт ниже). Или вручную по шагам.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div><h3>Поставь Git, Obsidian и заведи GitHub</h3><p>Git — <code>git-scm.com</code>, Obsidian — <code>obsidian.md</code>, аккаунт — <code>github.com</code>. Claude Code подскажет, если чего-то нет.</p></div></div>
+      <div class="step reveal"><div><h3>Создай отдельный приватный репозиторий</h3><p>На GitHub: New repository → имя латиницей → Private. Это твоё облачное хранилище документов.</p></div></div>
+      <div class="step reveal"><div><h3>Подключи безопасно</h3><p>НЕ вписывай токен в адрес репозитория. Вход — через Git Credential Manager (откроется окно браузера, войти один раз).</p></div></div>
+      <div class="step reveal"><div><h3>Свяжи папку Obsidian с репозиторием</h3><p>Папка сейфа = локальная копия репозитория. Проще сделать через Claude Code, чтобы не ошибиться в командах.</p></div></div>
+      <div class="step reveal"><div><h3>Установи плагин Obsidian Git</h3><p>Settings → Community plugins → отключить Restricted mode → Browse → Obsidian Git → Install → Enable.</p></div></div>
+      <div class="step reveal"><div><h3>Включи авто-синхронизацию каждые N минут</h3><p>В плагине: Auto commit-and-sync = 10, Auto pull = 10, Pull on startup = вкл. Документы будут ходить «туда-обратно» сами.</p></div></div>
+    </div>
+    <div class="prompt reveal" style="margin-top:18px">
+      <div class="prompt-top"><span>🚀 Промпт для Claude Code — настроить связку</span><button class="copy" data-p="Помоги настроить связку Git + Obsidian + Claude Code с авто-синхронизацией. По шагам, простыми словами:
+1. Проверь, установлены ли Git и Obsidian; если нет — подскажи установку.
+2. Помоги создать отдельный приватный репозиторий на GitHub.
+3. Привяжи папку моего сейфа Obsidian к репозиторию. ВАЖНО: не вписывай токен в адрес, используй Git Credential Manager (вход через браузер).
+4. Объясни установку плагина Obsidian Git.
+5. Настрой двустороннюю синхронизацию: commit-and-sync = 10 мин, pull = 10 мин, pull on startup = вкл.
+6. Объясни, как через Settings - Collaborators выдать доступ коллегам.">⧉ Копировать</button></div>
+      <pre>Помоги настроить связку Git + Obsidian + Claude Code с авто-синхронизацией. По шагам, простыми словами:
+1. Проверь, установлены ли Git и Obsidian; если нет — подскажи установку.
+2. Помоги создать отдельный приватный репозиторий на GitHub.
+3. Привяжи папку моего сейфа Obsidian к репозиторию. ВАЖНО: не вписывай токен в адрес, используй Git Credential Manager (вход через браузер).
+4. Объясни установку плагина Obsidian Git.
+5. Настрой двустороннюю синхронизацию: commit-and-sync = 10 мин, pull = 10 мин, pull on startup = вкл.
+6. Объясни, как через Settings - Collaborators выдать доступ коллегам.</pre>
+    </div>
+    <div class="tip reveal" style="margin-top:14px">📄 Полная пошаговая инструкция — в разделе <a href="#library" style="color:var(--brand);font-weight:700">Библиотека</a> → «Связка GitHub и Obsidian».</div>
+  </div>
+</section>
+
+<!-- KB -->
+<section id="kb">
+  <div class="wrap">
+    <div class="obs reveal">
+      <div class="eyebrow">Самое важное</div>
+      <h2>Как растить базу знаний</h2>
+      <p class="muted" style="max-width:740px;font-size:1.05rem">База знаний — это топливо помощника. Чем лучше она наполнена и ухожена, тем умнее и быстрее работает ИИ. Вот принципы, по которым её стоит пополнять.</p>
+      <div class="grid cols-3" style="margin-top:26px">
+        <div class="card reveal"><div class="ic">🎯</div><h3>Единый источник правды</h3><p>Важное живёт в одном месте — в вальте, а не в голове, чате или десяти файлах. Изменилось — правишь один раз.</p></div>
+        <div class="card reveal"><div class="ic">⚛️</div><h3>Атомарность</h3><p>Одна заметка — одна мысль или факт. Так проще найти, обновить и переиспользовать.</p></div>
+        <div class="card reveal"><div class="ic">🔗</div><h3>Связывай</h3><p>Ссылки [[между заметками]] превращают список файлов в сеть знаний, где всё находится по контексту.</p></div>
+        <div class="card reveal"><div class="ic">📥</div><h3>Захват без трения</h3><p>Мысль или голос в Telegram → падает в Inbox. Главное — не потерять; разберёшь и разложишь позже.</p></div>
+        <div class="card reveal"><div class="ic">🧠</div><h3>Учи память</h3><p>Фиксируй правила, предпочтения и факты в памяти Claude (CLAUDE.md), чтобы не повторять одно и то же каждый раз.</p></div>
+        <div class="card reveal"><div class="ic">♻️</div><h3>Регулярная чистка</h3><p>Раз в месяц — короткая ревизия: объедини дубли, обнови факты, удали устаревшее. Без ухода база превращается в свалку.</p></div>
+      </div>
+      <div class="dodont">
+        <div class="dd do reveal"><h3>✅ Что сохранять</h3><ul>
+          <li>Решения и договорённости</li>
+          <li>Регламенты и процессы</li>
+          <li>Шаблоны писем, договоров, отчётов</li>
+          <li>Контекст проектов и клиентов</li>
+          <li>Твои предпочтения по работе</li>
+          <li>Протоколы и расшифровки встреч</li>
+        </ul></div>
+        <div class="dd dont reveal"><h3>❌ Что не сохранять</h3><ul>
+          <li>Пароли, ключи, токены</li>
+          <li>Персональные данные (паспорта и т.п.)</li>
+          <li>То, что и так лежит в рабочих системах</li>
+          <li>Сиюминутный мусор</li>
+          <li>Дубли уже записанного</li>
+          <li>Лишние конфиденциальные цифры</li>
+        </ul></div>
+      </div>
+      <div class="flow" style="margin-top:24px">
+        <div class="node">📥 Захват</div><span class="arr">→</span>
+        <div class="node">🗂 Разбор</div><span class="arr">→</span>
+        <div class="node">🧱 Структура</div><span class="arr">→</span>
+        <div class="node">♻️ Переиспользование</div><span class="arr">→</span>
+        <div class="node">🧹 Чистка</div>
+      </div>
+      <div class="tip reveal" data-min="2" style="margin-top:22px"><b>Уверенный уровень:</b> заведи в вальте папки <code>_knowledge/</code> (о тебе, проекты, словарь), <code>Notes/</code>, <code>Inbox/</code>, <code>Templates/</code>. Единая структура — единый порядок у всей команды.</div>
+      <div class="tip adv reveal" data-min="3"><b>Продвинутый уровень:</b> поручай Claude вести память самому и периодически запускай консолидацию (объединение дублей, удаление устаревшего). История в Git хранит версии и даёт общий контекст команде.</div>
+    </div>
+  </div>
+</section>
+
+<!-- LIBRARY -->
+<section id="library">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Документы и решения</div>
+      <h2>Библиотека базы знаний</h2>
+      <p class="muted">Статьи, инструкции и готовые решения команды. Нажми на карточку, чтобы прочитать. Кнопка «＋» — добавить свою статью (файл <code>.md</code> или <code>.pdf</code>).</p>
+    </div>
+    <div class="lib-head reveal">
+      <span class="muted" id="libCount" style="display:none">Загрузка списка…</span>
+      <button class="lib-add" id="libAdd">＋ Добавить статью</button>
+    </div>
+    <div class="lib-drop reveal" id="libDrop" style="display:none">
+      <input type="file" id="libFile" accept=".md,.txt,.pdf,.docx" multiple hidden>
+      <p>📎 Перетащите файл сюда или нажмите, чтобы выбрать. Поддерживаются .md, .txt, .pdf, .docx</p>
+    </div>
+    <div id="libMsg" class="muted" style="margin:0 0 16px;min-height:1.2em"></div>
+    <div class="lib-grid reveal" id="libGrid"></div>
+    <div class="tip reveal" style="margin-top:18px;display:none">💡 Загруженные файлы хранятся в общем облаке и видны всем коллегам. Форматы <code>.md</code>, <code>.txt</code>, <code>.pdf</code> и <code>.docx</code> открываются для чтения прямо на сайте — скачивать не нужно (но можно).</div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section id="video">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Смотри и повторяй</div>
+      <h2>Видео-гайды</h2>
+      <p class="muted">Видео по работе с Claude. Нажми ▶ — плеер откроется прямо здесь. Чтобы посмотреть другое видео, выбери его в списке ниже.</p>
+    </div>
+    <div class="video-player reveal" id="ytPlayer" data-id="1zKAyKaJ-Q09jzygBd4onCaqiIwefRDUc" data-type="drive">
+      <div class="video-poster"><img src="logo.svg" alt="СКС"></div>
+      <button class="video-play" type="button" aria-label="Смотреть видео"><span>▶</span></button>
+    </div>
+    <div class="video-list reveal" id="ytList">
+      <button class="vid-item is-active" type="button" data-type="drive" data-id="1zKAyKaJ-Q09jzygBd4onCaqiIwefRDUc">
+        <span class="vid-thumb poster"><img src="logo.svg" alt="СКС"></span>
+        <span class="vid-title">Встреча по ИИ №4</span>
+        <span class="vid-meta">Внутренняя запись · СКС</span>
+      </button>
+      <button class="vid-item" type="button" data-type="drive" data-id="1Q-vYD4tyaJFbFMHuQoqVU-WdLBk-I-iv">
+        <span class="vid-thumb poster"><img src="logo.svg" alt="СКС"></span>
+        <span class="vid-title">Встреча по ИИ №3</span>
+        <span class="vid-meta">Внутренняя запись · СКС</span>
+      </button>
+      <button class="vid-item" type="button" data-type="drive" data-id="1KVdyinIm-Dct-DiJNJUQ6pUbK4BimG9H">
+        <span class="vid-thumb poster"><img src="logo.svg" alt="СКС"></span>
+        <span class="vid-title">Встреча по ИИ №2</span>
+        <span class="vid-meta">Внутренняя запись · СКС</span>
+      </button>
+      <button class="vid-item" type="button" data-type="drive" data-id="1mt-T7HCdGriKUlojquymm9rYaJRjXL6y">
+        <span class="vid-thumb poster"><img src="logo.svg" alt="СКС"></span>
+        <span class="vid-title">Встреча по ИИ №1</span>
+        <span class="vid-meta">Внутренняя запись · СКС</span>
+      </button>
+      <button class="vid-item" type="button" data-id="VZNzZAO7v8w">
+        <span class="vid-thumb"><img src="https://i.ytimg.com/vi/VZNzZAO7v8w/mqdefault.jpg" alt="" loading="lazy"></span>
+        <span class="vid-title">Claude Code от НУЛЯ до ПРОФИ за 40 минут</span>
+        <span class="vid-meta">Никита Велс</span>
+      </button>
+      <button class="vid-item" type="button" data-id="6NK4Pona2fY">
+        <span class="vid-thumb"><img src="https://i.ytimg.com/vi/6NK4Pona2fY/mqdefault.jpg" alt="" loading="lazy"></span>
+        <span class="vid-title">Claude Code: полный гайд по AI-кодингу (хаки, техники и секреты)</span>
+        <span class="vid-meta">Олег Стефанов</span>
+      </button>
+      <button class="vid-item" type="button" data-id="htFmIVif_qg">
+        <span class="vid-thumb"><img src="https://i.ytimg.com/vi/htFmIVif_qg/mqdefault.jpg" alt="" loading="lazy"></span>
+        <span class="vid-title">Как использовать Claude AI в Excel для работы?</span>
+        <span class="vid-meta">Academica Courses</span>
+      </button>
+      <button class="vid-item" type="button" data-id="EHrqzvKmszo">
+        <span class="vid-thumb"><img src="https://i.ytimg.com/vi/EHrqzvKmszo/mqdefault.jpg" alt="" loading="lazy"></span>
+        <span class="vid-title">Полный гайд по AI-агентам в Claude Code: MCP, Skills и своя архитектура</span>
+        <span class="vid-meta">Даниил Шишко · Pixel Perfect</span>
+      </button>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var p=document.getElementById('ytPlayer'), list=document.getElementById('ytList');
+  if(!p) return;
+  function showPoster(id,type){
+    p.setAttribute('data-id',id);
+    p.setAttribute('data-type',type||'');
+    p.classList.remove('playing');
+    p.innerHTML='<div class="video-poster"><img src="logo.svg" alt="СКС"></div><button class="video-play" type="button" aria-label="Смотреть видео"><span>▶</span></button>';
+  }
+  function play(id,type){
+    var src = type==='drive'
+      ? 'https://drive.google.com/file/d/'+id+'/preview'
+      : 'https://www.youtube-nocookie.com/embed/'+id+'?autoplay=1&rel=0';
+    p.setAttribute('data-id',id);
+    p.setAttribute('data-type',type||'');
+    p.innerHTML='<iframe src="'+src+'" title="Видео-гайд" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+    p.classList.add('playing');
+  }
+  p.addEventListener('click',function(){
+    if(p.classList.contains('playing')) return;
+    play(p.getAttribute('data-id'), p.getAttribute('data-type'));
+  });
+  if(list) list.querySelectorAll('.vid-item').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      list.querySelectorAll('.vid-item').forEach(function(b){ b.classList.remove('is-active'); });
+      btn.classList.add('is-active');
+      var id=btn.getAttribute('data-id'), type=btn.getAttribute('data-type');
+      if(type==='drive') showPoster(id,type); else play(id,type);
+      p.scrollIntoView({behavior:'smooth',block:'center'});
+    });
+  });
+})();
+</script>
+
+<!-- modal для чтения статьи -->
+<div class="modal" id="modal">
+  <div class="modal-box">
+    <div class="modal-top"><h3 id="modalTitle"></h3><button class="modal-x" id="modalX" aria-label="Закрыть">✕</button></div>
+    <div class="md-body" id="modalBody"></div>
+  </div>
+</div>
+
+<!-- GAME MODAL -->
+<div class="game-modal" id="gameModal">
+  <div class="game-modal-box">
+    <div class="game-modal-top">
+      <h3 id="gameModalTitle">🎮 СКС: Побег от Регулятора</h3>
+      <button class="modal-x" id="gameModalX" aria-label="Закрыть">✕</button>
+    </div>
+    <div class="game-modal-frame"><iframe id="gameFrame" title="Игра СКС" allow="autoplay; fullscreen"></iframe></div>
+  </div>
+</div>
+
+<!-- PROMPTS -->
+<section id="prompts">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Как просить</div>
+      <h2>Формулируй задачи правильно</h2>
+      <p class="muted">Результат на 80% зависит от постановки задачи. Шесть проверенных приёмов.</p>
+    </div>
+    <div class="card reveal" style="margin-bottom:24px;border-color:rgba(224,163,42,.35)">
+      <h3 style="margin-bottom:6px">🚀 Самый первый промпт — познакомь ИИ с собой</h3>
+      <p class="muted" style="margin:0 0 12px">Прежде чем давать задачи, представься. Так помощник будет учитывать твою роль и контекст в каждом ответе. Скопируй и заполни в квадратных скобках:</p>
+      <div class="prompt" style="margin:0">
+        <div class="prompt-top"><span>Знакомство</span><button class="copy" data-p="Я начинаю работать с тобой. Запомни обо мне:
+— Имя: [ФИО]. Должность: [например, юрист в компании СКС].
+— Чем занимаюсь: [2–3 предложения о моих задачах].
+— С какими документами работаю: [договоры, отчёты, реестры].
+— Как мне удобнее получать ответы: [кратко и по делу / с таблицами / деловой тон].
+— Что важно учитывать: [регламенты, сроки, особенности компании].
+Дальше я буду давать тебе задачи. Учитывай это при каждом ответе и переспрашивай, если данных не хватает.">⧉ Копировать</button></div>
+        <pre>Я начинаю работать с тобой. Запомни обо мне:
+— Имя: [ФИО]. Должность: [например, юрист в компании СКС].
+— Чем занимаюсь: [2–3 предложения о моих задачах].
+— С какими документами работаю: [договоры, отчёты, реестры].
+— Как мне удобнее получать ответы: [кратко и по делу / с таблицами / деловой тон].
+— Что важно учитывать: [регламенты, сроки, особенности компании].
+Дальше я буду давать тебе задачи. Учитывай это при каждом ответе и переспрашивай, если данных не хватает.</pre>
+      </div>
+      <div class="tip" style="margin-top:14px">💡 В чате это можно вписать в «инструкцию проекта», в Claude Code — сохранить в память (<code>CLAUDE.md</code>), и тогда повторять не придётся.</div>
+    </div>
+    <div class="grid cols-3">
+      <div class="card reveal"><div class="ic">🧩</div><h3>Контекст + цель + формат</h3><p>Кто ты, что нужно и в каком виде на выходе: таблица, письмо, одна страница.</p></div>
+      <div class="card reveal"><div class="ic">🎯</div><h3>Будь конкретным</h3><p>Не «переделай отчёт», а что именно, в каком файле и каким должно стать.</p></div>
+      <div class="card reveal"><div class="ic">🖼️</div><h3>Дай образец</h3><p>Пример, скрин или файл «сделай так же» — лучший способ объяснить ожидание.</p></div>
+      <div class="card reveal"><div class="ic">🚧</div><h3>Поставь рамки</h3><p>«Не удаляй», «только из этой папки», «уложись в одну страницу».</p></div>
+      <div class="card reveal"><div class="ic">🪜</div><h3>Дроби на шаги</h3><p>Большое — по частям, проверяя каждый шаг. Меньше ошибок, проще править.</p></div>
+      <div class="card reveal"><div class="ic">✅</div><h3>Критерий готовности</h3><p>Скажи, когда считать сделано: «итоги сходятся, нет пустых строк».</p></div>
+    </div>
+    <div class="dodont">
+      <div class="dd dont reveal"><h3>❌ Слабый промпт</h3><div class="prompt" style="margin:12px 0 0"><pre>Переделай отчёт, чтобы было нормально.</pre></div><p class="muted" style="font-size:.88rem;margin:10px 0 0">Непонятно какой файл, что менять и каким должен быть результат.</p></div>
+      <div class="dd do reveal"><h3>✅ Сильный промпт</h3><div class="prompt" style="margin:12px 0 0"><pre>В файле report.xlsx добавь колонку «Динамика %» рядом с суммами, посчитай к прошлому месяцу, итоги внизу выдели жирным. Формат не меняй.</pre></div><p class="muted" style="font-size:.88rem;margin:10px 0 0">Файл, конкретное действие, формат и ограничение — сделает с первого раза.</p></div>
+    </div>
+    <div class="tip adv reveal" data-min="3" style="margin-top:18px"><b>Продвинутый:</b> для крупных задач сначала попроси план (режим плана), дай 1–2 примера желаемого результата и дорабатывай итеративно по комментариям.</div>
+  </div>
+</section>
+
+<!-- PROFESSIONS -->
+<section id="prof">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Рабочие моменты</div>
+      <h2>Сценарии под твою профессию</h2>
+      <p class="muted">Выбери роль — получишь типовые задачи и готовые промпты (нажми «Копировать» и вставь своему Claude Code). Глубина зависит от выбранного уровня.</p>
+    </div>
+    <div class="prof-tabs" id="profTabs"></div>
+    <div id="profPanels"></div>
+  </div>
+</section>
+
+<!-- HOW -->
+<section id="how">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Первый запуск</div>
+      <h2>Как начать за 5 шагов</h2>
+    </div>
+    <div class="steps">
+      <div class="step reveal"><div><h3>Установи Claude Code</h3><p>Десктоп-приложение для Windows/Mac (самый простой старт) либо расширение для VS Code. Войди под рабочим аккаунтом.</p></div></div>
+      <div class="step reveal"><div><h3>Поставь Obsidian и заведи базу</h3><p>Создай вальт заметок, включи синхронизацию. Это «память» твоего помощника.</p></div></div>
+      <div class="step reveal"><div><h3>Открой Claude Code в рабочей папке</h3><p>Например, папка с твоими таблицами и документами. Claude будет работать именно с ними.</p></div></div>
+      <div class="step reveal"><div><h3>Дай первую задачу простым языком</h3><p>«Сведи эти три Excel-файла в один и посчитай итоги». Без технического жаргона — обычными словами.</p></div></div>
+      <div class="step reveal"><div><h3>Проверяй и уточняй</h3><p>Смотри результат, говори что поправить. Claude дорабатывает по твоим комментариям.</p></div></div>
+    </div>
+    <div class="tip adv reveal" data-min="3" style="margin-top:18px"><b>Продвинутый:</b> добавь SessionStart-хук (автозагрузка контекста), задачи в Планировщике и собственные skills под повторяющиеся процессы отдела.</div>
+  </div>
+</section>
+
+<!-- MATERIALS -->
+<section id="materials">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Полезное со стороны</div>
+      <h2>Материалы и статьи</h2>
+      <p class="muted">Подборка внешних руководств по Claude — открываются в новой вкладке.</p>
+    </div>
+    <div class="mat-grid reveal" id="matGrid">
+      <a class="mat-card" href="https://habr.com/ru/articles/1033416/" target="_blank" rel="noopener">
+        <span class="mat-src">📄 Хабр · claudedev</span>
+        <h3>Claude Code — полный гайд и обучение для новичков с нуля</h3>
+        <p>Обстоятельное руководство по экосистеме Claude: режимы Chat, Cowork, Code и Projects, настройка среды, расширения и практические примеры автоматизации задач.</p>
+        <span class="mat-go">Читать на Хабре →</span>
+      </a>
+      <a class="mat-card" href="https://pikabu.ru/story/claude_code__polnyiy_gayd_i_obuchenie_dlya_novichkov_s_nulya_chto_takoe_klaud_kod_kak_im_polzovatsya_claude_code_obuchenie_prostyim_yazyikom_13935868" target="_blank" rel="noopener">
+        <span class="mat-src">📄 Пикабу · user11785632</span>
+        <h3>Claude Code — полный гайд для новичков с нуля</h3>
+        <p>Что такое Claude Code и как им пользоваться — простым языком: от базового чата до продвинутых режимов Cowork, проектов и интеграций с внешними сервисами.</p>
+        <span class="mat-go">Читать на Пикабу →</span>
+      </a>
+      <a class="mat-card" href="https://habr.com/ru/search/?q=claude+code+новички&target_type=posts&order=relevance" target="_blank" rel="noopener">
+        <span class="mat-src">🔎 Хабр · лента</span>
+        <h3>Claude Code для новичков — подборка статей на Хабре</h3>
+        <p>Живая лента статей и новостей по запросу «Claude Code для новичков». Обновляется автоматически — всегда свежие материалы сообщества.</p>
+        <span class="mat-go">Открыть ленту на Хабре →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- RUN: где запускать -->
+<section id="run" style="display:none">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Где запускать</div>
+      <h2>Терминал, приложение или VS Code</h2>
+      <p class="muted">Claude Code «живёт» в терминале — текстовом окне, через которое он управляет компьютером. Само окно можно открыть по-разному. Выбери, что удобнее, — возможности одинаковые.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card reveal"><div class="ic">🖥️</div><h3>Десктоп-приложение <span class="badge base">проще всего</span></h3><p>Готовое приложение Claude для Windows/Mac. Терминал уже внутри, настраивать нечего.</p>
+        <p style="margin:12px 0 0;font-size:.9rem"><b style="color:var(--ok)">＋</b> самый простой старт для новичка<br><b style="color:var(--ok)">＋</b> всё в одном окне<br><b style="color:var(--accent)">－</b> меньше тонких настроек</p></div>
+      <div class="card reveal"><div class="ic">⌨️</div><h3>Терминал · PowerShell <span class="badge lv2">гибко</span></h3><p>Запуск из PowerShell или командной строки Windows. Максимум контроля и автоматизации.</p>
+        <p style="margin:12px 0 0;font-size:.9rem"><b style="color:var(--ok)">＋</b> скрипты, автоматизация, расписание<br><b style="color:var(--ok)">＋</b> ничего лишнего<br><b style="color:var(--accent)">－</b> «чёрное окно» поначалу непривычно</p></div>
+      <div class="card reveal"><div class="ic">🧩</div><h3>VS Code · расширение <span class="badge lv2">для файлов</span></h3><p>Бесплатный редактор Microsoft с расширением Claude Code. Файлы и изменения видно рядом.</p>
+        <p style="margin:12px 0 0;font-size:.9rem"><b style="color:var(--ok)">＋</b> видно правки и структуру проекта<br><b style="color:var(--ok)">＋</b> удобно для работы с папками<br><b style="color:var(--accent)">－</b> нужно поставить VS Code</p></div>
+    </div>
+    <div class="tip reveal" style="margin-top:18px">💡 Не знаешь, с чего начать — бери <b>десктоп-приложение</b>. Захочешь автоматизацию по расписанию — пригодится <b>PowerShell</b>. Работаешь с файлами и кодом — оценишь <b>VS Code</b>. Все три — это один и тот же Claude Code, просто разные «двери».</div>
+    <div class="tip adv reveal" data-min="3" style="margin-top:6px"><b>Продвинутый уровень:</b> из терминала задачи ставятся по расписанию (Планировщик Windows), запускаются фоновые процессы и связываются собственные PowerShell-скрипты.</div>
+  </div>
+</section>
+
+<!-- SAFETY -->
+<section id="safety">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Безопасно и по правилам</div>
+      <h2>Что важно помнить в офисе</h2>
+    </div>
+    <div class="grid cols-3">
+      <div class="card reveal"><div class="ic">🔐</div><h3>Персональные данные</h3><p>Не загружай паспорта, телефоны и адреса клиентов, пароли и реквизиты карт. Конфиденциальное — обезличивай. Сомневаешься — лучше не грузить.</p></div>
+      <div class="card reveal"><div class="ic">✅</div><h3>Проверяй важное</h3><p>Цифры в отчётах, пункты договоров, суммы — перепроверяй перед отправкой. ИИ ускоряет, ответственность на тебе.</p></div>
+      <div class="card reveal"><div class="ic">📤</div><h3>Подтверждай отправку</h3><p>Письма, публикации, удаление файлов — Claude спросит подтверждение. Не подтверждай вслепую.</p></div>
+      <div class="card reveal"><div class="ic">🧩</div><h3>Дроби задачи</h3><p>Большое — на шаги. Так проще проверять и меньше ошибок.</p></div>
+      <div class="card reveal"><div class="ic">💾</div><h3>Бэкапы</h3><p>Работай в синхронизируемой папке — история версий спасает при ошибке.</p></div>
+      <div class="card reveal"><div class="ic">🗣</div><h3>Говори как человеку</h3><p>Контекст, цель, формат результата. Чем понятнее задача — тем лучше итог.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Закрепим</div>
+      <h2>Проверь свои знания</h2>
+      <p class="muted">Тест для самопроверки — несколько страниц от азов к сложному. Правильность видно сразу. В конце увидишь свой балл и советы, что подтянуть. Результаты никуда не отправляются — это только для тебя.</p>
+    </div>
+    <div class="quiz reveal">
+      <div class="quiz-dots" id="quizDots"></div>
+      <div class="quiz-pagebar"><span id="quizPageTitle"></span><span class="muted" id="quizPageNum"></span></div>
+      <div id="quizBox"></div>
+      <div class="quiz-nav">
+        <button class="btn ghost" id="quizPrev">← Назад</button>
+        <span class="muted" id="quizProgress"></span>
+        <span style="display:flex;gap:10px">
+          <button class="btn primary" id="quizNext">Далее →</button>
+          <button class="btn primary" id="quizSubmit" style="display:none">Показать результат</button>
+        </span>
+      </div>
+      <div class="quiz-result-box" id="quizResultBox" style="display:none"></div>
+    </div>
+  </div>
+</section>
+
+<!-- GAME -->
+<section id="game">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Сделано в Claude Code</div>
+      <h2>Игры</h2>
+      <p class="muted">Мини-игры про будни СКС, собранные в Claude Code как пример того, что можно сделать быстро. Запускаются прямо здесь, на странице.</p>
+    </div>
+    <div class="games-list" style="display:grid;gap:16px;max-width:720px;margin:0 auto">
+      <div class="game-card reveal js-game-open" id="gameOpen" role="button" tabindex="0" aria-label="Запустить игру «СКС: Побег от Регулятора»" data-src="game/index.html" data-title="🎮 СКС: Побег от Регулятора">
+        <div class="game-card-art"><span class="game-emoji">🎮</span></div>
+        <div class="game-card-body">
+          <h3>СКС: Побег от Регулятора</h3>
+          <p class="muted">2D-платформер в стиле Mario про будни СКС: собирай выручку, уворачивайся от Регулятора, Приставов и Антибизнеса, лови баффы. Клавиатура или экранные кнопки.</p>
+          <span class="btn primary">▶ Играть прямо тут</span>
+        </div>
+      </div>
+      <div class="game-card reveal js-game-open" role="button" tabindex="0" aria-label="Запустить игру «Ломбард: Детектив СБ»" data-src="game-sb/index.html" data-title="🕵️ Ломбард: Детектив СБ">
+        <div class="game-card-art" style="background:linear-gradient(180deg,#3a3326,#15130f)"><span class="game-emoji">🕵️</span></div>
+        <div class="game-card-body">
+          <h3>Ломбард: Детектив СБ</h3>
+          <p class="muted">Ведёшь расследование глазами службы безопасности ломбарда — изучаешь улики и принимаешь решения. Тоже собрана в Claude Code.</p>
+          <span class="btn primary">▶ Играть прямо тут</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Частые вопросы</div>
+      <h2>FAQ</h2>
+    </div>
+    <div id="faqList"></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="logo" style="margin-bottom:14px"><div class="mark">◆</div> Академия СКС <span class="muted" style="font-weight:600">· Claude Code</span></div>
+    <div class="contacts">
+      <h3>📞 Остались вопросы?</h3>
+      <p>Обращайтесь в <b>отдел аналитики</b> — Хазиев Тимур Ильнурович.</p>
+      <p>Рабочие телефоны: <a href="tel:+79273011752">8 927 301-17-52</a> · <a href="tel:+79174850555">8 917 485-05-55</a></p>
+    </div>
+    <div style="margin-top:16px">Внутренний обучающий материал. Промпты — это примеры: адаптируй под свои файлы и задачи.<br>
+    Уровни и профессии можно расширять — система собрана модульно.</div>
+  </div>
+</footer>
+
+<div class="prog" id="prog" title="Прогресс прохождения курса" style="display:none">
+  <div class="ring" id="ring"><i id="ringv">0%</i></div>
+  <small id="progtxt">Листай курс — прогресс копится</small>
+</div>
+
+<script>
+/* ---------- data ---------- */
+const PROFS=[
+ {id:'fin',ic:'💰',name:'Бухгалтерия и финансы',tasks:['Сверка таблиц и поиск дублей/расхождений','Расшифровка банковских выписок в сводки','Проверка формул и контрольных сумм в Excel','Шаблоны актов, счетов, платёжек'],
+  prompts:[{t:'Сверка дебиторки',p:'Проверь приложенный Excel с дебиторской задолженностью: найди дубли контрагентов, строки с отрицательным балансом и записи без ИНН. Сделай сводную таблицу проблемных строк и краткий вывод.'}],
+  adv:{t:'Авто-сводка из выписок',p:'Каждый месяц бери все CSV-выписки из папки /bank, своди приход/расход по контрагентам в одну таблицу и сохраняй отчёт с датой в названии. Опиши, как поставить это на расписание.'}},
+ {id:'law',ic:'⚖️',name:'Юрист',tasks:['Разбор договоров и поиск рисков','Сравнение двух редакций документа','Реестры дел и сроков','Шаблоны претензий и соглашений'],
+  prompts:[{t:'Анализ договора',p:'Прочитай договор (PDF) и выпиши: стороны, предмет, сроки, ответственность и штрафы, условия одностороннего расторжения. Отдельно отметь пункты, невыгодные для нашей стороны, и почему.'}],
+  adv:{t:'Сравнение редакций',p:'Сравни две версии договора (старую и новую) и покажи таблицей все смысловые изменения: что добавлено, удалено, переформулировано. Помечай потенциально рискованные правки.'}},
+ {id:'hr',ic:'👥',name:'HR и кадры',tasks:['Тексты вакансий и скрининг резюме','Чеклисты онбординга','Шаблоны приказов и кадровых документов','Обработка опросов сотрудников'],
+  prompts:[{t:'Отбор резюме',p:'В папке /cv лежат резюме. Отбери кандидатов под вакансию: опыт от 3 лет в продажах, знание 1С. Сделай таблицу: кандидат, соответствие, плюсы, минусы, рекомендация (звать/нет).'}],
+  adv:{t:'Конструктор онбординга',p:'Собери чеклист онбординга нового сотрудника отдела продаж на первые 2 недели: доступы, обучение, наставник, контрольные точки. Сохрани как заметку-шаблон в Obsidian.'}},
+ {id:'sales',ic:'📈',name:'Продажи',tasks:['Коммерческие предложения','Письма и follow-up клиентам','Скрипты звонков','Анализ воронки и отчёты'],
+  prompts:[{t:'Коммерческое предложение',p:'Составь коммерческое предложение на 1 страницу по этим характеристикам товара/услуги [вставь]. Тон деловой, выдели выгоды для клиента, добавь блок с ценой и сроками.'}],
+  adv:{t:'Анализ воронки',p:'Возьми выгрузку сделок из CRM (Excel) и посчитай конверсию по этапам, средний чек и где «застревают» сделки. Дай 3 вывода и рекомендации.'}},
+ {id:'mkt',ic:'🎯',name:'Маркетинг',tasks:['Контент-планы и тексты','Анализ конкурентов','Рассылки и посты','Отчёты по метрикам'],
+  prompts:[{t:'Контент-план',p:'Сделай контент-план на месяц для Telegram-канала компании [тема]. 12 постов: тема, формат (новость/кейс/польза), короткий тезис и призыв к действию. Оформи таблицей.'}],
+  adv:{t:'Разбор конкурентов',p:'Я соберу тексты/скриншоты с сайтов 3 конкурентов в папку. Сравни их позиционирование, офферы и тон, и предложи, чем нам отстроиться. Сделай итоговую таблицу.'}},
+ {id:'asst',ic:'🗂',name:'Секретарь / Ассистент',tasks:['Протоколы встреч из расшифровок','Планирование и письма','Организация документов','Напоминания и задачи'],
+  prompts:[{t:'Протокол совещания',p:'Из этой расшифровки совещания сделай протокол: повестка, принятые решения, ответственные и сроки (таблицей), открытые вопросы. Кратко и по делу.'}],
+  adv:{t:'Голос → задачи',p:'Я наговариваю задачи голосом в Telegram. Настрой так, чтобы расшифровка падала в Obsidian, а ты раскладывал задачи по проектам и ставил напоминания.'}},
+ {id:'boss',ic:'🧭',name:'Руководитель',tasks:['Сводки по отделам на одну страницу','Подготовка к встречам','Делегирование и контроль задач','Аналитика и дашборды'],
+  prompts:[{t:'Сводка для руководителя',p:'Собери из этих отчётов отделов (файлы) одностраничную сводку: ключевые цифры, отклонения от плана, риски и что требует моего решения. Без воды.'}],
+  adv:{t:'Регулярный дайджест',p:'Раз в неделю собирай отчёты отделов из папки в единый дайджест с трендами «лучше/хуже прошлой недели» и списком вопросов на планёрку. Поставь на расписание.'}},
+ {id:'log',ic:'🚚',name:'Логистика / Склад',tasks:['Учёт остатков и расхождений','Сверка заказов и отгрузок','Отчёты по отгрузкам','Маршруты и графики'],
+  prompts:[{t:'Сверка поставок',p:'Сверь файл заказов и файл отгрузок: найди недопоставки, пересортицу и расхождения по количеству. Выведи таблицу проблемных позиций с разницей.'}],
+  adv:{t:'Контроль остатков',p:'Ежедневно проверяй файл остатков: помечай позиции ниже минимума и формируй заявку на пополнение. Опиши, как автоматизировать.'}},
+ {id:'proc',ic:'🛒',name:'Закупки / Снабжение',tasks:['Сравнение поставщиков','Тендерные таблицы','Анализ цен','Заявки и заказы'],
+  prompts:[{t:'Сравнение поставщиков',p:'Сравни 5 коммерческих предложений поставщиков (PDF) по цене, срокам поставки, условиям оплаты и гарантии. Сделай таблицу и дай обоснованную рекомендацию.'}],
+  adv:{t:'Мониторинг цен',p:'Веду таблицу закупочных цен по позициям. Каждый раз при новом КП обновляй её и подсвечивай, где цена выросла больше чем на 10%.'}},
+ {id:'it',ic:'🛠',name:'IT / Поддержка',tasks:['Скрипты автоматизации рутины','Разбор логов и ошибок','Инструкции для сотрудников','Обработка файлов пачкой'],
+  prompts:[{t:'Скрипт обслуживания',p:'Напиши PowerShell-скрипт, который раз в день архивирует папку [путь], кладёт архив с датой в [путь_бэкапов] и удаляет архивы старше 30 дней. Поясни, как поставить в Планировщик.'}],
+  adv:{t:'Разбор логов',p:'Проанализируй этот лог-файл: сгруппируй ошибки по типу, покажи частоту и время пиков, предположи причины топ-3 проблем.'}}
+];
+
+const QUIZ_PAGES=[
+ {title:'Страница 1 · Азы',qs:[
+   {q:'Что такое Claude Code простыми словами?',o:['Программа для рисования','ИИ-помощник, который работает с файлами на ПК и выполняет задачи','Антивирус','Почтовый клиент'],c:1,fb:'Это ИИ, который читает и создаёт файлы и делает работу, а не только советует.'},
+   {q:'Как ты ставишь задачу ИИ?',o:['Пишу программный код','Обычными словами, как коллеге','Через сложные настройки','Никак, он сам догадывается'],c:1,fb:'Достаточно объяснить словами — «сделай», «сравни», «собери».'},
+   {q:'Нужно ли уметь программировать, чтобы пользоваться?',o:['Да, обязательно','Нет, не нужно','Нужен диплом IT','Нужно знать английский в совершенстве'],c:1,fb:'Программировать не нужно — код, если требуется, ИИ напишет сам.'},
+   {q:'С какого уровня проще всего начать новичку?',o:['Сразу с автоматизации','С чата и «Проектов»','С написания скриптов','С настройки серверов'],c:1,fb:'Чат + Проекты — самый простой старт, без установки программ.'},
+   {q:'Что произойдёт перед важным действием (удаление, отправка)?',o:['ИИ сделает молча','ИИ спросит подтверждение','Файлы удалятся навсегда','Ничего'],c:1,fb:'Перед рискованными действиями ИИ запрашивает подтверждение.'}
+ ]},
+ {title:'Страница 2 · Основы работы',qs:[
+   {q:'Что такое «Проекты» в чате?',o:['Папка с играми','Личная база знаний: документы + инструкция','Список задач','Калькулятор'],c:1,fb:'В Проект загружаешь документы и инструкцию — ИИ отвечает по ним.'},
+   {q:'Что НЕ стоит загружать в ИИ?',o:['Рабочий черновик','Персональные данные, пароли, реквизиты','Шаблон письма','Таблицу с задачами'],c:1,fb:'Личные данные клиентов, пароли и реквизиты загружать нельзя.'},
+   {q:'Чем Claude Code отличается от обычного чата?',o:['Только цветом','Работает с файлами на компьютере и выполняет действия','Он медленнее','Ничем'],c:1,fb:'Код-версия имеет доступ к файлам, терминалу и браузеру.'},
+   {q:'Какой промпт сработает лучше?',o:['«Переделай отчёт»','«В report.xlsx добавь колонку Динамика % и выдели итоги жирным»','«Сделай красиво»','«Помоги»'],c:1,fb:'Конкретика: файл, действие, формат — результат с первого раза.'},
+   {q:'Кто отвечает за проверку важных цифр и решений?',o:['Только ИИ','Сотрудник — ИИ лишь ускоряет','Никто','Компьютер'],c:1,fb:'ИИ ускоряет, но ответственность и проверка — на человеке.'}
+ ]},
+ {title:'Страница 3 · Obsidian, GitHub, формат .md',qs:[
+   {q:'Зачем нужен Obsidian?',o:['Для видеозвонков','Как база знаний и память — единый контекст для ИИ','Для музыки','Это игра'],c:1,fb:'Obsidian хранит контекст о тебе и проектах — «второй мозг» помощника.'},
+   {q:'Зачем нужен GitHub?',o:['Это соцсеть','Облачное хранилище документов: единый источник, синхронизация и история версий','Для редактирования фото','Для печати'],c:1,fb:'GitHub — общее хранилище: у всех свежая копия, есть история и откат.'},
+   {q:'Почему документы лучше хранить в формате .md?',o:['Он красивее','Это простой текст: ИИ легче читает, Git видит изменения, работают связи','Он весит больше','Так требует Windows'],c:1,fb:'Markdown — чистый текст без «мусора», идеален для ИИ и синхронизации.'},
+   {q:'Что даёт связка Git + Claude + Obsidian?',o:['Ничего особенного','Общую, всегда свежую базу знаний с историей и синхронизацией у всех','Только бэкап','Ускоряет интернет'],c:1,fb:'Документы у всех актуальны, есть версии и общий контекст для команды.'},
+   {q:'Что такое связи [[ ]] между заметками?',o:['Ошибка форматирования','Ссылки, превращающие файлы в сеть знаний для навигации по контексту','Пароль','Команда удаления'],c:1,fb:'Связи соединяют документы в граф знаний — всё находится по контексту.'}
+ ]},
+ {title:'Страница 4 · Продвинутое',qs:[
+   {q:'Что такое автоматизация по расписанию?',o:['Будильник','ИИ сам выполняет рутину по таймеру: отчёты, дайджесты, мониторинг','Скринсейвер','Очистка корзины'],c:1,fb:'Повторяющиеся задачи выполняются сами, без твоего участия.'},
+   {q:'Зачем нужен «режим плана» в Claude Code?',o:['Для красоты','Сначала показать план, потом делать — меньше ошибок на крупных задачах','Чтобы замедлить работу','Это реклама'],c:1,fb:'План перед действием снижает риск ошибок в больших задачах.'},
+   {q:'Что такое коннекторы (MCP)?',o:['Вирусы','Подключение внешних сервисов: Gmail, Calendar, Drive, Slack','Тип файлов','Кнопки на клавиатуре'],c:1,fb:'Коннекторы дают ИИ доступ к рабочим сервисам с твоего разрешения.'},
+   {q:'Как ИИ «помнит» тебя между сессиями?',o:['Никак','Через память (CLAUDE.md) и базу знаний','Записывает на диктофон','Через камеру'],c:1,fb:'Память и база знаний хранят факты и предпочтения — не нужно повторять.'},
+   {q:'Что такое субагенты?',o:['Сотрудники охраны','Параллельные ИИ-помощники для больших задач','Антивирусные модули','Платные подписки'],c:1,fb:'Несколько помощников работают параллельно над частями задачи.'},
+   {q:'Где можно запускать Claude Code?',o:['Только в браузере','В десктоп-приложении, терминале (PowerShell) или VS Code','Только на телефоне','Нигде, он работает сам'],c:1,fb:'Десктоп-приложение — проще всего; PowerShell — гибче; VS Code — удобно для файлов.'}
+ ]}
+];
+const QUIZ=QUIZ_PAGES.flatMap(p=>p.qs);
+
+const FAQ=[
+ {q:'Я не программист и боюсь что-то сломать. Это точно для меня?',a:'Да. Ты общаешься обычными словами, как с коллегой — программировать не нужно. Перед важными действиями (отправка, удаление) ИИ спрашивает подтверждение, а файлы держатся в папке с историей версий — всегда есть откат. Начни с копии одного файла и простой задачи.'},
+ {q:'С чего начать прямо сегодня?',a:'Открой чат Claude, создай «Проект», загрузи пару рабочих документов и впиши короткую инструкцию о себе. Дальше задавай вопросы по этим файлам. Это 10 минут и не требует установки программ.'},
+ {q:'Что такое «Проекты» в чате?',a:'Это личная база знаний прямо в окне чата: загружаешь документы и инструкцию — и ИИ отвечает строго по ним, помня контекст. Отличный первый уровень перед Cowork и Claude Code.'},
+ {q:'Заменит ли ИИ меня на работе?',a:'Нет. ИИ снимает рутину (сверки, выжимки, черновики), а решения и ответственность остаются за тобой. Выигрывает не тот, кого «заменят», а тот, кто научится пользоваться инструментом и станет быстрее.'},
+ {q:'Можно ли загружать рабочие документы и персональные данные?',a:'Рабочие документы — да, аккуратно. Персональные данные клиентов (паспорта, телефоны, адреса), пароли и реквизиты — НЕ загружай. Конфиденциальное обезличивай. Сомневаешься — лучше не грузить.'},
+ {q:'Это сложно настроить?',a:'Самый простой уровень (Чат + Проекты) не требует настройки вообще. Claude Code и автоматизация требуют разовой установки — но Claude сам проведёт тебя по шагам.'},
+ {q:'Это бесплатно?',a:'Базовые возможности чата доступны бесплатно. Продвинутые функции, Claude Code и часть коннекторов — по подписке. Для первого знакомства подписка не обязательна.'},
+ {q:'Нужно ли уметь программировать?',a:'Нет. Ты ставишь задачи обычными словами — «сделай», «сравни», «собери отчёт». Claude сам пишет нужный код, если он требуется.'},
+ {q:'Это безопасно для рабочих документов?',a:'Claude Code работает локально на твоём ПК с твоими файлами. Соблюдай правила: не вставляй пароли/гостайну, проверяй важное, подтверждай отправку и удаление осознанно.'},
+ {q:'Чем это лучше, чем просто копировать текст в чат?',a:'Чат не видит твои файлы и забывает контекст. Claude Code открывает папки, обрабатывает документы пачкой и сразу отдаёт готовый файл — без ручного копирования.'},
+ {q:'С чего начать, если я совсем новичок?',a:'Поставь приложение, открой его в папке с парой своих файлов и дай простую задачу: «сведи эти таблицы в одну». Дальше — по разделу «Как начать».'},
+ {q:'Обязательно ли ставить Obsidian сразу?',a:'Для первых задач — нет. Но как только захочешь, чтобы помощник помнил контекст и принимал задачи из Telegram, Obsidian станет фундаментом. Рекомендуем не откладывать.'},
+ {q:'Что НЕ нужно хранить в базе знаний?',a:'Пароли, ключи и персональные данные; то, что и так лежит в рабочих системах; сиюминутный мусор и дубли. Храни решения, регламенты, шаблоны и контекст.'},
+ {q:'Как часто обновлять базу знаний?',a:'Понемногу постоянно — заметил неточность, сразу поправил. И раз в месяц короткая ревизия: объединить дубли, обновить факты, удалить устаревшее.'}
+];
+
+/* ---------- render professions ---------- */
+const tabs=document.getElementById('profTabs'),panels=document.getElementById('profPanels');
+PROFS.forEach((p,i)=>{
+  const t=document.createElement('button');t.className='prof-tab'+(i===0?' active':'');t.innerHTML=`<span>${p.ic}</span>${p.name}`;t.dataset.i=i;tabs.appendChild(t);
+  const pr=p.prompts.map(x=>promptHTML(x)).join('');
+  const adv=`<div data-min="3"><div class="prompt-top" style="border-radius:12px 12px 0 0;margin-top:6px;background:rgba(255,122,89,.1)"><span style="color:var(--accent)">🚀 Продвинутый сценарий — ${esc(p.adv.t)}</span></div>${promptHTML(p.adv,true)}</div>`;
+  const panel=document.createElement('div');panel.className='prof-panel'+(i===0?' active':'');panel.dataset.i=i;
+  panel.innerHTML=`<div class="prof-body">
+    <div class="card"><h3>${p.ic} Типовые задачи</h3><ul class="task-list">${p.tasks.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+      <div class="tip" data-min="2">💡 На уверенном уровне давай Claude целую папку файлов — он обработает все за один заход.</div></div>
+    <div><div class="muted" style="font-size:.82rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px">Готовые промпты</div>${pr}${adv}</div>
+  </div>`;
+  panels.appendChild(panel);
+});
+function promptHTML(x,adv){return `<div class="prompt"><div class="prompt-top"><span>${esc(x.t)}</span><button class="copy" data-p="${esc(x.p)}">⧉ Копировать</button></div><pre>${esc(x.p)}</pre></div>`;}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+tabs.addEventListener('click',e=>{const b=e.target.closest('.prof-tab');if(!b)return;
+  document.querySelectorAll('.prof-tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.prof-panel').forEach(x=>x.classList.remove('active'));
+  b.classList.add('active');document.querySelector(`.prof-panel[data-i="${b.dataset.i}"]`).classList.add('active');
+  applyLevel();});
+
+/* copy */
+document.addEventListener('click',e=>{const c=e.target.closest('.copy');if(!c)return;
+  navigator.clipboard.writeText(c.dataset.p).then(()=>{const o=c.textContent;c.textContent='✓ Скопировано';c.classList.add('done');setTimeout(()=>{c.textContent=o;c.classList.remove('done');},1600);});});
+
+/* ---------- quiz ---------- */
+const quizEl=document.getElementById('quizBox');
+const quizAnswers={};
+let quizPage=0;
+function pageStart(p){let s=0;for(let i=0;i<p;i++)s+=QUIZ_PAGES[i].qs.length;return s;}
+function quizProgressText(){return `Отвечено ${Object.keys(quizAnswers).length} из ${QUIZ.length}`;}
+function paintAnswered(d,qi,q){
+  const opts=d.querySelectorAll('.opt');opts.forEach(o=>o.disabled=true);
+  opts[q.c].classList.add('correct');
+  const chosen=quizAnswers[qi];if(chosen!==q.c)opts[chosen].classList.add('wrong');
+  const fb=d.querySelector('.qfb');fb.style.display='block';fb.style.color=chosen===q.c?'var(--ok)':'var(--accent)';
+  fb.textContent=(chosen===q.c?'✓ Верно. ':'✗ Не совсем. ')+q.fb;
+}
+function renderQuizDots(){
+  const wrap=document.getElementById('quizDots');wrap.innerHTML='';
+  QUIZ_PAGES.forEach((p,k)=>{const i=document.createElement('i');
+    const start=pageStart(k);const allDone=p.qs.every((_,li)=>quizAnswers[start+li]!==undefined);
+    if(k===quizPage)i.classList.add('on');else if(allDone)i.classList.add('done');
+    wrap.appendChild(i);});
+}
+function renderQuizPage(doScroll){
+  const page=QUIZ_PAGES[quizPage],start=pageStart(quizPage);
+  document.getElementById('quizPageTitle').textContent=page.title;
+  document.getElementById('quizPageNum').textContent=`${quizPage+1} / ${QUIZ_PAGES.length}`;
+  quizEl.innerHTML='';
+  page.qs.forEach((q,li)=>{const qi=start+li;const d=document.createElement('div');d.className='q';
+    d.innerHTML=`<p class="qt">${qi+1}. ${esc(q.q)}</p>`+q.o.map((o,oi)=>`<button class="opt" data-q="${qi}" data-o="${oi}">${esc(o)}</button>`).join('')+`<div class="qfb" id="fb${qi}"></div>`;
+    quizEl.appendChild(d);
+    if(quizAnswers[qi]!==undefined)paintAnswered(d,qi,q);
+  });
+  document.getElementById('quizPrev').style.visibility=quizPage===0?'hidden':'visible';
+  const last=quizPage===QUIZ_PAGES.length-1;
+  document.getElementById('quizNext').style.display=last?'none':'';
+  document.getElementById('quizSubmit').style.display=last?'':'none';
+  document.getElementById('quizProgress').textContent=quizProgressText();
+  renderQuizDots();
+  if(doScroll)document.getElementById('quiz').scrollIntoView({behavior:'smooth',block:'start'});
+}
+quizEl.addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b)return;const qi=+b.dataset.q,oi=+b.dataset.o,q=QUIZ[qi];
+  if(quizAnswers[qi]!==undefined)return;
+  quizAnswers[qi]=oi;
+  const d=b.closest('.q');paintAnswered(d,qi,q);
+  document.getElementById('quizProgress').textContent=quizProgressText();
+  renderQuizDots();
+  bump();});
+document.getElementById('quizNext').addEventListener('click',()=>{if(quizPage<QUIZ_PAGES.length-1){quizPage++;renderQuizPage(true);}});
+document.getElementById('quizPrev').addEventListener('click',()=>{if(quizPage>0){quizPage--;renderQuizPage(true);}});
+renderQuizPage(false);
+
+/* ---------- faq ---------- */
+const faqEl=document.getElementById('faqList');
+FAQ.forEach(f=>{const d=document.createElement('div');d.className='faq-item';
+  d.innerHTML=`<button class="faq-q">${esc(f.q)}<span class="chev">▾</span></button><div class="faq-a"><div>${esc(f.a)}</div></div>`;
+  faqEl.appendChild(d);
+  d.querySelector('.faq-q').addEventListener('click',()=>{d.classList.toggle('open');const a=d.querySelector('.faq-a');a.style.maxHeight=d.classList.contains('open')?a.scrollHeight+'px':0;});});
+
+/* ---------- level ---------- */
+const hints={1:'Показываем базовые материалы — самое нужное для старта.',2:'Добавили рабочие приёмы: пачки файлов, шаблоны, лучшие промпты.',3:'Открыто всё: автоматизация, расписания, хуки и собственные навыки.'};
+function applyLevel(){const lv=+document.documentElement.dataset.level;
+  document.querySelectorAll('[data-min]').forEach(el=>{el.style.display=(+el.dataset.min<=lv)?'':'none';});
+  document.getElementById('lvhint').textContent=hints[lv];}
+document.getElementById('seg').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('#seg button').forEach(x=>x.setAttribute('aria-pressed','false'));b.setAttribute('aria-pressed','true');
+  document.documentElement.dataset.level=b.dataset.lv;localStorage.setItem('cc_level',b.dataset.lv);applyLevel();bump();});
+
+/* ---------- theme ---------- */
+const themeBtn=document.getElementById('theme');
+const sunIco=themeBtn.querySelector('.sun'),moonIco=themeBtn.querySelector('.moon');
+function setTheme(t){document.documentElement.dataset.theme=t;sunIco.classList.toggle('active',t==='light');moonIco.classList.toggle('active',t==='dark');localStorage.setItem('cc_theme',t);}
+themeBtn.addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+
+/* ---------- nav, scroll, reveal, progress ---------- */
+const bar=document.getElementById('bar');
+const seen=new Set(JSON.parse(localStorage.getItem('cc_seen')||'[]'));
+function bump(){seen.add('act_'+Date.now()%1e7);} // interaction bonus
+const secs=[...document.querySelectorAll('section')];
+function onScroll(){const h=document.documentElement;const sc=h.scrollTop/(h.scrollHeight-h.clientHeight);bar.style.width=(sc*100)+'%';
+  let cur='';secs.forEach(s=>{if(s.getBoundingClientRect().top<160)cur=s.id;});
+  document.querySelectorAll('.nav-links a').forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+cur));
+  if(cur){seen.add(cur);localStorage.setItem('cc_seen',JSON.stringify([...seen].filter(x=>x.indexOf('act_')<0)));updateProg();}}
+window.addEventListener('scroll',onScroll,{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting)en.target.classList.add('in');}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+function updateProg(){const total=secs.length;const done=secs.filter(s=>seen.has(s.id)).length;const pct=Math.round(done/total*100);
+  document.getElementById('ring').style.setProperty('--p',pct);document.getElementById('ringv').textContent=pct+'%';
+  document.getElementById('progtxt').textContent=pct>=100?'🎉 Курс пройден!':`Пройдено ${done} из ${total} разделов`;}
+
+/* burger */
+document.getElementById('burger').addEventListener('click',()=>document.getElementById('navlinks').classList.toggle('show'));
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navlinks').classList.remove('show')));
+
+/* init */
+(function(){const lv=localStorage.getItem('cc_level')||'1';document.documentElement.dataset.level=lv;
+  document.querySelectorAll('#seg button').forEach(x=>x.setAttribute('aria-pressed',x.dataset.lv===lv?'true':'false'));
+  setTheme(localStorage.getItem('cc_theme')||'light');applyLevel();onScroll();updateProg();})();
+</script>
+
+<!-- markdown-рендер + общее облачное хранилище -->
+<script src="https://cdn.jsdelivr.net/npm/marked@12/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1/mammoth.browser.min.js"></script>
+<script>
+/* ========== НАСТРОЙКИ ========== */
+/* Папка со встроенными статьями внутри репозитория (академия лежит в /claude/) */
+const KB_DIR = 'claude/kb';
+/* Общее облачное хранилище загруженных статей (Supabase).
+   Заполни после создания бесплатного проекта — см. РАЗВЕРТЫВАНИЕ.md.
+   anon-ключ можно публиковать: он рассчитан на работу в браузере. */
+const SUPABASE_URL = 'https://iwlmgebsfmkfqcwtuyac.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Iml3bG1nZWJzZm1rZnFjd3R1eWFjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE1Njc3MjgsImV4cCI6MjA5NzE0MzcyOH0.4cdFtJawWYhWxdlqDUbf7uuSsj_bjjKpoXIjZgF1axg';
+const SUPABASE_BUCKET = 'Kb';
+
+/* Определяем владельца и репозиторий из адреса GitHub Pages (форк подхватится сам) */
+function repoInfo(){
+  const h=location.hostname, parts=location.pathname.split('/').filter(Boolean);
+  if(h.endsWith('github.io')) return {owner:h.split('.')[0], repo:parts[0]||'', branch:'main'};
+  return {owner:'tikhaziev-coder', repo:'gksks', branch:'main'}; // запасной вариант для локального просмотра
+}
+
+/* ========== СЛАЙДЕР ========== */
+(function(){
+  const deck=document.getElementById('deck'); if(!deck) return;
+  const slides=[...deck.querySelectorAll('.slide')];
+  const dots=document.getElementById('deckDots'); let i=0;
+  slides.forEach((_,k)=>{const d=document.createElement('i'); if(k===0)d.classList.add('on'); d.addEventListener('click',()=>go(k)); dots.appendChild(d);});
+  function go(n){ i=(n+slides.length)%slides.length; slides.forEach((s,k)=>s.classList.toggle('active',k===i)); [...dots.children].forEach((d,k)=>d.classList.toggle('on',k===i)); }
+  document.getElementById('prevSlide').addEventListener('click',()=>go(i-1));
+  document.getElementById('nextSlide').addEventListener('click',()=>go(i+1));
+  document.getElementById('fsSlide').addEventListener('click',()=>{ if(!document.fullscreenElement){ deck.requestFullscreen&&deck.requestFullscreen(); } else { document.exitFullscreen(); } });
+  document.addEventListener('keydown',e=>{ const r=deck.getBoundingClientRect(); if(r.top>innerHeight||r.bottom<0)return; if(e.key==='ArrowRight')go(i+1); if(e.key==='ArrowLeft')go(i-1); });
+})();
+
+/* ========== БИБЛИОТЕКА (база знаний) ========== */
+function prettyName(n){ return n.replace(/\.(md|pdf)$/i,'').replace(/^\d{4}-\d{2}-\d{2}\s*[—-]?\s*/,'').replace(/[-_]+/g,' ').trim(); }
+function plural(n,a,b,c){ const x=Math.abs(n)%100, x1=x%10; if(x>10&&x<20)return c; if(x1>1&&x1<5)return b; if(x1===1)return a; return c; }
+function stripFm(t){ return t.replace(/^﻿/,'').replace(/^---\r?\n[\s\S]*?\r?\n---\r?\n/,''); }
+async function openDoc(title,url,ext){
+  const m=document.getElementById('modal');
+  document.getElementById('modalTitle').textContent=title;
+  const body=document.getElementById('modalBody');
+  body.innerHTML='<p class="muted">Загрузка…</p>';
+  m.classList.add('open');
+  const dl=`<p style="margin:18px 0 0;padding-top:14px;border-top:1px solid var(--line)"><a href="${url}" target="_blank" rel="noopener" style="color:var(--brand);font-weight:700">⬇ Скачать исходный файл</a></p>`;
+  try{
+    if(ext==='pdf'){
+      body.innerHTML=`<iframe src="${url}" title="${esc(title)}" style="width:100%;height:74vh;border:0;border-radius:10px;background:#fff"></iframe>`+dl;
+    } else if(ext==='docx'){
+      const buf=await (await fetch(url)).arrayBuffer();
+      const res=await mammoth.convertToHtml({arrayBuffer:buf});
+      body.innerHTML=(res.value||'<p class="muted">Документ пустой или без текста.</p>')+dl;
+    } else if(ext==='txt'){
+      const txt=await (await fetch(url)).text();
+      body.innerHTML='<pre style="white-space:pre-wrap;font-family:inherit;margin:0">'+esc(txt)+'</pre>';
+    } else {
+      const txt=await (await fetch(url)).text();
+      body.innerHTML=marked.parse(stripFm(txt));
+    }
+  }catch(e){ body.innerHTML='<p>Не удалось открыть документ прямо на сайте. <a href="'+url+'" target="_blank" rel="noopener" style="color:var(--brand);font-weight:700">Скачать файл</a></p>'; }
+}
+document.getElementById('modalX').addEventListener('click',()=>document.getElementById('modal').classList.remove('open'));
+document.getElementById('modal').addEventListener('click',e=>{ if(e.target.id==='modal') document.getElementById('modal').classList.remove('open'); });
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') document.getElementById('modal').classList.remove('open'); });
+
+/* Игровой модал: грузим iframe только при открытии, выгружаем при закрытии */
+(function(){
+  const gm=document.getElementById('gameModal'), frame=document.getElementById('gameFrame');
+  const title=document.getElementById('gameModalTitle'), x=document.getElementById('gameModalX');
+  function openGame(src,name){ frame.src=src; if(title&&name) title.textContent=name; gm.classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeGame(){ gm.classList.remove('open'); frame.src='about:blank'; document.body.style.overflow=''; }
+  document.querySelectorAll('.js-game-open').forEach(card=>{
+    const src=card.getAttribute('data-src'), name=card.getAttribute('data-title');
+    card.addEventListener('click',()=>openGame(src,name));
+    card.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); openGame(src,name); } });
+  });
+  if(x) x.addEventListener('click',closeGame);
+  gm.addEventListener('click',e=>{ if(e.target===gm) closeGame(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && gm.classList.contains('open')) closeGame(); });
+})();
+
+/* Supabase-клиент (общее облачное хранилище статей) */
+let supa=null;
+if(SUPABASE_URL && SUPABASE_KEY && window.supabase){ try{ supa=window.supabase.createClient(SUPABASE_URL,SUPABASE_KEY); }catch(e){} }
+
+async function fetchRepoArticles(){
+  const {owner,repo,branch}=repoInfo();
+  if(!owner||!repo) return [];
+  try{
+    const r=await fetch(`https://api.github.com/repos/${owner}/${repo}/contents/${KB_DIR}?ref=${branch}`);
+    if(!r.ok) return [];
+    return (await r.json()).filter(f=>f.type==='file'&&/\.(md|pdf|txt)$/i.test(f.name)&&!f.name.startsWith('_'))
+      .map(f=>({name:f.name,url:f.download_url}));
+  }catch(e){ return []; }
+}
+/* Supabase не принимает кириллицу/спецсимволы в имени файла —
+   кодируем имя в безопасный ключ (base64url), а на сайте показываем обратно. */
+function b64urlEncode(str){
+  const utf8=new TextEncoder().encode(str); let bin='';
+  utf8.forEach(b=>bin+=String.fromCharCode(b));
+  return btoa(bin).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function b64urlDecode(str){
+  str=str.replace(/-/g,'+').replace(/_/g,'/'); while(str.length%4)str+='=';
+  const bin=atob(str); const bytes=new Uint8Array(bin.length);
+  for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
+  return new TextDecoder().decode(bytes);
+}
+function encodeKey(filename){
+  const dot=filename.lastIndexOf('.');
+  const base=dot>0?filename.slice(0,dot):filename;
+  const ext=dot>0?filename.slice(dot+1).toLowerCase():'';
+  return 'enc-'+b64urlEncode(base)+(ext?'.'+ext:'');
+}
+function decodeName(key){
+  if(!key.startsWith('enc-')) return key;
+  const rest=key.slice(4), dot=rest.lastIndexOf('.');
+  const b64=dot>0?rest.slice(0,dot):rest, ext=dot>0?rest.slice(dot):'';
+  try{ return b64urlDecode(b64)+ext; }catch(e){ return key; }
+}
+async function fetchSupaArticles(){
+  if(!supa) return [];
+  try{
+    const {data,error}=await supa.storage.from(SUPABASE_BUCKET).list('',{limit:200,sortBy:{column:'created_at',order:'desc'}});
+    if(error||!data) return [];
+    return data.filter(f=>f.name && f.id && !f.name.startsWith('.') && f.name!=='game-plays.json')
+      .map(f=>({name:decodeName(f.name),url:supa.storage.from(SUPABASE_BUCKET).getPublicUrl(f.name).data.publicUrl}));
+  }catch(e){ return []; }
+}
+function libCard(a){
+  const ext=(a.name.split('.').pop()||'').toLowerCase();
+  const known=['md','txt','pdf','docx'].includes(ext);
+  const icon=ext==='pdf'?'📕':(ext==='docx'?'📘':'📄');
+  const title=prettyName(a.name);
+  const el=document.createElement(known?'button':'a');
+  el.className='lib-card';
+  if(!known){ el.href=a.url; el.target='_blank'; el.rel='noopener'; }
+  el.innerHTML=`<div class="ficon">${icon}</div><h4>${esc(title)}</h4><small>${known?'Читать на сайте →':'Скачать файл'}</small>`;
+  if(known) el.addEventListener('click',()=>openDoc(title,a.url,ext));
+  return el;
+}
+async function renderLib(){
+  const grid=document.getElementById('libGrid'), cnt=document.getElementById('libCount');
+  cnt.textContent='Загрузка…';
+  const [supaA,repoA]=await Promise.all([fetchSupaArticles(),fetchRepoArticles()]);
+  const all=[...supaA,...repoA];
+  grid.innerHTML='';
+  if(!all.length){ grid.innerHTML='<div class="lib-empty">Пока нет статей. Перетащите файл в область выше или нажмите «＋ Добавить статью».</div>'; cnt.textContent='0 статей'; return; }
+  cnt.textContent=all.length+' '+plural(all.length,'статья','статьи','статей');
+  all.forEach(a=>grid.appendChild(libCard(a)));
+}
+async function uploadFiles(files){
+  const msg=document.getElementById('libMsg');
+  if(!supa){ msg.style.color='var(--accent)'; msg.textContent='Хранилище ещё не подключено. Загрузка заработает после настройки Supabase (см. файл РАЗВЕРТЫВАНИЕ.md).'; return; }
+  for(const file of files){
+    if(file.size>25*1024*1024){ msg.style.color='var(--accent)'; msg.textContent=`Файл «${file.name}» больше 25 МБ — слишком большой.`; continue; }
+    msg.style.color='var(--muted)'; msg.textContent=`Загрузка «${file.name}»…`;
+    const {error}=await supa.storage.from(SUPABASE_BUCKET).upload(encodeKey(file.name),file,{upsert:true,contentType:file.type||undefined});
+    if(error){ msg.style.color='var(--accent)'; msg.textContent='Не удалось загрузить: '+error.message; return; }
+  }
+  msg.style.color='var(--ok)'; msg.textContent='Готово ✓ Статья добавлена.';
+  renderLib();
+}
+(function(){
+  const drop=document.getElementById('libDrop'), fileInput=document.getElementById('libFile'), add=document.getElementById('libAdd');
+  if(add) add.addEventListener('click',()=>fileInput.click());
+  if(drop) drop.addEventListener('click',()=>fileInput.click());
+  if(fileInput) fileInput.addEventListener('change',()=>{ if(fileInput.files.length) uploadFiles(fileInput.files); fileInput.value=''; });
+  if(drop){
+    ['dragover','dragenter'].forEach(ev=>drop.addEventListener(ev,e=>{e.preventDefault();drop.classList.add('drag');}));
+    drop.addEventListener('dragleave',e=>{e.preventDefault();drop.classList.remove('drag');});
+    drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag'); if(e.dataTransfer.files.length) uploadFiles(e.dataTransfer.files);});
+  }
+})();
+renderLib();
+
+/* ========== РЕЗУЛЬТАТ ТЕСТА (самопроверка) ========== */
+document.getElementById('quizSubmit').addEventListener('click',function(){
+  const box=document.getElementById('quizResultBox');
+  const answered=Object.keys(quizAnswers).length;
+  if(answered<QUIZ.length){
+    box.style.display='block';
+    box.innerHTML=`<p style="color:var(--accent);font-weight:700;margin:0">Ответьте на все вопросы во всех разделах (отвечено ${answered} из ${QUIZ.length}). Используйте «← Назад», чтобы вернуться к пропущенным.</p>`;
+    box.scrollIntoView({behavior:'smooth',block:'center'});
+    return;
+  }
+  let score=0; QUIZ.forEach((q,qi)=>{ if(quizAnswers[qi]===q.c) score++; });
+  const pct=Math.round(score/QUIZ.length*100);
+  const links={0:'#onramp',1:'#cap',2:'#github',3:'#run'};
+  let rows='';
+  QUIZ_PAGES.forEach((p,pi)=>{const start=pageStart(pi);let c=0;p.qs.forEach((q,li)=>{if(quizAnswers[start+li]===q.c)c++;});
+    const full=c===p.qs.length;
+    rows+=`<li>${full?'✅':'🔸'} ${esc(p.title)} — <b>${c} из ${p.qs.length}</b>${full?'':` · <a href="${links[pi]}">повторить раздел</a>`}</li>`;});
+  let advice,emoji,color;
+  if(pct>=90){emoji='🎉';color='var(--ok)';advice='Отлично! Ты уверенно ориентируешься в теме. Переходи к практике — поставь Claude Code реальную задачу из своей работы.';}
+  else if(pct>=60){emoji='👍';color='var(--brand2)';advice='Хороший результат! Пробегись ещё раз по темам, где были ошибки (отмечены 🔸), и закрепи знания на практике.';}
+  else{emoji='📚';color='var(--accent)';advice='База ещё не закрепилась — это нормально для старта. Вернись к разделам «Для новичков», «Возможности» и «GitHub», потом пройди тест снова. Не торопись — основа важнее скорости.';}
+  box.style.display='block';
+  box.innerHTML=`
+    <div class="qr-score" style="color:${color}">${emoji} ${score} из ${QUIZ.length} <span class="muted" style="font-weight:600;font-size:1.1rem">(${pct}%)</span></div>
+    <p class="qr-advice">${advice}</p>
+    <div class="muted" style="font-weight:700;font-size:.82rem;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px">Разбор по темам</div>
+    <ul class="qr-breakdown">${rows}</ul>
+    <div class="qr-cta">
+      <span class="muted">Остались вопросы? Нажми на кнопку →</span>
+      <button class="btn primary" id="quizToContacts">Связаться с куратором</button>
+    </div>`;
+  document.getElementById('quizToContacts').addEventListener('click',()=>{document.querySelector('footer').scrollIntoView({behavior:'smooth',block:'start'});});
+  box.scrollIntoView({behavior:'smooth',block:'center'});
+});
+
+/* ========== АВТОРИЗАЦИЯ (Supabase Auth) ========== */
+/* Администраторы: видят пункт «📊 Статистика» со списком всех регистраций.
+   Реальные права на чтение списка заданы на сервере (RLS, supabase-auth.sql) —
+   здесь только показ/скрытие пункта меню. */
+const ADMIN_EMAILS=['ti.khaziev@gmail.com'];
+(function(){
+  const gate=document.getElementById('authGate');
+  /* Если Supabase недоступен (CDN не загрузился) — не запираем сайт наглухо */
+  if(!supa){ gate.classList.add('hidden'); return; }
+  const msg=document.getElementById('authMsg');
+  const tabIn=document.getElementById('authTabIn'), tabUp=document.getElementById('authTabUp');
+  const formIn=document.getElementById('authFormIn'), formUp=document.getElementById('authFormUp');
+  const logoutBtn=document.getElementById('logoutBtn'), statsLink=document.getElementById('navStats');
+
+  const formReset=document.getElementById('authFormReset'), formNew=document.getElementById('authFormNew');
+  const tabsRow=gate.querySelector('.auth-tabs');
+  /* Режим смены пароля: пользователь пришёл по ссылке из письма сброса */
+  let recovery=/type=recovery/.test(location.hash);
+
+  function setMsg(text,color){ msg.style.color=color||'var(--muted)'; msg.textContent=text||''; }
+  function showPane(p){
+    tabIn.classList.toggle('on',p==='in'); tabUp.classList.toggle('on',p==='up');
+    tabsRow.style.display=(p==='in'||p==='up')?'':'none';
+    formIn.style.display=p==='in'?'':'none';
+    formUp.style.display=p==='up'?'':'none';
+    formReset.style.display=p==='reset'?'':'none';
+    formNew.style.display=p==='new'?'':'none';
+    setMsg('');
+  }
+  tabIn.addEventListener('click',()=>showPane('in'));
+  tabUp.addEventListener('click',()=>showPane('up'));
+
+  /* Переводим типовые ошибки Supabase на русский */
+  function ruError(err){
+    const m=(err&&err.message||'').toLowerCase();
+    if(m.includes('invalid login credentials')) return 'Неверный e-mail или пароль.';
+    if(m.includes('email not confirmed')) return 'Почта ещё не подтверждена — найдите письмо от Supabase (проверьте «Спам») и перейдите по ссылке.';
+    if(m.includes('already registered')) return 'Такой e-mail уже зарегистрирован — перейдите на вкладку «Вход».';
+    if(m.includes('rate limit')) return 'Превышен лимит отправки писем — подождите немного и попробуйте снова.';
+    if(m.includes('at least 6')) return 'Пароль должен быть не короче 6 символов.';
+    if(m.includes('different from the old')) return 'Новый пароль совпадает со старым — придумайте другой.';
+    if(m.includes('invalid or has expired')) return 'Ссылка устарела или уже использована — запросите новую через «Забыли пароль?».';
+    return 'Не получилось: '+(err&&err.message||'неизвестная ошибка');
+  }
+
+  function applySession(session){
+    gate.classList.remove('checking');
+    /* Пока меняем пароль по ссылке из письма — держим заглушку открытой,
+       хотя сессия технически уже есть */
+    if(recovery){
+      gate.classList.remove('hidden');
+      document.body.style.overflow='hidden';
+      showPane('new');
+      return;
+    }
+    const authed=!!session;
+    gate.classList.toggle('hidden',authed);
+    document.body.style.overflow=authed?'':'hidden';
+    logoutBtn.style.display=authed?'':'none';
+    if(authed) logoutBtn.title='Выйти ('+(session.user.email||'')+')';
+    const isAdmin=authed&&ADMIN_EMAILS.includes((session.user.email||'').toLowerCase());
+    statsLink.style.display=isAdmin?'':'none';
+  }
+  supa.auth.getSession().then(({data})=>applySession(data.session));
+  supa.auth.onAuthStateChange((ev,session)=>{
+    if(ev==='PASSWORD_RECOVERY'){ recovery=true; }
+    applySession(session);
+  });
+
+  /* Вход */
+  formIn.addEventListener('submit',async e=>{
+    e.preventDefault();
+    setMsg('Входим…');
+    const {error}=await supa.auth.signInWithPassword({
+      email:document.getElementById('inEmail').value.trim(),
+      password:document.getElementById('inPass').value
+    });
+    if(error) setMsg(ruError(error),'var(--accent)'); else setMsg('');
+  });
+
+  /* Регистрация: ФИО + e-mail + пароль, подтверждение по почте */
+  formUp.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const name=document.getElementById('upName').value.trim().replace(/\s+/g,' ');
+    const email=document.getElementById('upEmail').value.trim();
+    if(name.split(' ').length<2){ setMsg('Укажите фамилию и имя полностью.','var(--accent)'); return; }
+    setMsg('Создаём аккаунт…');
+    const {data,error}=await supa.auth.signUp({
+      email, password:document.getElementById('upPass').value,
+      options:{ data:{full_name:name}, emailRedirectTo:location.origin+location.pathname }
+    });
+    if(error){ setMsg(ruError(error),'var(--accent)'); return; }
+    if(data&&data.session){ setMsg(''); return; } /* если подтверждение почты выключено — впускаем сразу */
+    formUp.reset();
+    setMsg('Почти готово! На '+email+' отправлено письмо — перейдите по ссылке из него, затем вернитесь сюда и войдите. Если письма нет, загляните в «Спам».','var(--ok)');
+  });
+
+  /* Забыли пароль: письмо со ссылкой на смену */
+  document.getElementById('forgotLink').addEventListener('click',()=>{
+    document.getElementById('resetEmail').value=document.getElementById('inEmail').value.trim();
+    showPane('reset');
+  });
+  document.getElementById('resetBack').addEventListener('click',()=>showPane('in'));
+  formReset.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const email=document.getElementById('resetEmail').value.trim();
+    setMsg('Отправляем письмо…');
+    const {error}=await supa.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+    if(error){ setMsg(ruError(error),'var(--accent)'); return; }
+    setMsg('Если на '+email+' есть аккаунт, туда пришло письмо со ссылкой для смены пароля. Не пришло — проверьте «Спам».','var(--ok)');
+  });
+
+  /* Установка нового пароля (после перехода по ссылке из письма) */
+  formNew.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const p1=document.getElementById('newPass1').value, p2=document.getElementById('newPass2').value;
+    if(p1!==p2){ setMsg('Пароли не совпадают — проверьте оба поля.','var(--accent)'); return; }
+    setMsg('Сохраняем…');
+    const {error}=await supa.auth.updateUser({password:p1});
+    if(error){ setMsg(ruError(error),'var(--accent)'); return; }
+    recovery=false; formNew.reset();
+    history.replaceState(null,'',location.pathname+location.search); /* подчистить токены из адреса */
+    const {data}=await supa.auth.getSession();
+    applySession(data.session);
+  });
+
+  logoutBtn.addEventListener('click',async()=>{ await supa.auth.signOut(); showPane('in'); });
+
+  /* Статистика регистраций (только админ; сервер отдаст список только ему) */
+  statsLink.addEventListener('click',async e=>{
+    e.preventDefault();
+    const m=document.getElementById('modal');
+    document.getElementById('modalTitle').textContent='📊 Статистика регистраций';
+    const body=document.getElementById('modalBody');
+    body.innerHTML='<p class="muted">Загрузка…</p>';
+    m.classList.add('open');
+    const {data,error}=await supa.from('profiles').select('full_name,email,created_at').order('created_at',{ascending:false});
+    if(error){ body.innerHTML='<p>Не удалось загрузить список: '+esc(error.message)+'</p>'; return; }
+    const rows=(data||[]).map((p,i)=>`<tr><td>${(data.length-i)}</td><td>${esc(p.full_name||'—')}</td><td>${esc(p.email||'')}</td><td>${new Date(p.created_at).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td></tr>`).join('');
+    body.innerHTML=`<p style="margin:0 0 14px;font-size:1.05rem"><b>Всего зарегистрировано: ${data.length}</b></p>
+      <div style="overflow-x:auto"><table class="stat-table"><thead><tr><th>#</th><th>ФИО</th><th>E-mail</th><th>Дата регистрации</th></tr></thead><tbody>${rows||'<tr><td colspan="4" class="muted">Пока никто не зарегистрировался.</td></tr>'}</tbody></table></div>`;
+  });
+})();
+</script>
+</body>
+</html>

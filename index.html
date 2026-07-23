@@ -342,6 +342,28 @@ footer .contacts{margin-left:auto;margin-right:auto}
 @media(max-width:560px){.game-card{flex-direction:column;text-align:center}.game-card-art{flex-basis:auto;width:100%}}
 /* модал игры */
 .game-modal{position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.74);backdrop-filter:blur(5px);display:none;align-items:center;justify-content:center;padding:18px}
+
+/* ЭКРАН ВХОДА (авторизация) */
+#authGate{position:fixed;inset:0;z-index:2000;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:20px}
+#authGate.hidden{display:none}
+.auth-card{width:100%;max-width:430px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:36px 30px;text-align:center;box-shadow:var(--shadow)}
+.auth-card h2{margin:16px 0 6px;font-size:1.45rem}
+.auth-card .auth-sub{margin:0;font-size:.92rem}
+.auth-tabs{display:flex;gap:6px;margin:22px 0 16px;background:var(--card2);border-radius:12px;padding:4px}
+.auth-tabs button{flex:1;border:0;background:transparent;color:var(--muted);font:inherit;font-weight:700;padding:10px;border-radius:9px;cursor:pointer;transition:.15s}
+.auth-tabs button.on{background:var(--grad);color:#fff}
+.auth-card form{display:flex;flex-direction:column;gap:10px;text-align:left}
+.auth-card input{background:var(--bg2);border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--ink);font:inherit;width:100%}
+.auth-card input:focus{outline:none;border-color:var(--brand)}
+.auth-card form .btn{justify-content:center;margin-top:4px}
+#authMsg{min-height:1.3em;margin:14px 0 0;font-size:.9rem;font-weight:600;line-height:1.45}
+.auth-link{border:0;background:none;color:var(--muted);font:inherit;font-size:.86rem;font-weight:600;cursor:pointer;padding:2px;align-self:center;text-decoration:underline;text-underline-offset:3px}
+.auth-link:hover{color:var(--brand)}
+#authGate.checking .auth-ui{display:none}
+#authGate:not(.checking) .auth-wait{display:none}
+.stat-table{width:100%;border-collapse:collapse;font-size:.92rem}
+.stat-table th,.stat-table td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:left}
+.stat-table th{color:var(--muted);font-size:.78rem;text-transform:uppercase;letter-spacing:.05em}
 .game-modal.open{display:flex}
 .game-modal-box{width:min(1180px,100%);height:94vh;display:flex;flex-direction:column;background:#0b1224;border:1px solid var(--line);border-radius:16px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.6)}
 .game-modal-top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 16px;background:#16234a;color:#fff;border-bottom:1px solid rgba(255,255,255,.1);flex:0 0 auto}
@@ -399,6 +421,48 @@ footer .contacts{margin-left:auto;margin-right:auto}
 </style>
 </head>
 <body>
+
+<!-- ЭКРАН ВХОДА: сайт скрыт, пока сотрудник не авторизуется -->
+<div id="authGate" class="checking">
+  <div class="auth-card">
+    <img src="logo.svg" alt="СКС" style="height:44px;width:auto">
+    <h2>Академия СКС</h2>
+    <p class="muted auth-sub">Корпоративный обучающий портал.<br>Доступ только для сотрудников группы компаний.</p>
+    <p class="muted auth-wait" style="margin-top:22px">Проверяем доступ…</p>
+    <div class="auth-ui">
+      <div class="auth-tabs">
+        <button type="button" id="authTabIn" class="on">Вход</button>
+        <button type="button" id="authTabUp">Регистрация</button>
+      </div>
+      <form id="authFormIn">
+        <input type="email" id="inEmail" placeholder="E-mail" required autocomplete="email">
+        <input type="password" id="inPass" placeholder="Пароль" required autocomplete="current-password">
+        <button class="btn primary" type="submit">Войти</button>
+        <button class="auth-link" type="button" id="forgotLink">Забыли пароль?</button>
+      </form>
+      <form id="authFormReset" style="display:none">
+        <p class="muted" style="margin:0;font-size:.9rem;text-align:center">Пришлём на почту ссылку для смены пароля.</p>
+        <input type="email" id="resetEmail" placeholder="E-mail, указанный при регистрации" required autocomplete="email">
+        <button class="btn primary" type="submit">Отправить ссылку</button>
+        <button class="auth-link" type="button" id="resetBack">← Назад ко входу</button>
+      </form>
+      <form id="authFormNew" style="display:none">
+        <p class="muted" style="margin:0;font-size:.9rem;text-align:center">Придумайте новый пароль для входа.</p>
+        <input type="password" id="newPass1" placeholder="Новый пароль (минимум 6 символов)" required minlength="6" autocomplete="new-password">
+        <input type="password" id="newPass2" placeholder="Повторите новый пароль" required minlength="6" autocomplete="new-password">
+        <button class="btn primary" type="submit">Сохранить и войти</button>
+      </form>
+      <form id="authFormUp" style="display:none">
+        <input type="text" id="upName" placeholder="ФИО сотрудника (например: Иванов Иван Иванович)" required autocomplete="name">
+        <input type="email" id="upEmail" placeholder="E-mail" required autocomplete="email">
+        <input type="password" id="upPass" placeholder="Пароль (минимум 6 символов)" required minlength="6" autocomplete="new-password">
+        <button class="btn primary" type="submit">Зарегистрироваться</button>
+      </form>
+      <p id="authMsg"></p>
+    </div>
+  </div>
+</div>
+
 <div id="bar"></div>
 
 <nav>
@@ -421,10 +485,12 @@ footer .contacts{margin-left:auto;margin-right:auto}
       <a href="#run" style="display:none">Запуск</a>
       <a href="#game">Игра</a>
       <a href="#faq">FAQ</a>
+      <a href="#" id="navStats" style="display:none">📊 Статистика</a>
     </div>
     <button class="icon-btn burger" id="burger" aria-label="Меню">☰</button>
     <div class="theme-wrap">
       <button class="theme-toggle" id="theme" aria-label="Смена темы" title="Сменить тему"><span class="ico sun">☀️</span><span class="ico moon">🌙</span><span class="theme-label">Смена темы</span></button>
+      <button class="theme-toggle" id="logoutBtn" style="display:none" aria-label="Выйти" title="Выйти из аккаунта"><span class="theme-label">⎋ Выйти</span></button>
     </div>
   </div>
 </nav>
@@ -1641,6 +1707,150 @@ document.getElementById('quizSubmit').addEventListener('click',function(){
   document.getElementById('quizToContacts').addEventListener('click',()=>{document.querySelector('footer').scrollIntoView({behavior:'smooth',block:'start'});});
   box.scrollIntoView({behavior:'smooth',block:'center'});
 });
+
+/* ========== АВТОРИЗАЦИЯ (Supabase Auth) ========== */
+/* Администраторы: видят пункт «📊 Статистика» со списком всех регистраций.
+   Реальные права на чтение списка заданы на сервере (RLS, supabase-auth.sql) —
+   здесь только показ/скрытие пункта меню. */
+const ADMIN_EMAILS=['ti.khaziev@gmail.com'];
+(function(){
+  const gate=document.getElementById('authGate');
+  /* Если Supabase недоступен (CDN не загрузился) — не запираем сайт наглухо */
+  if(!supa){ gate.classList.add('hidden'); return; }
+  const msg=document.getElementById('authMsg');
+  const tabIn=document.getElementById('authTabIn'), tabUp=document.getElementById('authTabUp');
+  const formIn=document.getElementById('authFormIn'), formUp=document.getElementById('authFormUp');
+  const logoutBtn=document.getElementById('logoutBtn'), statsLink=document.getElementById('navStats');
+
+  const formReset=document.getElementById('authFormReset'), formNew=document.getElementById('authFormNew');
+  const tabsRow=gate.querySelector('.auth-tabs');
+  /* Режим смены пароля: пользователь пришёл по ссылке из письма сброса */
+  let recovery=/type=recovery/.test(location.hash);
+
+  function setMsg(text,color){ msg.style.color=color||'var(--muted)'; msg.textContent=text||''; }
+  function showPane(p){
+    tabIn.classList.toggle('on',p==='in'); tabUp.classList.toggle('on',p==='up');
+    tabsRow.style.display=(p==='in'||p==='up')?'':'none';
+    formIn.style.display=p==='in'?'':'none';
+    formUp.style.display=p==='up'?'':'none';
+    formReset.style.display=p==='reset'?'':'none';
+    formNew.style.display=p==='new'?'':'none';
+    setMsg('');
+  }
+  tabIn.addEventListener('click',()=>showPane('in'));
+  tabUp.addEventListener('click',()=>showPane('up'));
+
+  /* Переводим типовые ошибки Supabase на русский */
+  function ruError(err){
+    const m=(err&&err.message||'').toLowerCase();
+    if(m.includes('invalid login credentials')) return 'Неверный e-mail или пароль.';
+    if(m.includes('email not confirmed')) return 'Почта ещё не подтверждена — найдите письмо от Supabase (проверьте «Спам») и перейдите по ссылке.';
+    if(m.includes('already registered')) return 'Такой e-mail уже зарегистрирован — перейдите на вкладку «Вход».';
+    if(m.includes('rate limit')) return 'Превышен лимит отправки писем — подождите немного и попробуйте снова.';
+    if(m.includes('at least 6')) return 'Пароль должен быть не короче 6 символов.';
+    if(m.includes('different from the old')) return 'Новый пароль совпадает со старым — придумайте другой.';
+    if(m.includes('invalid or has expired')) return 'Ссылка устарела или уже использована — запросите новую через «Забыли пароль?».';
+    return 'Не получилось: '+(err&&err.message||'неизвестная ошибка');
+  }
+
+  function applySession(session){
+    gate.classList.remove('checking');
+    /* Пока меняем пароль по ссылке из письма — держим заглушку открытой,
+       хотя сессия технически уже есть */
+    if(recovery){
+      gate.classList.remove('hidden');
+      document.body.style.overflow='hidden';
+      showPane('new');
+      return;
+    }
+    const authed=!!session;
+    gate.classList.toggle('hidden',authed);
+    document.body.style.overflow=authed?'':'hidden';
+    logoutBtn.style.display=authed?'':'none';
+    if(authed) logoutBtn.title='Выйти ('+(session.user.email||'')+')';
+    const isAdmin=authed&&ADMIN_EMAILS.includes((session.user.email||'').toLowerCase());
+    statsLink.style.display=isAdmin?'':'none';
+  }
+  supa.auth.getSession().then(({data})=>applySession(data.session));
+  supa.auth.onAuthStateChange((ev,session)=>{
+    if(ev==='PASSWORD_RECOVERY'){ recovery=true; }
+    applySession(session);
+  });
+
+  /* Вход */
+  formIn.addEventListener('submit',async e=>{
+    e.preventDefault();
+    setMsg('Входим…');
+    const {error}=await supa.auth.signInWithPassword({
+      email:document.getElementById('inEmail').value.trim(),
+      password:document.getElementById('inPass').value
+    });
+    if(error) setMsg(ruError(error),'var(--accent)'); else setMsg('');
+  });
+
+  /* Регистрация: ФИО + e-mail + пароль, подтверждение по почте */
+  formUp.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const name=document.getElementById('upName').value.trim().replace(/\s+/g,' ');
+    const email=document.getElementById('upEmail').value.trim();
+    if(name.split(' ').length<2){ setMsg('Укажите фамилию и имя полностью.','var(--accent)'); return; }
+    setMsg('Создаём аккаунт…');
+    const {data,error}=await supa.auth.signUp({
+      email, password:document.getElementById('upPass').value,
+      options:{ data:{full_name:name}, emailRedirectTo:location.origin+location.pathname }
+    });
+    if(error){ setMsg(ruError(error),'var(--accent)'); return; }
+    if(data&&data.session){ setMsg(''); return; } /* если подтверждение почты выключено — впускаем сразу */
+    formUp.reset();
+    setMsg('Почти готово! На '+email+' отправлено письмо — перейдите по ссылке из него, затем вернитесь сюда и войдите. Если письма нет, загляните в «Спам».','var(--ok)');
+  });
+
+  /* Забыли пароль: письмо со ссылкой на смену */
+  document.getElementById('forgotLink').addEventListener('click',()=>{
+    document.getElementById('resetEmail').value=document.getElementById('inEmail').value.trim();
+    showPane('reset');
+  });
+  document.getElementById('resetBack').addEventListener('click',()=>showPane('in'));
+  formReset.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const email=document.getElementById('resetEmail').value.trim();
+    setMsg('Отправляем письмо…');
+    const {error}=await supa.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+    if(error){ setMsg(ruError(error),'var(--accent)'); return; }
+    setMsg('Если на '+email+' есть аккаунт, туда пришло письмо со ссылкой для смены пароля. Не пришло — проверьте «Спам».','var(--ok)');
+  });
+
+  /* Установка нового пароля (после перехода по ссылке из письма) */
+  formNew.addEventListener('submit',async e=>{
+    e.preventDefault();
+    const p1=document.getElementById('newPass1').value, p2=document.getElementById('newPass2').value;
+    if(p1!==p2){ setMsg('Пароли не совпадают — проверьте оба поля.','var(--accent)'); return; }
+    setMsg('Сохраняем…');
+    const {error}=await supa.auth.updateUser({password:p1});
+    if(error){ setMsg(ruError(error),'var(--accent)'); return; }
+    recovery=false; formNew.reset();
+    history.replaceState(null,'',location.pathname+location.search); /* подчистить токены из адреса */
+    const {data}=await supa.auth.getSession();
+    applySession(data.session);
+  });
+
+  logoutBtn.addEventListener('click',async()=>{ await supa.auth.signOut(); showPane('in'); });
+
+  /* Статистика регистраций (только админ; сервер отдаст список только ему) */
+  statsLink.addEventListener('click',async e=>{
+    e.preventDefault();
+    const m=document.getElementById('modal');
+    document.getElementById('modalTitle').textContent='📊 Статистика регистраций';
+    const body=document.getElementById('modalBody');
+    body.innerHTML='<p class="muted">Загрузка…</p>';
+    m.classList.add('open');
+    const {data,error}=await supa.from('profiles').select('full_name,email,created_at').order('created_at',{ascending:false});
+    if(error){ body.innerHTML='<p>Не удалось загрузить список: '+esc(error.message)+'</p>'; return; }
+    const rows=(data||[]).map((p,i)=>`<tr><td>${(data.length-i)}</td><td>${esc(p.full_name||'—')}</td><td>${esc(p.email||'')}</td><td>${new Date(p.created_at).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td></tr>`).join('');
+    body.innerHTML=`<p style="margin:0 0 14px;font-size:1.05rem"><b>Всего зарегистрировано: ${data.length}</b></p>
+      <div style="overflow-x:auto"><table class="stat-table"><thead><tr><th>#</th><th>ФИО</th><th>E-mail</th><th>Дата регистрации</th></tr></thead><tbody>${rows||'<tr><td colspan="4" class="muted">Пока никто не зарегистрировался.</td></tr>'}</tbody></table></div>`;
+  });
+})();
 </script>
 </body>
 </html>

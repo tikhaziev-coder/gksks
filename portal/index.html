@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Портал адаптации — Группа компаний СКС</title>
+<meta name="description" content="Корпоративный портал адаптации новых сотрудников группы компаний СКС: о компании, структурные подразделения, обучение.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#130d0e; --bg2:#1b1314; --card:#231819; --card2:#2b1e1f;
+  --ink:#f6ece9; --muted:#c3a9a4; --line:rgba(255,255,255,.10);
+  --brand:#e31e24; --brand2:#e0a32a; --accent:#e8833a; --ok:#34d399;
+  --glass:rgba(28,18,18,.62); --shadow:0 18px 50px -20px rgba(0,0,0,.7);
+  --r:18px; --maxw:1180px;
+  --grad:linear-gradient(135deg,var(--brand),var(--brand2));
+}
+[data-theme="light"]{
+  --bg:#fbf7f6; --bg2:#fff4f3; --card:#ffffff; --card2:#fff8f7;
+  --ink:#1c1414; --muted:#7a6a67; --line:rgba(30,18,18,.10);
+  --glass:rgba(255,255,255,.82); --shadow:0 18px 50px -24px rgba(150,40,40,.16);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;font-family:'Inter',system-ui,Segoe UI,Roboto,Arial,sans-serif;
+  background:radial-gradient(1200px 700px at 80% -10%,rgba(225,25,35,.18),transparent 60%),
+             radial-gradient(900px 600px at -10% 20%,rgba(224,163,42,.12),transparent 55%),
+             var(--bg);
+  color:var(--ink);line-height:1.62;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+a{color:inherit}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
+h1,h2,h3{line-height:1.15;margin:0 0 .4em}
+h2{font-size:clamp(1.5rem,3.4vw,2.4rem);font-weight:800;letter-spacing:-.02em}
+h3{font-size:1.18rem;font-weight:700}
+.muted{color:var(--muted)}
+section{padding:56px 0}
+.section-head{text-align:center;max-width:760px;margin:0 auto 34px}
+.eyebrow{font-size:.75rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--brand2);margin-bottom:8px}
+
+/* nav */
+nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:var(--glass);border-bottom:1px solid var(--line)}
+.nav-in{display:flex;align-items:center;justify-content:center;gap:4px;padding:7px 0;flex-wrap:wrap}
+.logo{display:flex;align-items:center;justify-content:center;flex-basis:100%;gap:9px;font-weight:800;letter-spacing:-.02em;font-size:1.18rem;margin-bottom:2px}
+.logo .mark{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;font-size:15px;color:#fff;box-shadow:0 6px 18px -6px var(--brand)}
+.nav-links{display:flex;gap:2px;flex-basis:100%;flex-wrap:wrap;justify-content:center;align-items:center}
+.nav-links a{font-size:.9rem;color:var(--muted);text-decoration:none;padding:5px 11px;border-radius:8px;transition:.2s;font-weight:600;white-space:nowrap}
+.nav-links a:hover{color:var(--ink);background:rgba(225,25,35,.14)}
+.icon-btn{width:36px;height:36px;border-radius:11px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:grid;place-items:center;font-size:15px;transition:.2s}
+.icon-btn:hover{transform:translateY(-2px);border-color:var(--brand)}
+
+/* hero */
+header.hero{padding:70px 0 34px;text-align:center}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;color:var(--brand2);background:rgba(224,163,42,.1);border:1px solid rgba(224,163,42,.25);padding:6px 14px;border-radius:999px;margin-bottom:20px}
+.hero h1{font-size:clamp(2rem,5.4vw,3.5rem);font-weight:900;letter-spacing:-.03em}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p.lead{font-size:clamp(1.02rem,2.1vw,1.25rem);color:var(--muted);max-width:720px;margin:.5em auto 0}
+.motto{margin:30px auto 0;max-width:620px;font-size:1.24rem;font-weight:800;font-style:italic;padding:16px 22px;border-radius:16px;background:var(--card);border:1px solid var(--line);border-left:4px solid var(--brand);box-shadow:var(--shadow)}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:30px;justify-content:center}
+.btn{appearance:none;border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:.98rem;padding:14px 26px;border-radius:14px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:.22s}
+.btn.primary{background:var(--grad);color:#fff;box-shadow:0 14px 34px -12px var(--brand)}
+.btn.primary:hover{transform:translateY(-3px);box-shadow:0 22px 44px -14px var(--brand)}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--brand);transform:translateY(-3px)}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:18px;margin-top:44px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 14px;text-align:center;box-shadow:var(--shadow)}
+.stat b{font-size:1.75rem;font-weight:900;display:block;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:.82rem;color:var(--muted);display:block;margin-top:2px}
+
+/* cards */
+.grid{display:grid;gap:18px}
+.cols-2{grid-template-columns:repeat(2,1fr)}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px;box-shadow:var(--shadow)}
+.card .ic{font-size:26px;margin-bottom:8px}
+.card p{margin:0;color:var(--muted);font-size:.95rem}
+.card ul{margin:10px 0 0;padding-left:20px;color:var(--muted);font-size:.94rem}
+.card li{margin-bottom:5px}
+
+/* image placeholder */
+.ph{border:2px dashed var(--line);border-radius:16px;background:linear-gradient(135deg,var(--card2),var(--card));display:grid;place-items:center;text-align:center;padding:20px;color:var(--muted);min-height:170px}
+.ph .ico{font-size:30px;opacity:.75;margin-bottom:6px}
+.ph b{display:block;font-size:.92rem;color:var(--ink);font-weight:700}
+.ph small{font-size:.78rem;opacity:.8;display:block;margin-top:3px}
+.ph-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-top:20px}
+
+/* subdivision nodes */
+.nodes{display:grid;grid-template-columns:repeat(auto-fill,minmax(255px,1fr));gap:18px}
+.node{position:relative;display:block;text-decoration:none;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px 20px;text-align:center;box-shadow:var(--shadow);transition:.22s}
+.node:hover{transform:translateY(-4px);border-color:var(--brand)}
+.node .dot{width:62px;height:62px;border-radius:50%;display:grid;place-items:center;font-size:27px;margin:0 auto 12px;background:var(--card2);border:2px solid var(--line);transition:.22s}
+.node.ready .dot{background:var(--grad);border-color:transparent;color:#fff;box-shadow:0 10px 26px -8px var(--brand)}
+.node h3{margin:0 0 4px;font-size:1.05rem}
+.node p{margin:0;font-size:.86rem;color:var(--muted)}
+.node .badge{position:absolute;top:12px;right:12px;font-size:.66rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:3px 9px;border-radius:999px}
+.node.ready .badge{background:rgba(52,211,153,.16);color:var(--ok)}
+.node.soon .badge{background:rgba(150,150,150,.16);color:var(--muted)}
+.node.soon{opacity:.72}
+.node.soon:hover{transform:none;border-color:var(--line);cursor:default}
+
+.tip{background:rgba(224,163,42,.1);border:1px solid rgba(224,163,42,.3);border-left:4px solid var(--brand2);border-radius:12px;padding:14px 18px;font-size:.95rem}
+.note{background:rgba(225,25,35,.07);border:1px dashed rgba(225,25,35,.4);border-radius:12px;padding:13px 17px;font-size:.88rem;color:var(--muted);margin-top:18px}
+
+footer{padding:44px 0 34px;border-top:1px solid var(--line);margin-top:20px;text-align:center;color:var(--muted);font-size:.9rem}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important}}
+@media(max-width:880px){.cols-3{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:640px){.cols-2,.cols-3{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap nav-in">
+    <div class="logo"><span class="mark">СКС</span> Портал адаптации</div>
+    <div class="nav-links">
+      <a href="#about">О компании</a>
+      <a href="#spirit">Корпоративный дух</a>
+      <a href="#map">Подразделения</a>
+      <a href="#contacts">Контакты</a>
+      <button class="icon-btn" id="theme" aria-label="Сменить тему" style="margin-left:6px">◐</button>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="pill">👋 Добро пожаловать в команду</div>
+    <h1>Группа компаний <span class="grad-text">СКС</span></h1>
+    <p class="lead">Портал адаптации новых сотрудников. Здесь — всё, что нужно знать о компании и о своём направлении: обучение, документы, видео и тесты.</p>
+    <div class="motto">«Люди дороже золота»</div>
+    <div class="cta">
+      <a href="#map" class="btn primary">Выбрать своё подразделение →</a>
+      <a href="#about" class="btn ghost">Сначала о компании</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>15+</b><span>лет на рынке</span></div>
+      <div class="stat"><b>95</b><span>подразделений</span></div>
+      <div class="stat"><b>283</b><span>сотрудника</span></div>
+      <div class="stat"><b>4</b><span>региона присутствия</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Кто мы</div>
+      <h2>О группе компаний</h2>
+      <p class="muted">Федеральная сеть ломбардов с более чем 15-летней историей. Работаем открыто, под надзором Банка России.</p>
+    </div>
+
+    <div class="grid cols-2 reveal" style="align-items:start">
+      <div class="card">
+        <div class="ic">🏢</div>
+        <h3>Чем мы занимаемся</h3>
+        <p>СКС — федеральная сеть ломбардов. Мы выдаём займы под залог и помогаем людям решать денежные вопросы быстро и без бюрократии.</p>
+        <ul>
+          <li>Займы под золото, ювелирные изделия и драгоценные металлы</li>
+          <li>Займы под залог автомобилей и недвижимости</li>
+          <li>Займы под технику и электронику</li>
+          <li>Продажа золота и техники</li>
+          <li>Онлайн-оценка, оплата и мобильное приложение «СКС Онлайн»</li>
+        </ul>
+      </div>
+      <div class="ph" style="min-height:100%">
+        <div>
+          <div class="ico">🏬</div>
+          <b>Место под фото</b>
+          <small>Офис / отделение СКС, витрина, вывеска</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid cols-3 reveal" style="margin-top:18px">
+      <div class="card">
+        <div class="ic">🗺️</div>
+        <h3>География</h3>
+        <p>95 подразделений в четырёх регионах: Республика Башкортостан, Республика Татарстан, Удмуртская Республика и Челябинская область. Головной офис — Уфа.</p>
+      </div>
+      <div class="card">
+        <div class="ic">🧩</div>
+        <h3>Структура группы</h3>
+        <ul style="margin-top:2px">
+          <li><b>ООО «СКС Ломбард»</b> — ломбардные операции, займы под авто и недвижимость</li>
+          <li><b>ООО «ДинКом»</b> — микрозаймы</li>
+          <li><b>ООО «Ювелирный Дом»</b> — оптовая продажа золота</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ic">🛡️</div>
+        <h3>Надёжность</h3>
+        <ul style="margin-top:2px">
+          <li>11 лет под надзором Банка России</li>
+          <li>10 лет в государственном реестре ломбардов</li>
+          <li>Ни одной просрочки по обязательствам за 15 лет</li>
+          <li>Без штрафов со стороны надзорных органов</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="grid cols-2 reveal" style="margin-top:18px">
+      <div class="card">
+        <div class="ic">📈</div>
+        <h3>Итоги 2024 года</h3>
+        <ul style="margin-top:2px">
+          <li>Выдано займов — более <b>1,5 млрд ₽</b></li>
+          <li>Обслужено клиентов — более <b>55 000</b></li>
+          <li>Заключено договоров — более <b>103 000</b></li>
+          <li>Действующий портфель — <b>476 млн ₽</b></li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="ic">🚀</div>
+        <h3>Куда движемся</h3>
+        <p>Компания растёт: по итогам I квартала 2025 года выручка выросла на 58%, чистая прибыль — на 140%. В планах группы — размещение облигаций в 2026–2027 годах и выход на IPO.</p>
+      </div>
+    </div>
+
+    <div class="note reveal">ℹ️ Данные собраны из открытых источников (корпоративный сайт группы, сайт сети, карточки компании). Перед публикацией на всю компанию цифры стоит сверить с актуальной отчётностью.</div>
+  </div>
+</section>
+
+<!-- SPIRIT -->
+<section id="spirit" style="background:var(--bg2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Наши люди</div>
+      <h2>Компания, где ценят людей</h2>
+      <p class="muted">«Люди дороже золота» — это не просто слоган на стене. Это то, как мы относимся и к клиентам, и друг к другу.</p>
+    </div>
+
+    <div class="grid cols-2 reveal" style="align-items:start">
+      <div class="card">
+        <div class="ic">❤️</div>
+        <h3>Социальная направленность</h3>
+        <p style="margin-bottom:10px">Мы работаем в бизнесе, где к нам приходят в разных жизненных ситуациях. Поэтому главное для нас — человеческое отношение: без осуждения, с уважением и полной конфиденциальностью.</p>
+        <p>Ту же логику мы переносим внутрь компании. Мы вкладываемся в людей, которые работают в СКС: помогаем расти профессионально, поддерживаем семьи сотрудников и создаём среду, в которую хочется возвращаться.</p>
+      </div>
+      <div class="card">
+        <div class="ic">🌱</div>
+        <h3>Что мы делаем для команды</h3>
+        <ul style="margin-top:2px">
+          <li><b>Обучение и развитие</b> — тренинги, обучающие программы, стипендии на образование</li>
+          <li><b>Корпоративная библиотека</b> — доступ к Литрес для всех сотрудников</li>
+          <li><b>Спорт</b> — волейбол с профессиональным тренером</li>
+          <li><b>Праздники и корпоративы</b> — отмечаем вместе</li>
+          <li><b>Семейные конкурсы</b> — для сотрудников и их детей</li>
+          <li><b>Карьерный рост</b> — подтверждённый практикой, а не обещаниями</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="ph-row reveal">
+      <div class="ph">
+        <div><div class="ico">🏐</div><b>Фото: спорт</b><small>Волейбольная команда СКС, тренировка</small></div>
+      </div>
+      <div class="ph">
+        <div><div class="ico">🎉</div><b>Фото: корпоратив</b><small>Праздник, награждение, общее фото команды</small></div>
+      </div>
+      <div class="ph">
+        <div><div class="ico">👨‍👩‍👧</div><b>Фото: семейный конкурс</b><small>Дети сотрудников, творческий конкурс</small></div>
+      </div>
+      <div class="ph">
+        <div><div class="ico">🎓</div><b>Фото: обучение</b><small>Тренинг, обучающая сессия, наставничество</small></div>
+      </div>
+    </div>
+
+    <div class="tip reveal" style="margin-top:22px">💡 Блок под фотографии готов — как появятся реальные снимки с корпоративов, тренировок и конкурсов, просто заменим заглушки на фото.</div>
+  </div>
+</section>
+
+<!-- MAP -->
+<section id="map">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Карта портала</div>
+      <h2>Структурные подразделения</h2>
+      <p class="muted">Выбери своё подразделение — внутри тебя ждут материалы для адаптации: презентации, обучающие ролики, документы и тесты для самопроверки.</p>
+    </div>
+
+    <div class="nodes reveal">
+      <a class="node ready" href="../index.html">
+        <span class="badge">Открыто</span>
+        <div class="dot">🤖</div>
+        <h3>Академия Claude</h3>
+        <p>Работа с ИИ и Claude Code: курс, видео-гайды, тесты и база знаний</p>
+      </a>
+      <div class="node soon" role="button" aria-disabled="true">
+        <span class="badge">Скоро</span>
+        <div class="dot">☎️</div>
+        <h3>Академия кол-центра</h3>
+        <p>Скрипты, работа с обращениями, стандарты общения с клиентом</p>
+      </div>
+      <div class="node soon" role="button" aria-disabled="true">
+        <span class="badge">Скоро</span>
+        <div class="dot">💎</div>
+        <h3>Товароведы</h3>
+        <p>Оценка изделий, пробы, работа с драгоценными металлами</p>
+      </div>
+      <div class="node soon" role="button" aria-disabled="true">
+        <span class="badge">Скоро</span>
+        <div class="dot">🛒</div>
+        <h3>Продавцы-скупщики</h3>
+        <p>Приём и оценка залога, оформление договоров, работа в отделении</p>
+      </div>
+      <div class="node soon" role="button" aria-disabled="true">
+        <span class="badge">Скоро</span>
+        <div class="dot">👥</div>
+        <h3>HR-служба</h3>
+        <p>Подбор, адаптация, кадровые процессы и корпоративная культура</p>
+      </div>
+      <div class="node soon" role="button" aria-disabled="true">
+        <span class="badge">Скоро</span>
+        <div class="dot">➕</div>
+        <h3>Новое подразделение</h3>
+        <p>Место под следующее направление — добавим по мере наполнения</p>
+      </div>
+    </div>
+
+    <div class="note reveal">🧭 Это черновой набросок карты. Дальше подразделения переедут в визуализацию в стиле графа Obsidian — узлы со связями, по которым можно перемещаться между направлениями.</div>
+  </div>
+</section>
+
+<!-- CONTACTS -->
+<section id="contacts">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Остались вопросы</div>
+      <h2>Куда обратиться</h2>
+    </div>
+    <div class="grid cols-2 reveal">
+      <div class="card">
+        <div class="ic">🏢</div>
+        <h3>Головной офис</h3>
+        <p>г. Уфа, ул. Менделеева, д. 229, корп. 1</p>
+      </div>
+      <div class="card">
+        <div class="ic">💬</div>
+        <h3>Куратор портала</h3>
+        <p>Хазиев Тимур — отдел аналитики<br>8 927 301-17-52 · 8 917 485-05-55</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div style="font-weight:800;margin-bottom:6px">Группа компаний СКС</div>
+    <div>Портал адаптации новых сотрудников · внутренний ресурс</div>
+  </div>
+</footer>
+
+<script>
+/* тема — тот же ключ, что и в академии, чтобы выбор не сбрасывался при переходе */
+const themeBtn=document.getElementById('theme');
+function setTheme(t){document.documentElement.dataset.theme=t;localStorage.setItem('cc_theme',t);}
+themeBtn.addEventListener('click',()=>setTheme(document.documentElement.dataset.theme==='dark'?'light':'dark'));
+setTheme(localStorage.getItem('cc_theme')||'light');
+
+/* появление блоков при скролле */
+const io=new IntersectionObserver(es=>es.forEach(en=>{if(en.isIntersecting)en.target.classList.add('in');}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+</body>
+</html>

@@ -406,6 +406,11 @@ footer .contacts{margin-left:auto;margin-right:auto}
 .theme-toggle .ico.active{opacity:1;transform:scale(1.18)}
 .theme-wrap{flex-basis:100%;display:flex;justify-content:center}
 .theme-label{color:var(--muted);white-space:nowrap}
+/* кнопка возврата на портал (правый верхний угол, видна и поверх экрана входа) */
+.back-portal{position:fixed;top:12px;right:14px;z-index:2500;display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--ink);background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:10px;padding:7px 12px;text-decoration:none;box-shadow:var(--shadow);transition:.2s}
+.back-portal:hover{border-color:var(--brand);transform:translateY(-1px)}
+@media(max-width:520px){.back-portal{font-size:.76rem;padding:6px 10px;top:8px;right:8px}}
+@media print{.back-portal{display:none!important}}
 @media(max-width:980px){.theme-label{display:none}}
 
 /* ===== результат теста ===== */
@@ -423,6 +428,8 @@ footer .contacts{margin-left:auto;margin-right:auto}
 <body>
 
 <!-- ЭКРАН ВХОДА: сайт скрыт, пока сотрудник не авторизуется -->
+<a href="../portal/" class="back-portal" title="Вернуться на портал группы компаний">← На портал</a>
+
 <div id="authGate" class="checking">
   <div class="auth-card">
     <img src="logo.svg" alt="СКС" style="height:44px;width:auto">
@@ -967,12 +974,22 @@ footer .contacts{margin-left:auto;margin-right:auto}
       <h2>Видео-гайды</h2>
       <p class="muted">Видео по работе с Claude. Нажми ▶ — плеер откроется прямо здесь. Чтобы посмотреть другое видео, выбери его в списке ниже.</p>
     </div>
-    <div class="video-player reveal" id="ytPlayer" data-id="1zKAyKaJ-Q09jzygBd4onCaqiIwefRDUc" data-type="drive">
+    <div class="video-player reveal" id="ytPlayer" data-id="14m0eiC461JTFF7RCSSo20_IxA8ndQgsC" data-type="drive">
       <div class="video-poster"><img src="logo.svg" alt="СКС"></div>
       <button class="video-play" type="button" aria-label="Смотреть видео"><span>▶</span></button>
     </div>
     <div class="video-list reveal" id="ytList">
-      <button class="vid-item is-active" type="button" data-type="drive" data-id="1zKAyKaJ-Q09jzygBd4onCaqiIwefRDUc">
+      <button class="vid-item is-active" type="button" data-type="drive" data-id="14m0eiC461JTFF7RCSSo20_IxA8ndQgsC">
+        <span class="vid-thumb poster"><img src="logo.svg" alt="СКС"></span>
+        <span class="vid-title">Встреча по ИИ №5</span>
+        <span class="vid-meta">Внутренняя запись · СКС</span>
+      </button>
+      <button class="vid-item" type="button" data-type="drive" data-id="1LG-z_B4CjYwmYaib0v0TciKg9zCcX7cH">
+        <span class="vid-thumb poster"><img src="logo.svg" alt="СКС"></span>
+        <span class="vid-title">Встреча по ИИ №6</span>
+        <span class="vid-meta">Внутренняя запись · СКС</span>
+      </button>
+      <button class="vid-item" type="button" data-type="drive" data-id="1zKAyKaJ-Q09jzygBd4onCaqiIwefRDUc">
         <span class="vid-thumb poster"><img src="logo.svg" alt="СКС"></span>
         <span class="vid-title">Встреча по ИИ №4</span>
         <span class="vid-meta">Внутренняя запись · СКС</span>

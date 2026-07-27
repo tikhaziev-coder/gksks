@@ -407,8 +407,8 @@ footer .contacts{margin-left:auto;margin-right:auto}
 .theme-wrap{flex-basis:100%;display:flex;justify-content:center}
 .theme-label{color:var(--muted);white-space:nowrap}
 /* кнопка возврата на портал (правый верхний угол, видна и поверх экрана входа) */
-.back-portal{position:fixed;top:12px;right:14px;z-index:2500;display:inline-flex;align-items:center;gap:6px;font-size:.82rem;font-weight:700;color:var(--ink);background:var(--glass);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:10px;padding:7px 12px;text-decoration:none;box-shadow:var(--shadow);transition:.2s}
-.back-portal:hover{border-color:var(--brand);transform:translateY(-1px)}
+.back-portal{position:fixed;top:12px;right:14px;z-index:2500;display:inline-flex;align-items:center;gap:6px;font-size:.84rem;font-weight:800;color:#fff;background:var(--grad);border:0;border-radius:999px;padding:9px 16px;text-decoration:none;box-shadow:0 8px 22px -6px var(--brand);transition:.2s}
+.back-portal:hover{transform:translateY(-1px);box-shadow:0 12px 30px -6px var(--brand);filter:brightness(1.06)}
 @media(max-width:520px){.back-portal{font-size:.76rem;padding:6px 10px;top:8px;right:8px}}
 @media print{.back-portal{display:none!important}}
 @media(max-width:980px){.theme-label{display:none}}

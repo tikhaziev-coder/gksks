@@ -1787,15 +1787,28 @@ const ADMIN_EMAILS=['ti.khaziev@gmail.com'];
     applySession(session);
   });
 
+  /* Журнал: пишем строку на каждый вход по логину/паролю (повторный вход — новая строка) */
+  async function logActivity(session){
+    if(!session||!session.user) return;
+    try{
+      await supa.from('activity_log').insert({
+        user_id: session.user.id,
+        email: session.user.email||'',
+        full_name: (session.user.user_metadata&&session.user.user_metadata.full_name)||''
+      });
+    }catch(e){ /* журнал не должен мешать входу */ }
+  }
+
   /* Вход */
   formIn.addEventListener('submit',async e=>{
     e.preventDefault();
     setMsg('Входим…');
-    const {error}=await supa.auth.signInWithPassword({
+    const {data,error}=await supa.auth.signInWithPassword({
       email:document.getElementById('inEmail').value.trim(),
       password:document.getElementById('inPass').value
     });
-    if(error) setMsg(ruError(error),'var(--accent)'); else setMsg('');
+    if(error){ setMsg(ruError(error),'var(--accent)'); }
+    else { setMsg(''); logActivity(data&&data.session); }
   });
 
   /* Регистрация: ФИО + e-mail + пароль, подтверждение по почте */
@@ -1810,7 +1823,7 @@ const ADMIN_EMAILS=['ti.khaziev@gmail.com'];
       options:{ data:{full_name:name}, emailRedirectTo:location.origin+location.pathname }
     });
     if(error){ setMsg(ruError(error),'var(--accent)'); return; }
-    if(data&&data.session){ setMsg(''); return; } /* если подтверждение почты выключено — впускаем сразу */
+    if(data&&data.session){ setMsg(''); logActivity(data.session); return; } /* если подтверждение почты выключено — впускаем сразу */
     formUp.reset();
     setMsg('Почти готово! На '+email+' отправлено письмо — перейдите по ссылке из него, затем вернитесь сюда и войдите. Если письма нет, загляните в «Спам».','var(--ok)');
   });
@@ -1846,19 +1859,55 @@ const ADMIN_EMAILS=['ti.khaziev@gmail.com'];
 
   logoutBtn.addEventListener('click',async()=>{ await supa.auth.signOut(); showPane('in'); });
 
-  /* Статистика регистраций (только админ; сервер отдаст список только ему) */
+  /* Статистика: регистрации + журнал входов (только админ; сервер отдаёт списки только ему) */
   statsLink.addEventListener('click',async e=>{
     e.preventDefault();
     const m=document.getElementById('modal');
-    document.getElementById('modalTitle').textContent='📊 Статистика регистраций';
+    document.getElementById('modalTitle').textContent='📊 Статистика';
     const body=document.getElementById('modalBody');
     body.innerHTML='<p class="muted">Загрузка…</p>';
     m.classList.add('open');
-    const {data,error}=await supa.from('profiles').select('full_name,email,created_at').order('created_at',{ascending:false});
-    if(error){ body.innerHTML='<p>Не удалось загрузить список: '+esc(error.message)+'</p>'; return; }
-    const rows=(data||[]).map((p,i)=>`<tr><td>${(data.length-i)}</td><td>${esc(p.full_name||'—')}</td><td>${esc(p.email||'')}</td><td>${new Date(p.created_at).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'})}</td></tr>`).join('');
-    body.innerHTML=`<p style="margin:0 0 14px;font-size:1.05rem"><b>Всего зарегистрировано: ${data.length}</b></p>
-      <div style="overflow-x:auto"><table class="stat-table"><thead><tr><th>#</th><th>ФИО</th><th>E-mail</th><th>Дата регистрации</th></tr></thead><tbody>${rows||'<tr><td colspan="4" class="muted">Пока никто не зарегистрировался.</td></tr>'}</tbody></table></div>`;
+    const [regRes,actRes]=await Promise.all([
+      supa.from('profiles').select('full_name,email,created_at').order('created_at',{ascending:false}),
+      supa.from('activity_log').select('full_name,email,created_at').order('created_at',{ascending:false})
+    ]);
+    if(regRes.error){ body.innerHTML='<p>Не удалось загрузить список: '+esc(regRes.error.message)+'</p>'; return; }
+    const regs=regRes.data||[];
+    const acts=actRes.error?[]:(actRes.data||[]);
+    const fmt=d=>new Date(d).toLocaleString('ru-RU',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
+    /* последний вход по каждому e-mail (acts уже отсортированы по убыванию даты) */
+    const lastLogin={};
+    acts.forEach(a=>{ const k=(a.email||'').toLowerCase(); if(!lastLogin[k]) lastLogin[k]=a.created_at; });
+
+    /* вкладка «Регистрации»: ФИО · e-mail · дата регистрации · последний вход */
+    const regRows=regs.map((p,i)=>{
+      const ll=lastLogin[(p.email||'').toLowerCase()];
+      return `<tr><td>${regs.length-i}</td><td>${esc(p.full_name||'—')}</td><td>${esc(p.email||'')}</td><td>${fmt(p.created_at)}</td><td>${ll?fmt(ll):'<span class="muted">—</span>'}</td></tr>`;
+    }).join('');
+    const regHtml=`<p style="margin:0 0 12px;font-size:1.02rem"><b>Всего зарегистрировано: ${regs.length}</b></p>
+      <div style="overflow-x:auto"><table class="stat-table"><thead><tr><th>#</th><th>ФИО</th><th>E-mail</th><th>Регистрация</th><th>Последний вход</th></tr></thead><tbody>${regRows||'<tr><td colspan="5" class="muted">Пока никто не зарегистрировался.</td></tr>'}</tbody></table></div>`;
+
+    /* вкладка «Входы (журнал)»: строка на каждый вход, свежие сверху */
+    const uniq=new Set(acts.map(a=>(a.email||'').toLowerCase())).size;
+    const actWarn=actRes.error?`<p class="muted" style="margin-top:10px">⚠️ Журнал недоступен: ${esc(actRes.error.message)}. Похоже, таблица <code>activity_log</code> ещё не создана — выполните SQL в Supabase.</p>`:'';
+    const actRows=acts.map((a,i)=>`<tr><td>${acts.length-i}</td><td>${esc(a.full_name||'—')}</td><td>${esc(a.email||'')}</td><td>${fmt(a.created_at)}</td></tr>`).join('');
+    const actHtml=`<p style="margin:0 0 12px;font-size:1.02rem"><b>Всего входов: ${acts.length}</b> <span class="muted">· уникальных пользователей: ${uniq}</span></p>
+      <div style="overflow-x:auto"><table class="stat-table"><thead><tr><th>#</th><th>ФИО</th><th>E-mail</th><th>Дата и время входа</th></tr></thead><tbody>${actRows||'<tr><td colspan="4" class="muted">Входов пока не зафиксировано.</td></tr>'}</tbody></table></div>${actWarn}`;
+
+    body.innerHTML=`<div class="auth-tabs" style="margin-top:0">
+        <button type="button" class="on" data-stab="reg">Регистрации</button>
+        <button type="button" data-stab="act">Входы (журнал)</button>
+      </div>
+      <div id="stabReg">${regHtml}</div>
+      <div id="stabAct" style="display:none">${actHtml}</div>`;
+    body.querySelectorAll('.auth-tabs button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        body.querySelectorAll('.auth-tabs button').forEach(b=>b.classList.remove('on'));
+        btn.classList.add('on');
+        document.getElementById('stabReg').style.display=btn.dataset.stab==='reg'?'':'none';
+        document.getElementById('stabAct').style.display=btn.dataset.stab==='act'?'':'none';
+      });
+    });
   });
 })();
 </script>

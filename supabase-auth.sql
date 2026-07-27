@@ -60,3 +60,33 @@ create policy "kb auth read" on storage.objects
 drop policy if exists "kb auth upload" on storage.objects;
 create policy "kb auth upload" on storage.objects
   for insert to authenticated with check (bucket_id = 'Kb');
+
+-- ============================================================
+-- 6. Журнал входов (activity_log) — одна строка на каждый вход,
+--    повторный вход = новая строка, хранится бессрочно.
+--    Этот блок безопасно выполнять отдельно/повторно.
+-- ============================================================
+create table if not exists public.activity_log (
+  id         bigint generated always as identity primary key,
+  user_id    uuid not null references auth.users(id) on delete cascade,
+  email      text not null default '',
+  full_name  text not null default '',
+  created_at timestamptz not null default now()
+);
+
+alter table public.activity_log enable row level security;
+
+create index if not exists activity_log_created_idx on public.activity_log(created_at desc);
+create index if not exists activity_log_user_idx    on public.activity_log(user_id);
+
+-- Залогиненный пользователь может записать ТОЛЬКО свой заход
+drop policy if exists "activity insert self" on public.activity_log;
+create policy "activity insert self" on public.activity_log
+  for insert to authenticated
+  with check (user_id = auth.uid());
+
+-- Читать журнал целиком может только админ
+drop policy if exists "activity read admin" on public.activity_log;
+create policy "activity read admin" on public.activity_log
+  for select to authenticated
+  using (public.is_admin());

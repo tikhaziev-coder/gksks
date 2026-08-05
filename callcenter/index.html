@@ -355,6 +355,7 @@ footer .logo{justify-content:center}
       <a href="#kb">База знаний</a>
       <a href="#quiz">Проверка</a>
       <a href="#exam">Экзамен</a>
+      <a href="#calculator">Калькулятор</a>
     </div>
   </div>
 </nav>
@@ -1350,6 +1351,130 @@ footer .logo{justify-content:center}
     </div>
   </div>
 </section>
+
+<!-- ================= CALCULATOR ================= -->
+<section id="calculator">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Инструмент оператора</div>
+      <h2>Давай произведем онлайн расчет ювелирных изделий с учетом всех плюшек</h2>
+      <p>Расчёт суммы займа под залог золота: тарифная сетка по ОП, акция «каждый 10-й грамм = 10 000 ₽» и бонус статуса лояльности. Цены — «при выдаче на карту по СБП».</p>
+    </div>
+    <div class="card reveal" style="max-width:640px;margin:0 auto">
+      <div class="grid cols-2" style="margin-bottom:4px">
+        <div>
+          <label for="calcCat" style="font-size:.85rem;font-weight:600;display:block;margin-bottom:6px">Проба / категория</label>
+          <select id="calcCat" style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font-family:inherit">
+            <option value="p958">958°</option>
+            <option value="zub850">Зубное золото 850°</option>
+            <option value="p750_1">750° I категория</option>
+            <option value="p750_2">750° II категория</option>
+            <option value="p585_watch">583-585° часы</option>
+            <option value="p585_1_dm">583-585° I категория (с ДМ-кодом)</option>
+            <option value="p585_1_nodm">583-585° I категория (без ДМ)</option>
+            <option value="p585_2" selected>583-585° II категория</option>
+            <option value="p585_3">583-585° III категория</option>
+            <option value="p375_1">375° I категория</option>
+            <option value="p375_2">375° II категория</option>
+            <option value="silver">Серебро 800-999°</option>
+          </select>
+        </div>
+        <div>
+          <label for="calcOp" style="font-size:.85rem;font-weight:600;display:block;margin-bottom:6px">Номер ОП</label>
+          <input id="calcOp" type="number" min="1" placeholder="например, 39" style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font-family:inherit">
+        </div>
+      </div>
+      <div class="grid cols-2" style="margin-top:14px">
+        <div>
+          <label for="calcW" style="font-size:.85rem;font-weight:600;display:block;margin-bottom:6px">Вес, г</label>
+          <input id="calcW" type="number" min="0" step="0.01" placeholder="например, 10.87" style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font-family:inherit">
+        </div>
+        <div>
+          <label for="calcStatus" style="font-size:.85rem;font-weight:600;display:block;margin-bottom:6px">Статус лояльности</label>
+          <select id="calcStatus" style="width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--bg2);color:var(--ink);font-family:inherit">
+            <option value="0">Без статуса</option>
+            <option value="3">Постоянный (+3%)</option>
+            <option value="5">VIP (+5%)</option>
+            <option value="7">Бронзовый VIP (+7%)</option>
+            <option value="8">Серебряный VIP (+8%)</option>
+            <option value="10">Золотой VIP (+10%)</option>
+            <option value="13">Платиновый VIP (+13%)</option>
+            <option value="15">Бриллиантовый VIP (+15%)</option>
+            <option value="17">Супер VIP (+17%)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn primary" id="calcBtn" style="margin-top:20px;width:100%;justify-content:center">Рассчитать</button>
+      <div id="calcResult" style="margin-top:18px"></div>
+    </div>
+    <div class="std-note reveal" style="max-width:640px;margin:18px auto 0">💰 Акция «10-й грамм»: каждые полные 10 г в заявке — 1 грамм оценивается фиксированно по 10 000 ₽, остальные граммы — по тарифу сетки. Статус лояльности увеличивает только тарифную часть. Сетка 8 (онлайн-добор) в калькулятор не входит.</div>
+  </div>
+</section>
+<script>
+(function(){
+  var grids={
+    1:[5,7,14,15,16,19,28,32,39,53,55,61,65,76,83,84,135,150,153,159,160,161,163,164,173],
+    2:[11,12,95,144,158,166],
+    3:[2,18,23,35,45,48,52,71,88,99,102,104,142,145,152,157,165,167,168,169,170,171,172],
+    4:[121,132,134,137],
+    5:[10,17,22,24,36,37,47,60,62,69,87,89,90,92,97,117,124,127,130,138,143,154,156],
+    6:[6,70,146],
+    7:[34,46,64,67,128,131,133,151,155,162]
+  };
+  var OP_GRID={};
+  Object.keys(grids).forEach(function(g){grids[g].forEach(function(op){OP_GRID[op]=+g;});});
+
+  var PRICES={
+    p958:       [7650,7650,7650,7650,7650,7650,7650],
+    zub850:     [6400,6400,6400,6400,6400,6400,6400],
+    p750_1:     [6200,6200,6200,6200,6200,6200,6200],
+    p750_2:     [6150,6150,6150,6150,6150,6150,6150],
+    p585_watch: [5400,4500,5400,5400,5500,5550,5550],
+    p585_1_dm:  [5450,5400,5500,5550,5550,5650,5650],
+    p585_1_nodm:[4200,4200,4750,4850,5150,5600,5550],
+    p585_2:     [4150,4000,4600,4700,5100,5550,5500],
+    p585_3:     [3700,3600,3950,4000,4350,4600,4600],
+    p375_1:     [3200,3200,3500,3500,3800,3800,3800],
+    p375_2:     [3150,3150,3250,3250,3650,3650,3650],
+    silver:     [30,30,30,30,30,30,30]
+  };
+
+  function fmt(n){return n.toLocaleString('ru-RU',{maximumFractionDigits:2})+' ₽';}
+  function warn(msg){document.getElementById('calcResult').innerHTML='<div class="std-note" style="border-color:rgba(225,25,35,.35);background:rgba(225,25,35,.08)">⚠️ '+msg+'</div>';}
+
+  document.getElementById('calcBtn').addEventListener('click',function(){
+    var cat=document.getElementById('calcCat').value;
+    var opRaw=document.getElementById('calcOp').value;
+    var wRaw=document.getElementById('calcW').value;
+    var loyaltyPct=+document.getElementById('calcStatus').value;
+    var loyalty=loyaltyPct/100;
+
+    if(!opRaw)return warn('Укажите номер ОП.');
+    var op=+opRaw;
+    var grid=OP_GRID[op];
+    if(!grid)return warn('ОП '+op+' не найден в тарифных сетках 1–7. Проверьте номер отделения.');
+    if(!wRaw||+wRaw<=0)return warn('Укажите вес в граммах.');
+    var w=+wRaw;
+
+    var price=PRICES[cat][grid-1];
+    var promoUnits=Math.floor(w/10);
+    var rest=w-promoUnits;
+    var tariffSum=rest*price*(1+loyalty);
+    var promoSum=promoUnits*10000;
+    var total=tariffSum+promoSum;
+
+    var html='<div class="std-block"><b>Сетка '+grid+' · '+fmt(price)+'/г</b>';
+    if(promoUnits>0){
+      html+='<p>Акция «10-й грамм»: '+promoUnits+' × 10 000 ₽ = '+fmt(promoSum)+'</p>';
+      html+='<p>Остальное: '+rest.toFixed(2)+' г × '+fmt(price)+(loyalty?' × (1 + '+loyaltyPct+'%)':'')+' = '+fmt(tariffSum)+'</p>';
+    }else{
+      html+='<p>'+w.toFixed(2)+' г × '+fmt(price)+(loyalty?' × (1 + '+loyaltyPct+'%)':'')+' = '+fmt(tariffSum)+'</p>';
+    }
+    html+='</div><div style="margin-top:10px;padding:16px 18px;border-radius:14px;background:var(--grad);color:#fff;font-weight:800;font-size:1.15rem;text-align:center">Итого: '+fmt(total)+'</div>';
+    document.getElementById('calcResult').innerHTML=html;
+  });
+})();
+</script>
 
 <!-- ================= FOOTER ================= -->
 <footer>

@@ -1,19 +1,18 @@
 <!DOCTYPE html>
-<html lang="ru" data-theme="light">
+<html lang="ru" data-theme="light" data-level="1">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Академия «Кол-центр» — Группа компаний СКС</title>
-<meta name="description" content="Академия кол-центра группы компаний СКС: обучение, скрипты, стандарты общения с клиентом.">
+<meta name="description" content="Академия колл-центра группы компаний СКС: программа обучения, скрипты, стандарты общения с клиентом, база знаний и материалы для всех уровней.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ===== Дизайн-токены СКС (как на портале и в академии Claude) ===== */
 :root{
   --bg:#130d0e; --bg2:#1b1314; --card:#231819; --card2:#2b1e1f;
   --ink:#f6ece9; --muted:#c3a9a4; --line:rgba(255,255,255,.10);
-  --brand:#e31e24; --brand2:#e0a32a; --accent:#e8833a; --ok:#34d399;
+  --brand:#e31e24; --brand2:#e0a32a; --accent:#e8833a; --ok:#34d399; --warn:#fbbf24;
   --glass:rgba(28,18,18,.62); --shadow:0 18px 50px -20px rgba(0,0,0,.7);
   --r:18px; --maxw:1180px;
   --grad:linear-gradient(135deg,var(--brand),var(--brand2));
@@ -36,79 +35,1432 @@ a{color:inherit}
 .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px}
 h1,h2,h3{line-height:1.15;margin:0 0 .4em}
 h2{font-size:clamp(1.5rem,3.4vw,2.4rem);font-weight:800;letter-spacing:-.02em}
+h3{font-size:1.18rem;font-weight:700}
 .muted{color:var(--muted)}
 .grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-section{padding:56px 0}
-.eyebrow{font-size:.75rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--brand2);margin-bottom:8px}
 
-/* nav */
+/* progress + nav */
+#bar{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:60;transition:width .1s}
 nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);background:var(--glass);border-bottom:1px solid var(--line)}
-.nav-in{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0;flex-wrap:wrap}
-.logo{display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.02em;font-size:1.12rem}
-.logo .mark{width:30px;height:30px;border-radius:9px;background:var(--grad);display:grid;place-items:center;font-size:14px;color:#fff;box-shadow:0 6px 18px -6px var(--brand)}
-.nav-back{font-size:.9rem;color:var(--muted);text-decoration:none;font-weight:600;padding:6px 12px;border-radius:9px;border:1px solid var(--line);transition:.2s}
+.nav-in{display:flex;align-items:center;justify-content:center;gap:4px;min-height:0;padding:5px 0;flex-wrap:wrap;position:relative}
+.logo{display:flex;align-items:center;justify-content:center;flex-basis:100%;gap:11px;font-weight:800;letter-spacing:-.02em;font-size:1.18rem;margin-bottom:1px}
+.logo .mark{width:34px;height:34px;border-radius:10px;background:var(--grad);display:grid;place-items:center;font-size:12px;font-weight:800;color:#fff;letter-spacing:.03em;box-shadow:0 6px 18px -6px var(--brand);flex:none}
+.nav-back{font-size:.82rem;color:var(--muted);text-decoration:none;font-weight:600;padding:7px 12px;border-radius:9px;border:1px solid var(--line);transition:.2s;white-space:nowrap}
 .nav-back:hover{color:var(--ink);border-color:var(--brand)}
+.logo .lg-txt{display:flex;flex-direction:column;line-height:1.05}
+.logo .lg-txt b{font-weight:800;font-size:1.06rem}
+.logo .lg-txt small{font-size:.62rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--brand2)}
+.nav-links{display:flex;gap:2px 2px;flex-basis:100%;flex-wrap:wrap;justify-content:center;align-items:center}
+.nav-links a{font-size:.9rem;color:var(--muted);text-decoration:none;padding:4px 10px;border-radius:8px;transition:.2s;font-weight:600;white-space:nowrap}
+.nav-links a:hover,.nav-links a.active{color:var(--ink);background:rgba(225,25,35,.14)}
+.nav-tools{position:absolute;right:8px;top:6px;display:flex;gap:8px;align-items:center}
+.icon-btn{width:40px;height:40px;border-radius:11px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer;display:grid;place-items:center;font-size:17px;transition:.2s}
+.icon-btn:hover{transform:translateY(-2px);border-color:var(--brand)}
+.burger{display:none}
 
 /* hero */
-header.hero{padding:72px 0 40px;text-align:center}
-.pill{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;color:var(--brand2);background:rgba(224,163,42,.1);border:1px solid rgba(224,163,42,.25);padding:6px 14px;border-radius:999px;margin-bottom:20px}
-.hero h1{font-size:clamp(2rem,5.4vw,3.4rem);font-weight:900;letter-spacing:-.03em}
-.hero p.lead{font-size:clamp(1.02rem,2.1vw,1.22rem);color:var(--muted);max-width:680px;margin:.5em auto 0}
+header.hero{padding:78px 0 40px;position:relative}
+.pill{display:inline-flex;align-items:center;gap:8px;font-size:.8rem;font-weight:600;color:var(--brand2);background:rgba(224,163,42,.1);border:1px solid rgba(224,163,42,.25);padding:6px 14px;border-radius:999px;margin-bottom:22px}
+.hero h1{font-size:clamp(2.2rem,6vw,4rem);font-weight:900;letter-spacing:-.03em}
+.hero p.lead{font-size:clamp(1.05rem,2.2vw,1.3rem);color:var(--muted);max-width:none;margin:.4em 0 0}
+.cta{display:flex;gap:14px;flex-wrap:wrap;margin-top:32px}
+.btn{appearance:none;border:0;cursor:pointer;font-family:inherit;font-weight:700;font-size:.98rem;padding:14px 26px;border-radius:14px;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:.22s}
+.btn.primary{background:var(--grad);color:#fff;box-shadow:0 14px 34px -12px var(--brand)}
+.btn.primary:hover{transform:translateY(-3px);box-shadow:0 22px 44px -14px var(--brand)}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn.ghost:hover{border-color:var(--brand);transform:translateY(-3px)}
+.stats{display:flex;gap:30px;margin-top:46px;flex-wrap:wrap;justify-content:center;text-align:center}
+.stat b{font-size:1.9rem;font-weight:800;display:block;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat span{font-size:.85rem;color:var(--muted)}
+.warnbar{display:flex;align-items:center;gap:10px;background:rgba(225,25,35,.1);border:1px solid rgba(225,25,35,.4);border-left:4px solid var(--brand);border-radius:12px;padding:14px 18px;margin:26px 0 0;font-size:1.02rem}
+.warnbar b{color:var(--brand)}
+.evo{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:stretch;margin-top:28px}
+.evo-item{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;text-align:center}
+.evo-item .tag{display:inline-block;font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:999px;margin-bottom:8px}
+.evo-item b{display:block;font-size:1.12rem;font-weight:800;margin:2px 0}
+.evo-item small{color:var(--muted);font-size:.82rem;display:block}
+.evo-item.past .tag{background:rgba(150,150,150,.2);color:var(--muted)}
+.evo-item.now .tag{background:rgba(224,163,42,.18);color:var(--brand2)}
+.evo-item.future{border-color:var(--brand);box-shadow:0 16px 40px -18px var(--brand)}
+.evo-item.future .tag{background:var(--grad);color:#fff}
+.evo-arrow{display:grid;place-items:center;font-size:1.4rem;color:var(--brand);font-weight:800}
+@media(max-width:760px){.evo{grid-template-columns:1fr}.evo-arrow{transform:rotate(90deg)}}
+code{font-family:'JetBrains Mono',monospace;font-size:.85em;background:rgba(225,25,35,.1);padding:1px 6px;border-radius:6px;color:var(--brand)}
+.badge{display:inline-block;font-size:.6rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:5px}
+.badge.base{background:rgba(150,150,150,.18);color:var(--muted)}
+.badge.lv2{background:rgba(224,163,42,.18);color:var(--brand2)}
+.badge.lv3{background:rgba(225,25,35,.13);color:var(--brand)}
+.badge.new{background:var(--grad);color:#fff}
+.dodont{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.dd{border-radius:var(--r);padding:22px;border:1px solid var(--line)}
+.dd.do{background:rgba(52,211,153,.07);border-color:rgba(52,211,153,.3)}
+.dd.dont{background:rgba(225,25,35,.06);border-color:rgba(225,25,35,.3)}
+.dd h3{display:flex;align-items:center;gap:8px;margin-bottom:2px}
+.dd ul{list-style:none;padding:0;margin:12px 0 0}
+.dd li{padding:7px 0 7px 26px;position:relative;font-size:.93rem;color:var(--muted);border-top:1px solid var(--line)}
+.dd.do li:before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:800}
+.dd.dont li:before{content:"✕";position:absolute;left:0;color:var(--brand);font-weight:800}
+@media(max-width:880px){.dodont{grid-template-columns:1fr}}
 
-/* cards */
-.grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin-top:36px}
-.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;box-shadow:var(--shadow);text-align:left}
-.card .ic{font-size:26px;margin-bottom:8px}
-.card h3{font-size:1.1rem;font-weight:700;margin:0 0 6px}
-.card p{margin:0;color:var(--muted);font-size:.94rem}
+/* print */
+@media print{
+  @page{margin:13mm}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  html{--bg:#fff;--bg2:#fff;--card:#fff;--card2:#fff;--ink:#1a1414;--muted:#444;--line:#dcdcdc}
+  body{background:#fff!important;color:#1a1414!important}
+  .levelbar,.prog,#bar,.burger,.icon-btn,.nav-tools,.cta,#quiz,.copy,.nav-links{display:none!important}
+  nav{position:static!important;background:#fff!important;border:none!important;backdrop-filter:none!important;box-shadow:none!important}
+  section{padding:12px 0!important;break-inside:avoid}
+  .reveal{opacity:1!important;transform:none!important}
+  [data-min]{display:block!important}
+  .grid.cols-3,.grid.cols-4{grid-template-columns:1fr 1fr!important}
+}
 
-.tip{max-width:720px;margin:34px auto 0;background:rgba(224,163,42,.1);border:1px solid rgba(224,163,42,.3);border-left:4px solid var(--brand2);border-radius:12px;padding:16px 20px;font-size:.96rem;text-align:left}
+/* level switcher */
+.levelbar{position:sticky;top:64px;z-index:40;background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:12px 0}
+.levelbar .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.levelbar .lbl{font-size:.82rem;color:var(--muted);font-weight:600}
+.seg{display:inline-flex;background:var(--card);border:1px solid var(--line);border-radius:13px;padding:4px;gap:4px}
+.seg button{appearance:none;border:0;background:transparent;color:var(--muted);font-family:inherit;font-weight:600;font-size:.86rem;padding:8px 16px;border-radius:10px;cursor:pointer;transition:.2s}
+.seg button[aria-pressed="true"]{background:var(--grad);color:#fff;box-shadow:0 8px 20px -8px var(--brand)}
+.level-hint{font-size:.82rem;color:var(--muted);margin-left:auto}
 
-footer{padding:44px 0 34px;border-top:1px solid var(--line);margin-top:20px;text-align:center;color:var(--muted);font-size:.9rem}
+/* sections */
+section{padding:40px 0;scroll-margin-top:130px}
+.eyebrow{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brand2);margin-bottom:10px}
+.section-head{max-width:none;margin-bottom:38px}
+.section-head p{color:var(--muted);font-size:1.05rem}
+.grid{display:grid;gap:18px}
+.cols-2{grid-template-columns:repeat(2,1fr)}
+.cols-3{grid-template-columns:repeat(3,1fr)}
+.cols-4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:24px;transition:.25s;position:relative;overflow:hidden}
+.card:hover{transform:translateY(-4px);border-color:rgba(225,25,35,.4);box-shadow:var(--shadow)}
+.card .ic{font-size:26px;width:52px;height:52px;border-radius:13px;display:grid;place-items:center;background:rgba(225,25,35,.13);margin-bottom:14px}
+.card h3{margin-bottom:6px}
+.card p{color:var(--muted);font-size:.94rem;margin:0}
+
+/* compare */
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.compare.three{grid-template-columns:repeat(3,1fr)}
+.compare .col{border-radius:var(--r);padding:26px;border:1px solid var(--line)}
+.compare .chat{background:var(--card);opacity:.9}
+.compare .cowork{background:linear-gradient(160deg,rgba(224,163,42,.12),rgba(224,163,42,.04));border-color:rgba(224,163,42,.38)}
+.compare .code{background:linear-gradient(160deg,rgba(225,25,35,.14),rgba(224,163,42,.07));border-color:rgba(225,25,35,.35)}
+.compare h3{display:flex;align-items:center;gap:10px}
+.compare ul{list-style:none;padding:0;margin:14px 0 0}
+.compare li{padding:9px 0 9px 28px;position:relative;font-size:.94rem;color:var(--muted);border-top:1px solid var(--line)}
+.compare li:before{content:"";position:absolute;left:0;top:14px;width:16px;height:16px;border-radius:50%}
+.compare .chat li:before{background:rgba(154,167,194,.4)}
+.compare .cowork li:before{background:var(--brand2);box-shadow:0 0 0 4px rgba(224,163,42,.18)}
+.compare .code li:before{background:var(--ok);box-shadow:0 0 0 4px rgba(52,211,153,.18)}
+@media(max-width:880px){.compare,.compare.three{grid-template-columns:1fr}}
+
+/* highlight block */
+.obs{background:linear-gradient(155deg,rgba(225,25,35,.16),rgba(224,163,42,.06));border:1px solid rgba(225,25,35,.3);border-radius:26px;padding:40px;position:relative;overflow:hidden}
+.obs:after{content:"🎧";position:absolute;right:-10px;bottom:-30px;font-size:200px;opacity:.06}
+.flow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:22px}
+.flow .node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 16px;font-size:.88rem;font-weight:600;display:flex;align-items:center;gap:8px}
+.flow .arr{color:var(--brand2);font-weight:800;font-size:1.3rem}
+
+/* professions / roles */
+.prof-tabs{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.prof-tab{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:12px 16px;cursor:pointer;font-weight:600;font-size:.9rem;display:flex;align-items:center;gap:9px;transition:.2s;color:var(--muted)}
+.prof-tab:hover{transform:translateY(-2px);color:var(--ink)}
+.prof-tab.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 10px 26px -10px var(--brand)}
+.prof-panel{display:none;animation:fade .4s ease}
+.prof-panel.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.prof-body{display:grid;grid-template-columns:1fr 1.1fr;gap:22px}
+.task-list{list-style:none;padding:0;margin:0}
+.task-list li{padding:11px 0 11px 30px;position:relative;border-bottom:1px solid var(--line);font-size:.95rem}
+.task-list li:before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:800}
+@media(max-width:880px){.prof-body{grid-template-columns:1fr}}
+
+/* prompt / script block */
+.prompt{background:var(--bg2);border:1px solid var(--line);border-radius:14px;overflow:hidden;margin-bottom:14px}
+.prompt-top{display:flex;align-items:center;justify-content:space-between;padding:9px 14px;background:rgba(225,25,35,.08);border-bottom:1px solid var(--line)}
+.prompt-top span{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--brand2)}
+.copy{background:var(--card);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:.78rem;font-weight:600;padding:5px 12px;border-radius:8px;cursor:pointer;transition:.2s}
+.copy:hover{border-color:var(--brand)}
+.copy.done{color:var(--ok);border-color:var(--ok)}
+.prompt pre{margin:0;padding:16px;font-family:'JetBrains Mono',monospace;font-size:.84rem;white-space:pre-wrap;color:var(--ink)}
+
+/* level-gated */
+[data-min]{display:none}
+.tip{margin-top:14px;background:rgba(224,163,42,.08);border:1px solid rgba(224,163,42,.25);border-radius:12px;padding:13px 16px;font-size:.9rem}
+.tip b{color:var(--brand2)}
+.adv{background:rgba(255,122,89,.08);border-color:rgba(255,122,89,.28)}
+.adv b{color:var(--accent)}
+
+/* steps */
+.steps{counter-reset:s;display:grid;gap:14px}
+.step{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px;align-items:flex-start}
+.step:before{counter-increment:s;content:counter(s);min-width:40px;height:40px;border-radius:11px;background:var(--grad);color:#fff;font-weight:800;display:grid;place-items:center}
+.step h3{margin-bottom:4px}.step p{margin:0;color:var(--muted);font-size:.94rem}
+
+/* quiz */
+.quiz{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:28px}
+.q{margin-bottom:22px}.q:last-child{margin-bottom:0}
+.q p.qt{font-weight:600;margin:0 0 12px}
+.opt{display:block;width:100%;text-align:left;background:var(--bg2);border:1px solid var(--line);color:var(--ink);font-family:inherit;font-size:.92rem;padding:12px 16px;border-radius:11px;margin-bottom:9px;cursor:pointer;transition:.18s}
+.opt:hover{border-color:var(--brand)}
+.opt.correct{background:rgba(52,211,153,.15);border-color:var(--ok)}
+.opt.wrong{background:rgba(255,122,89,.13);border-color:var(--accent)}
+.qfb{font-size:.86rem;margin-top:6px;display:none;color:var(--muted)}
+
+/* faq */
+.faq-item{border:1px solid var(--line);border-radius:14px;margin-bottom:12px;overflow:hidden;background:var(--card)}
+.faq-q{width:100%;text-align:left;background:none;border:0;color:var(--ink);font-family:inherit;font-weight:600;font-size:1rem;padding:18px 22px;cursor:pointer;display:flex;justify-content:space-between;gap:12px}
+.faq-q .chev{transition:.3s;color:var(--brand2)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .35s ease;color:var(--muted);font-size:.94rem}
+.faq-a div{padding:0 22px 20px}
+.faq-item.open .chev{transform:rotate(180deg)}
+
+/* service standards (СКС-48) */
+.std-doc-meta{display:flex;gap:14px;flex-wrap:wrap;margin:0 0 24px}
+.std-doc-meta .sdm{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 16px;font-size:.86rem}
+.std-doc-meta .sdm b{color:var(--brand2);display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
+.std-block{border-left:3px solid var(--brand2);padding:2px 0 2px 16px;margin:16px 0}
+.std-block>b{display:block;color:var(--ink);font-size:.98rem;margin-bottom:4px}
+.std-block p{margin:5px 0;color:var(--muted);font-size:.92rem}
+.std-block ul{margin:6px 0;padding-left:20px;color:var(--muted);font-size:.9rem}
+.std-block ul li{margin:3px 0}
+.std-script{background:var(--bg2);border:1px solid var(--line);border-left:3px solid var(--brand);border-radius:10px;padding:10px 14px;margin:8px 0;color:var(--ink);font-size:.9rem;line-height:1.5}
+.std-script:before{content:"🗣 Скрипт: ";font-weight:700;color:var(--brand)}
+.std-script em{font-style:italic}
+.std-note{background:rgba(224,163,42,.08);border:1px solid rgba(224,163,42,.25);border-radius:10px;padding:10px 14px;font-size:.88rem;margin:10px 0;color:var(--muted)}
+.std-note b{color:var(--brand2)}
+
+/* scripts hub */
+.scr-index{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 28px}
+.scr-index .si{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;transition:.2s;display:flex;flex-direction:column;gap:6px}
+.scr-index .si:hover{border-color:var(--brand);transform:translateY(-3px);box-shadow:var(--shadow)}
+.scr-index .si .si-ic{font-size:26px}
+.scr-index .si b{font-size:.98rem}
+.scr-index .si small{color:var(--muted);font-size:.82rem}
+@media(max-width:880px){.scr-index{grid-template-columns:1fr 1fr}}
+.scr-q{margin:12px 0 2px;font-weight:600;color:var(--ink);font-size:.94rem}
+.scr-q:before{content:"👤 ";}
+.tel-link{color:var(--brand);font-weight:700;text-decoration:none;border-bottom:1px dashed var(--brand)}
+.tel-link:hover{border-bottom-style:solid}
+
+/* client journey */
+.jrn-track{position:relative;height:150px;margin:6px 0 18px}
+.jrn-line{position:absolute;left:4%;right:4%;top:112px;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.jrn-fill{position:absolute;left:0;top:0;height:100%;width:0;background:var(--grad);transition:width .6s cubic-bezier(.4,.9,.3,1)}
+.jrn-marker{position:absolute;top:105px;width:20px;height:20px;margin-left:-10px;border-radius:50%;background:var(--card);border:3px solid var(--line);cursor:pointer;transition:.3s;z-index:2}
+.jrn-marker span{position:absolute;top:24px;left:50%;transform:translateX(-50%);font-size:.7rem;color:var(--muted);white-space:nowrap;font-weight:600}
+.jrn-marker.done{border-color:var(--brand2)}
+.jrn-marker.active{border-color:var(--brand);background:var(--brand);box-shadow:0 0 0 6px rgba(225,25,35,.16)}
+.jrn-marker.active span{color:var(--brand)}
+.jrn-char{position:absolute;top:0;width:112px;height:120px;margin-left:-56px;transition:left .7s cubic-bezier(.34,1.1,.5,1);z-index:3}
+.jrn-char .bob{animation:jbob 1.9s ease-in-out infinite;transform-origin:center bottom}
+@keyframes jbob{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.jrn-card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px 24px;margin-bottom:6px;min-height:96px;transition:.3s}
+.jrn-card .jc-top{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.jrn-card .jc-ic{font-size:26px}
+.jrn-card .jc-num{font-size:.72rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--brand2)}
+.jrn-card h3{margin:2px 0 0;font-size:1.2rem}
+.jrn-card p{margin:8px 0 0;color:var(--muted);font-size:.96rem}
+.jrn-card .jc-quote{margin-top:12px;font-style:italic;color:var(--ink);background:var(--bg2);border-left:3px solid var(--brand);border-radius:8px;padding:8px 12px;font-size:.92rem}
+.jrn-ctrl{display:flex;gap:12px;justify-content:center;align-items:center;margin-top:16px}
+.jrn-ctrl button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);font-family:inherit;font-weight:700;font-size:.9rem;padding:10px 20px;border-radius:11px;cursor:pointer;transition:.2s}
+.jrn-ctrl button:hover:not(:disabled){border-color:var(--brand);transform:translateY(-2px)}
+.jrn-ctrl button:disabled{opacity:.4;cursor:default}
+.jrn-ctrl .jc-count{font-size:.85rem;color:var(--muted);min-width:52px;text-align:center;font-weight:600}
+@media(max-width:640px){.jrn-marker span{display:none}}
+
+/* slides deck */
+.deck{position:relative;background:var(--card);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;box-shadow:var(--shadow)}
+.slides-wrap{position:relative;aspect-ratio:16/9;min-height:300px}
+.slide{position:absolute;inset:0;padding:clamp(24px,4vw,52px);display:none;flex-direction:column;justify-content:center;gap:14px}
+.slide.active{display:flex;animation:fade .4s ease}
+.slide .kicker{font-size:.8rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--brand2)}
+.slide h3{font-size:clamp(1.4rem,3.2vw,2.2rem);font-weight:800;margin:0}
+.slide p{color:var(--muted);font-size:clamp(1rem,1.6vw,1.15rem);margin:0;max-width:760px}
+.slide ul{margin:6px 0 0;padding:0;list-style:none;display:grid;gap:11px}
+.slide ul li{padding-left:28px;position:relative;font-size:clamp(.95rem,1.5vw,1.08rem)}
+.slide ul li:before{content:"◆";position:absolute;left:0;color:var(--brand)}
+.deck-ctrl{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;border-top:1px solid var(--line);background:var(--bg2)}
+.deck-ctrl button{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);font-family:inherit;font-weight:700;font-size:.86rem;padding:9px 16px;border-radius:10px;cursor:pointer;transition:.2s}
+.deck-ctrl button:hover{border-color:var(--brand);transform:translateY(-1px)}
+.dots{display:flex;gap:7px;flex-wrap:wrap}
+.dots i{width:9px;height:9px;border-radius:50%;background:var(--line);cursor:pointer;transition:.2s}
+.dots i.on{background:var(--brand);transform:scale(1.3)}
+.deck:fullscreen{background:var(--bg)}
+.deck:fullscreen .slides-wrap{height:calc(100vh - 60px);aspect-ratio:auto}
+
+/* library + video */
+.lib-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px}
+.lib-card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px;cursor:pointer;transition:.2s;display:flex;flex-direction:column;gap:8px;text-decoration:none}
+.lib-card:hover{border-color:var(--brand);transform:translateY(-3px);box-shadow:var(--shadow)}
+.lib-card .lic{font-size:24px}
+.lib-card b{font-size:1rem}
+.lib-card small{color:var(--muted);font-size:.85rem}
+.lib-card .tagd{margin-top:auto;font-size:.72rem;font-weight:700;color:var(--brand2);text-transform:uppercase;letter-spacing:.06em}
+.video-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+.vid-item{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;transition:.2s}
+.vid-item:hover{border-color:var(--brand);transform:translateY(-2px)}
+.vid-item .vid-thumb{aspect-ratio:16/9;background:radial-gradient(120% 120% at 50% 35%,var(--card2),var(--bg));display:grid;place-items:center;font-size:2rem;color:var(--brand)}
+.vid-item .vid-title{font-weight:700;font-size:.9rem;padding:10px 12px 2px}
+.vid-item .vid-meta{font-size:.78rem;color:var(--muted);padding:0 12px 12px}
+
+/* progress widget */
+.prog{position:fixed;right:20px;bottom:20px;z-index:45;background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--line);border-radius:16px;padding:12px 16px;display:flex;align-items:center;gap:12px;box-shadow:var(--shadow)}
+.ring{--p:0;width:46px;height:46px;border-radius:50%;background:conic-gradient(var(--brand) calc(var(--p)*1%),rgba(255,255,255,.1) 0);display:grid;place-items:center}
+.ring i{width:34px;height:34px;border-radius:50%;background:var(--bg);display:grid;place-items:center;font-style:normal;font-size:.72rem;font-weight:800}
+.prog small{font-size:.74rem;color:var(--muted);max-width:120px}
+
+footer{border-top:1px solid var(--line);padding:46px 0;color:var(--muted);font-size:.9rem}
+footer .wrap{text-align:center}
+footer .logo{justify-content:center}
+.reveal{opacity:0;transform:translateY(26px);transition:.7s cubic-bezier(.2,.7,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:880px){
+  .cols-2,.cols-3,.cols-4,.compare,.prof-body{grid-template-columns:1fr}
+  .nav-links{display:none;position:absolute;top:64px;left:0;right:0;flex-direction:column;background:var(--bg2);padding:14px;border-bottom:1px solid var(--line);z-index:55}
+  .nav-links.show{display:flex}
+  .burger{display:grid}
+  .level-hint{display:none}
+  .prog small{display:none}
+}
 </style>
 </head>
 <body>
+<div id="bar"></div>
 
+<!-- ================= NAV ================= -->
 <nav>
   <div class="wrap nav-in">
-    <div class="logo"><span class="mark">СКС</span> Академия «Кол-центр»</div>
-    <a class="nav-back" href="../portal/">← На портал</a>
+    <div class="logo">
+      <span class="mark">СКС</span>
+      <span class="lg-txt"><b>Академия «Кол-центр»</b><small>Группа компаний СКС</small></span>
+    </div>
+    <div class="nav-tools">
+      <a class="nav-back" href="../portal/">← На портал</a>
+      <button class="icon-btn burger" id="burger" aria-label="Меню">☰</button>
+      <button class="icon-btn" id="theme" aria-label="Смена темы">🌙</button>
+    </div>
+    <div class="nav-links" id="navlinks">
+      <a href="#about">Что это</a>
+      <a href="#journey">Путь клиента</a>
+      <a href="#onramp">Для новичков</a>
+      <a href="#program">Программа</a>
+      <a href="#slides">Презентация</a>
+      <a href="#roles">Направления</a>
+      <a href="#scripts">Скрипты</a>
+      <a href="#service-standards">Стандарты обслуживания</a>
+      <a href="#kb">База знаний</a>
+      <a href="#quiz">Проверка</a>
+      <a href="#exam">Экзамен</a>
+    </div>
   </div>
 </nav>
 
-<header class="hero">
+<!-- level switcher -->
+<div class="levelbar">
   <div class="wrap">
-    <div class="pill">☎️ Структурное подразделение</div>
-    <h1>Академия <span class="grad-text">«Кол-центр»</span></h1>
-    <p class="lead">Обучение операторов кол-центра: скрипты, работа с обращениями, стандарты общения с клиентом. Здесь будут материалы для адаптации новых сотрудников подразделения.</p>
+    <span class="lbl">Мой уровень:</span>
+    <div class="seg" id="levelseg">
+      <button data-lv="1" aria-pressed="true">🌱 Новичок</button>
+      <button data-lv="2" aria-pressed="false">⚡ Уверенный</button>
+      <button data-lv="3" aria-pressed="false">🚀 Наставник</button>
+    </div>
+    <span class="level-hint">Переключай уровень — глубина материала меняется по всему порталу.</span>
+  </div>
+</div>
+
+<!-- ================= HERO ================= -->
+<header class="hero">
+  <div class="wrap" style="text-align:center">
+    <span class="pill">☎️ Структурное подразделение · Группа компаний СКС</span>
+    <h1>Всё для работы <span class="grad-text">оператора</span><br>колл-центра — в одном месте</h1>
+    <p class="lead">Программа обучения, готовые скрипты разговоров, стандарты качества и база знаний.
+    Материал разбит на три уровня — от первого дня новичка до наставника, который обучает команду.</p>
+
+    <div class="warnbar" style="max-width:760px;margin:26px auto 0">💡 Первый день на линии? <b>Начни с раздела «Для новичков» — спокойно и по шагам.</b></div>
+
+    <div class="cta" style="justify-content:center">
+      <a href="#program" class="btn primary">Смотреть программу обучения →</a>
+      <a href="#scripts" class="btn ghost">Открыть скрипты разговоров</a>
+      <a href="https://gutorovadarclinic102-gif.github.io/sks-kc-academy/" target="_blank" rel="noopener" class="btn ghost">🎓 Проверь свои знания!</a>
+    </div>
+
+    <div class="evo" style="max-width:900px;margin:34px auto 0">
+      <div class="evo-item now"><span class="tag">старт</span><b>🌱 Новичок</b><small>учу продукт, скрипты и систему</small></div>
+      <div class="evo-arrow">→</div>
+      <div class="evo-item now"><span class="tag">рост</span><b>⚡ Уверенный</b><small>веду сложные звонки, держу KPI</small></div>
+      <div class="evo-arrow">→</div>
+      <div class="evo-item future"><span class="tag">профи</span><b>🚀 Наставник</b><small>обучаю новичков и улучшаю процессы</small></div>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>3</b><span>уровня подготовки</span></div>
+      <div class="stat"><b>10+</b><span>готовых скриптов</span></div>
+      <div class="stat"><b>1</b><span>единая база знаний</span></div>
+    </div>
   </div>
 </header>
 
-<section>
+<!-- ================= ABOUT ================= -->
+<section id="about">
   <div class="wrap">
-    <div class="eyebrow" style="text-align:center">Что здесь будет</div>
-    <h2 style="text-align:center">Разделы академии</h2>
-    <div class="grid">
-      <div class="card"><div class="ic">📞</div><h3>Скрипты разговоров</h3><p>Готовые сценарии для типовых обращений и ситуаций.</p></div>
-      <div class="card"><div class="ic">🎧</div><h3>Стандарты общения</h3><p>Как говорить с клиентом: тон, структура, работа с возражениями.</p></div>
-      <div class="card"><div class="ic">🎬</div><h3>Обучающие ролики</h3><p>Видео-разборы звонков и лучшие практики.</p></div>
-      <div class="card"><div class="ic">📝</div><h3>Тесты и самопроверка</h3><p>Проверь себя после прохождения материалов.</p></div>
+    <div class="section-head reveal">
+      <div class="eyebrow">С чего всё начинается</div>
+      <h2>Что такое Академия «Кол-центр»</h2>
+      <p>Это внутренний портал для сотрудников колл-центра СКС: единый источник правды по продукту, скриптам,
+      стандартам и процессам. Всё, что раньше жило в разрозненных файлах, чатах и головах — собрано в одном месте
+      и всегда под рукой.</p>
     </div>
-
-    <div class="tip">🚧 <b>Страница-заготовка.</b> Это стартовый каркас в фирменном стиле СКС — куратор подразделения наполняет его материалами. Дизайн-токены (цвета, шрифты) уже совпадают с порталом и Академией «Claude».</div>
+    <div class="grid cols-4">
+      <div class="card reveal"><div class="ic">📚</div><h3>Единая программа</h3><p>Понятный путь обучения: что учить в первый день, первую неделю и дальше.</p></div>
+      <div class="card reveal"><div class="ic">💬</div><h3>Готовые скрипты</h3><p>Речевые модули для приветствия, продажи, возражений и завершения звонка.</p></div>
+      <div class="card reveal"><div class="ic">✅</div><h3>Стандарты качества</h3><p>Как звучит хороший звонок: чек-листы, критерии оценки, частые ошибки.</p></div>
+      <div class="card reveal"><div class="ic">🗂️</div><h3>База знаний</h3><p>Ответы на частые вопросы клиентов, регламенты и инструкции по системам.</p></div>
+    </div>
   </div>
 </section>
 
+<!-- ================= CLIENT JOURNEY ================= -->
+<section id="journey">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">От звонка до сделки · воронка КЦ</div>
+      <h2>Путь нашего клиента</h2>
+      <p>Шесть этапов — от тревожного звонка до сделки с деньгами. Листайте этапы и смотрите, как наш клиент проходит путь: грустный с телефоном в начале — и счастливый с деньгами в конце.</p>
+    </div>
+
+    <div class="reveal">
+      <div class="jrn-track" id="jrnTrack">
+        <div class="jrn-line"><div class="jrn-fill" id="jrnFill"></div></div>
+        <div class="jrn-char" id="jrnChar" style="left:4%">
+          <svg viewBox="0 0 120 128" width="112" height="120" xmlns="http://www.w3.org/2000/svg">
+            <g class="bob">
+              <path d="M32 48 Q28 12 60 10 Q92 12 88 48 Q92 74 80 86 L78 58 Q80 36 60 34 Q40 36 42 58 L40 86 Q28 74 32 48 Z" fill="#7d4e2c"/>
+              <path d="M26 128 Q24 86 46 76 L74 76 Q96 86 94 128 Z" fill="#f2ead9"/>
+              <g id="gArmRest">
+                <path d="M42 84 Q32 104 36 122" stroke="#f2ead9" stroke-width="13" fill="none" stroke-linecap="round"/>
+                <path d="M80 84 Q90 104 84 122" stroke="#f2ead9" stroke-width="13" fill="none" stroke-linecap="round"/>
+              </g>
+              <g id="gArmPhone" opacity="0">
+                <path d="M42 84 Q32 102 36 122" stroke="#f2ead9" stroke-width="13" fill="none" stroke-linecap="round"/>
+                <path d="M80 86 Q94 66 82 46" stroke="#f2ead9" stroke-width="13" fill="none" stroke-linecap="round"/>
+                <g transform="rotate(18 82 40)"><rect x="76" y="26" width="15" height="26" rx="4" fill="#333"/><rect x="78" y="30" width="11" height="18" rx="2" fill="#e6371f"/><text x="83.5" y="42" font-size="6" text-anchor="middle" fill="#fff" font-family="Arial" font-weight="bold">СКС</text></g>
+              </g>
+              <g id="gArmUp" opacity="0">
+                <path d="M44 84 Q30 58 42 34" stroke="#f2ead9" stroke-width="13" fill="none" stroke-linecap="round"/>
+                <path d="M78 84 Q92 58 80 34" stroke="#f2ead9" stroke-width="13" fill="none" stroke-linecap="round"/>
+                <g transform="rotate(-16 40 30)"><rect x="28" y="22" width="24" height="15" rx="2" fill="#3fae74" stroke="#2c8a58"/><text x="40" y="34" font-size="10" text-anchor="middle" fill="#eafff2" font-family="Arial" font-weight="bold">₽</text></g>
+                <g transform="rotate(16 82 30)"><rect x="70" y="22" width="24" height="15" rx="2" fill="#3fae74" stroke="#2c8a58"/><text x="82" y="34" font-size="10" text-anchor="middle" fill="#eafff2" font-family="Arial" font-weight="bold">₽</text></g>
+                <g fill="#e0a32a"><path d="M20 20 l1.6 3.4 3.4 1.6 -3.4 1.6 -1.6 3.4 -1.6 -3.4 -3.4 -1.6 3.4 -1.6 z"/><path d="M98 24 l1.3 2.7 2.7 1.3 -2.7 1.3 -1.3 2.7 -1.3 -2.7 -2.7 -1.3 2.7 -1.3 z"/></g>
+              </g>
+              <rect x="53" y="60" width="14" height="17" rx="6" fill="#e3a877"/>
+              <circle cx="37" cy="46" r="4.5" fill="#eeb887"/><circle cx="83" cy="46" r="4.5" fill="#eeb887"/>
+              <circle cx="60" cy="44" r="24" fill="#eeb887"/>
+              <path d="M37 46 Q34 16 60 15 Q86 16 83 46 Q84 34 72 30 Q66 24 60 27 Q54 24 48 30 Q36 34 37 46 Z" fill="#8a5a34"/>
+              <ellipse id="jCheekL" cx="49" cy="50" rx="4.5" ry="3" fill="#e8888a" opacity="0"/>
+              <ellipse id="jCheekR" cx="71" cy="50" rx="4.5" ry="3" fill="#e8888a" opacity="0"/>
+              <path id="jBrowL" d="M47 35 L57 32" stroke="#5a3a22" stroke-width="2.2" stroke-linecap="round"/>
+              <path id="jBrowR" d="M73 35 L63 32" stroke="#5a3a22" stroke-width="2.2" stroke-linecap="round"/>
+              <g id="gEyesOpen"><circle cx="51" cy="43" r="2.7" fill="#4a3526"/><circle cx="69" cy="43" r="2.7" fill="#4a3526"/></g>
+              <g id="gEyesHappy" opacity="0"><path d="M46 43 Q51 47 56 43" stroke="#4a3526" stroke-width="2.4" fill="none" stroke-linecap="round"/><path d="M64 43 Q69 47 74 43" stroke="#4a3526" stroke-width="2.4" fill="none" stroke-linecap="round"/></g>
+              <path d="M59 45 Q57 50 61 50" stroke="#d59b6a" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+              <path id="jMouth" d="M50 58 Q60 50 70 58" stroke="#9a4f4f" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+
+      <div class="jrn-card">
+        <div class="jc-top"><span class="jc-ic" id="jcIc">📞</span><div><div class="jc-num" id="jcNum">Шаг 1 из 5</div><h3 id="jcTitle">…</h3></div></div>
+        <p id="jcText">…</p>
+        <div class="jc-quote" id="jcQuote">…</div>
+      </div>
+
+      <div class="jrn-ctrl">
+        <button id="jrnPrev">← Назад</button>
+        <span class="jc-count" id="jrnCount">1 / 5</span>
+        <button id="jrnNext">Далее →</button>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+(function(){
+  var stages=[
+    {ic:"📞",label:"Обращение",title:"«Меня тепло встретили»",
+     text:"Клиент обращается — звонок, заявка на сайте или сообщение в чат. Милый голос оператора приветствует и спрашивает, чем может помочь.",
+     quote:"«Позвонил — и услышал приятный, доброжелательный голос.»"},
+    {ic:"🔁",label:"Не дозвонился",title:"«Со мной всегда свяжутся»",
+     text:"Если клиент не дозвонился — ему всегда перезвонят и направят сообщение. Ни одно обращение не теряется.",
+     quote:"«Не бросили — перезвонили и написали.»"},
+    {ic:"💬",label:"Консультация",title:"«Меня поняли и всё показали»",
+     text:"Оператор выявил потребность клиента, презентовал продукт и донёс ценность компании.",
+     quote:"«Поняли, что мне нужно, и показали, чем компания лучше.»"},
+    {ic:"🗺️",label:"Приглашение",title:"«Меня ждут в отделении»",
+     text:"Доводим до визита: подтверждаем адрес, время и что взять с собой (паспорт и предмет), присылаем сообщение с адресом и картой, напоминаем за 1–2 часа.",
+     quote:"«Прислали адрес и напомнили — удобно.»"},
+    {ic:"🏢",label:"Визит",title:"«Пришёл — осмотрели и оценили»",
+     text:"Отмечаем факт визита в CRM. Товаровед проводит осмотр и точную оценку. Если вдруг не дошёл — перезваниваем и выясняем причину.",
+     quote:"«Всё честно, как и говорили по телефону.»"},
+    {ic:"💰",label:"Сделка",title:"«Деньги на руках — и обо мне помнят!»",
+     text:"Заём выдан. SMS с благодарностью, а дальше — заботливые касания: напоминание к дате оплаты, к концу льготного периода и выгодное предложение через 2–3 месяца. Круг замыкается.",
+     quote:"«Получил деньги и почувствовал заботу.»"}
+  ];
+  var n=stages.length, pos=[4,22.4,40.8,59.2,77.6,96], cur=0;
+  var mouths=["M50 58 Q60 50 70 58","M51 57 Q60 53 69 57","M51 56 L69 56","M50 55 Q60 61 70 55","M48 54 Q60 64 72 54","M47 53 Q60 67 73 53"];
+  var track=document.getElementById('jrnTrack'),fill=document.getElementById('jrnFill'),
+      chr=document.getElementById('jrnChar'),
+      mouth=document.getElementById('jMouth'),chL=document.getElementById('jCheekL'),chR=document.getElementById('jCheekR'),
+      browL=document.getElementById('jBrowL'),browR=document.getElementById('jBrowR'),
+      gRest=document.getElementById('gArmRest'),gPhone=document.getElementById('gArmPhone'),gUp=document.getElementById('gArmUp'),
+      eOpen=document.getElementById('gEyesOpen'),eHappy=document.getElementById('gEyesHappy'),
+      elIc=document.getElementById('jcIc'),elNum=document.getElementById('jcNum'),elTitle=document.getElementById('jcTitle'),
+      elText=document.getElementById('jcText'),elQuote=document.getElementById('jcQuote'),
+      count=document.getElementById('jrnCount'),prev=document.getElementById('jrnPrev'),next=document.getElementById('jrnNext');
+  var markers=[];
+  stages.forEach(function(s,i){
+    var m=document.createElement('div');
+    m.className='jrn-marker';m.style.left=pos[i]+'%';
+    m.innerHTML='<span>'+s.label+'</span>';
+    m.addEventListener('click',function(){go(i);});
+    track.appendChild(m);markers.push(m);
+  });
+  function go(i){
+    cur=Math.max(0,Math.min(n-1,i));
+    var s=stages[cur];
+    fill.style.width=(cur/(n-1)*100)+'%';
+    chr.style.left=pos[cur]+'%';
+    markers.forEach(function(m,j){m.classList.toggle('done',j<=cur);m.classList.toggle('active',j===cur);});
+    elIc.textContent=s.ic;elNum.textContent='Шаг '+(cur+1)+' из '+n;elTitle.textContent=s.title;
+    elText.textContent=s.text;elQuote.textContent=s.quote;
+    count.textContent=(cur+1)+' / '+n;
+    prev.disabled=cur===0;next.disabled=cur===n-1;
+    mouth.setAttribute('d',mouths[cur]);
+    var mm=cur/(n-1);
+    chL.setAttribute('opacity',(mm*0.9).toFixed(2));chR.setAttribute('opacity',(mm*0.9).toFixed(2));
+    if(cur<=1){browL.setAttribute('d','M47 35 L57 32');browR.setAttribute('d','M73 35 L63 32');}
+    else if(cur<=3){browL.setAttribute('d','M48 34 L57 34');browR.setAttribute('d','M72 34 L63 34');}
+    else{browL.setAttribute('d','M48 33 L57 33.5');browR.setAttribute('d','M72 33 L63 33.5');}
+    var happy=cur>=4;
+    eOpen.setAttribute('opacity',happy?'0':'1');
+    eHappy.setAttribute('opacity',happy?'1':'0');
+    var phone=cur<=1, up=cur===n-1;
+    gPhone.setAttribute('opacity',phone?'1':'0');
+    gUp.setAttribute('opacity',up?'1':'0');
+    gRest.setAttribute('opacity',(!phone&&!up)?'1':'0');
+  }
+  prev.addEventListener('click',function(){go(cur-1);});
+  next.addEventListener('click',function(){go(cur+1);});
+  go(0);
+})();
+</script>
+
+<!-- ================= ONRAMP ================= -->
+<section id="onramp">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Без стресса · для новичков</div>
+      <h2>Твой первый день на линии</h2>
+      <p>Не нужно знать всё сразу. Пройди по шагам — и уже к концу дня ты сможешь принять первый звонок уверенно.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card reveal"><div class="ic">👋</div><h3>Познакомься с продуктом</h3><p>Что мы предлагаем клиентам, кто наша аудитория и какие вопросы приходят чаще всего. <em>[Отредактируйте под ваш продукт]</em></p></div>
+      <div class="card reveal"><div class="ic">🖥️</div><h3>Освой рабочие системы</h3><p>Как войти в CRM/телефонию, где смотреть карточку клиента и историю обращений. <em>[Вставьте инструкции]</em></p></div>
+      <div class="card reveal"><div class="ic">📞</div><h3>Прими первый звонок</h3><p>Открой раздел «Скрипты», держи под рукой приветствие и работай по шаблону — остальное придёт с практикой.</p></div>
+    </div>
+    <div class="steps" style="margin-top:22px">
+      <div class="step reveal"><div><h3>Изучи приветствие и структуру звонка</h3><p>Раздел «Скрипты» → «Приветствие». Проговори вслух 2–3 раза.</p></div></div>
+      <div class="step reveal"><div><h3>Прочитай базу знаний по частым вопросам</h3><p>Топ-10 вопросов клиентов и правильные ответы на них.</p></div></div>
+      <div class="step reveal"><div><h3>Посмотри стандарты качества</h3><p>Чтобы с первого звонка звучать в едином стиле компании.</p></div></div>
+      <div class="step reveal"><div><h3>Пройди проверку знаний</h3><p>Короткий тест в конце портала — чтобы убедиться, что всё понятно.</p></div></div>
+    </div>
+    <div class="tip reveal">💡 <b>Совет наставника:</b> держи этот портал открытым в соседней вкладке во время первых смен — подсматривать не стыдно, это нормально.</div>
+  </div>
+</section>
+
+<!-- ================= PROGRAM ================= -->
+<section id="program">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Что ты освоишь</div>
+      <h2>Программа обучения</h2>
+      <p>Базовое нужно всем, продвинутое открывается с опытом. Значки показывают уровень материала.</p>
+    </div>
+    <div class="grid cols-3">
+      <div class="card reveal"><div class="ic">📖</div><h3>Продукт и услуги <span class="badge base">база</span></h3><p>Что мы предлагаем, условия, преимущества. Как объяснить ценность простыми словами.</p></div>
+      <div class="card reveal"><div class="ic">💬</div><h3>Скрипты разговора <span class="badge base">база</span></h3><p>Приветствие, выявление потребности, презентация, завершение. Речевые модули на каждый этап.</p></div>
+      <div class="card reveal"><div class="ic">🖥️</div><h3>Работа в CRM <span class="badge base">база</span></h3><p>Карточка клиента, фиксация обращения, статусы, история. <em>[Вставьте инструкции по вашей системе]</em></p></div>
+      <div class="card reveal"><div class="ic">🛡️</div><h3>Работа с возражениями <span class="badge lv2">уровень 2</span></h3><p>«Дорого», «подумаю», «мне неудобно» — как отвечать спокойно и по делу.</p></div>
+      <div class="card reveal"><div class="ic">📈</div><h3>KPI и метрики <span class="badge lv2">уровень 2</span></h3><p>Что такое AHT, конверсия, FCR и как на них влиять, не жертвуя качеством.</p></div>
+      <div class="card reveal"><div class="ic">😤</div><h3>Сложные клиенты <span class="badge lv2">уровень 2</span></h3><p>Как удержать спокойствие с раздражённым собеседником и вернуть разговор в русло.</p></div>
+      <div class="card reveal"><div class="ic">🎓</div><h3>Наставничество <span class="badge lv3">уровень 3</span></h3><p>Как обучать новичков, слушать звонки и давать полезную обратную связь.</p></div>
+      <div class="card reveal"><div class="ic">🔎</div><h3>Разбор звонков <span class="badge lv3">уровень 3</span></h3><p>Оценка по чек-листу, поиск точек роста, работа над ошибками команды.</p></div>
+      <div class="card reveal"><div class="ic">⚙️</div><h3>Улучшение процессов <span class="badge lv3">уровень 3</span> <span class="badge new">ново</span></h3><p>Как предлагать изменения в скриптах и регламентах на основе реальных звонков.</p></div>
+    </div>
+    <div class="tip reveal">💡 Разделы и уровни можно расширять — портал собран модульно. <em>[Добавляйте карточки под свои задачи]</em></div>
+  </div>
+</section>
+
+<!-- ================= SLIDES ================= -->
+<section id="slides">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Презентация</div>
+      <h2>Курс на слайдах</h2>
+      <p>Краткая версия для показа на планёрке или экране. Листай стрелками ← → или кнопками; можно открыть на весь экран.</p>
+    </div>
+    <div class="deck reveal" id="deck">
+      <div class="slides-wrap" id="slidesWrap">
+        <div class="slide active">
+          <div class="kicker">Академия «Кол-центр» · СКС</div>
+          <h3>Хороший звонок — это система, а не талант</h3>
+          <p>Любой оператор может звучать уверенно, если знает продукт, держит структуру разговора и следует стандартам. Этому и учит портал.</p>
+        </div>
+        <div class="slide">
+          <div class="kicker">Три уровня — заходи со своего</div>
+          <h3>Новичок → Уверенный → Наставник</h3>
+          <ul>
+            <li><b>🌱 Новичок</b> — учу продукт, скрипты и систему, принимаю первые звонки.</li>
+            <li><b>⚡ Уверенный</b> — веду сложные разговоры, работаю с возражениями, держу KPI.</li>
+            <li><b>🚀 Наставник</b> — обучаю новичков и улучшаю процессы.</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <div class="kicker">Структура звонка</div>
+          <h3>Пять этапов любого разговора</h3>
+          <ul>
+            <li>Приветствие и установление контакта</li>
+            <li>Выявление потребности — слушаем и уточняем</li>
+            <li>Презентация решения на языке клиента</li>
+            <li>Работа с возражениями</li>
+            <li>Завершение и фиксация в CRM</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <div class="kicker">Стандарт качества</div>
+          <h3>Как звучит звонок СКС</h3>
+          <ul>
+            <li>Доброжелательный тон и обращение по имени</li>
+            <li>Чёткая речь без слов-паразитов</li>
+            <li>Ответ по существу, без «я не знаю»</li>
+            <li>Клиент понимает следующий шаг</li>
+          </ul>
+        </div>
+        <div class="slide">
+          <div class="kicker">Старт</div>
+          <h3>Как начать за 4 шага</h3>
+          <ul>
+            <li>Пройди раздел «Для новичков»</li>
+            <li>Выучи приветствие из «Скриптов»</li>
+            <li>Прочитай топ вопросов в «Базе знаний»</li>
+            <li>Пройди «Проверку знаний»</li>
+          </ul>
+        </div>
+      </div>
+      <div class="deck-ctrl">
+        <button id="prevSlide">← Назад</button>
+        <div class="dots" id="dots"></div>
+        <button id="fsSlide">⛶ Во весь экран</button>
+        <button id="nextSlide">Вперёд →</button>
+      </div>
+    </div>
+    <div class="tip reveal">💡 Добавить или изменить слайды просто: это блоки <code>&lt;div class="slide"&gt;</code> в коде страницы.</div>
+  </div>
+</section>
+
+<!-- ================= ROLES ================= -->
+<section id="roles">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Направления работы</div>
+      <h2>Блоки колл-центра</h2>
+      <p>Колл-центр разделён по цели контакта на два блока — операционный и сервисный, плюс отдельное направление по возврату клиентов. Нажми на вкладку, чтобы увидеть состав задач и скрипты.</p>
+    </div>
+
+    <div class="grid cols-2 reveal" style="margin-bottom:22px">
+      <div class="card"><div class="ic">⚙️</div><h3>Операционный блок</h3><p>Всё, что связано с входящими запросами (консультация, оценка), перераспределением на отделы, деньгами, конверсией и возвратом повторных клиентов от входящего потока.</p></div>
+      <div class="card"><div class="ic">🎧</div><h3>Сервисный блок</h3><p>Вопросы действующих клиентов (ЗБ, МП, график/адрес ОП), возврат повторных клиентов от исходящего потока, качество обслуживания, лояльность, опыт клиента и возврат спящих.</p></div>
+    </div>
+
+    <div class="std-note reveal" style="margin-bottom:26px">👥 <b>Оргструктура (8 человек):</b> операционный блок — 1 старший оператор и 3 оператора; сервисный блок — 1 старший оператор и 3 оператора. <b>Взаимозаменяемость (критично):</b> в часы пик 1 сервисный оператор переключается в операционный; при перегрузе жалоб 1 операционный помогает сервису. Гибридная оргструктура: разделение по функциям + взаимозаменяемость.</div>
+    <div class="prof-tabs reveal" id="profTabs">
+      <div class="prof-tab active" data-p="0">⚙️ Операционный блок</div>
+      <div class="prof-tab" data-p="1">🎧 Сервисный блок</div>
+      <div class="prof-tab" data-p="2">🧭 Распределение звонков</div>
+      <div class="prof-tab" data-p="3">🔄 Возврат клиентов</div>
+    </div>
+    <div class="prof-panel active">
+      <div class="prof-body">
+        <div>
+          <h3>Фокус: консультация, привлечение и удержание через действия, перераспределение на отделы</h3>
+          <ul class="task-list">
+            <li>Приём входящих звонков (вопросы/помощь/распределение на отделы) — только если вопрос влияет на платёж, пролонгацию, %, выкуп, штрафы, жалобы, заявления действующих клиентов, МП, адрес/график ОП</li>
+            <li>Консультация первичных клиентов — продажа: выявление потребностей, презентация продукта, онлайн-оценка, отработка возражений, доведение до ОП</li>
+            <li>Консультация повторных клиентов — ускоренная продажа, возврат клиента в ОП</li>
+            <li>Исходящие звонки с напоминанием о платежах — прямая работа с дебиторской задолженностью</li>
+            <li>Открытая линия (чаты): действующие, первичные и повторные клиенты</li>
+          </ul>
+        </div>
+        <div class="prompt">
+          <div class="prompt-top"><span>Шпаргалка · операционный</span><button class="copy" data-c="ОПЕРАЦИОННЫЙ: оформить · повторный займ · оценка · сумма/срок к оплате">⧉ Копировать</button></div>
+          <pre>ОПЕРАЦИОННЫЙ:
+— оформить
+— повторный займ
+— оценка
+— сумма / срок к оплате
+
+Состав: 1 старший + 3 оператора</pre>
+        </div>
+      </div>
+    </div>
+    <div class="prof-panel">
+      <div class="prof-body">
+        <div>
+          <h3>Фокус: удовлетворённость, решение проблем, обработка жалоб, удержание, возврат спящих</h3>
+          <ul class="task-list">
+            <li>Приём входящих по действующим договорам — если вопрос влияет на платёж, пролонгацию, %, выкуп, штрафы, МП, адрес/график ОП</li>
+            <li>Приём входящих с жалобами/благодарностями — сервисная зона: жалобы, заявления, документация</li>
+            <li>Открытая линия с действующими клиентами</li>
+            <li>Исходящие звонки по спящей базе — формирование УТП, работа с триггерами, возврат спящего клиента в ОП</li>
+            <li>Исходящие звонки контроля качества — оценка сервиса, обслуживания, сравнение с конкурентами</li>
+          </ul>
+        </div>
+        <div class="prompt">
+          <div class="prompt-top"><span>Шпаргалка · сервисный</span><button class="copy" data-c="СЕРВИСНЫЙ: объяснить · разобраться · жалоба · заявление · продлить/перенести срок · непонятно · спящие клиенты">⧉ Копировать</button></div>
+          <pre>СЕРВИСНЫЙ:
+— объяснить
+— разобраться
+— жалоба / заявление
+— продлить / перенести срок оплаты
+— непонятно
+— спящие клиенты
+
+Состав: 1 старший + 3 оператора</pre>
+        </div>
+      </div>
+    </div>
+    <div class="prof-panel">
+      <h3>Цель: за короткое время понять, куда направить клиента</h3>
+      <div class="std-note">💰 Деньги / продажа / оценка / риск оплаты / конец ЛП → <b>операционный блок</b>.&nbsp;&nbsp; 😟 Эмоция / жалоба / разъяснение → <b>сервисный блок</b>. Разделение начинается уже на приветствии: приём золота/техники/оценка — всегда операционный; действующий клиент — идём дальше.</div>
+      <div class="grid cols-2">
+        <div class="prompt">
+          <div class="prompt-top"><span>Приветствие</span><button class="copy" data-c="Здравствуйте! Группа Компаний СКС! Меня зовут, [Имя]! Чем я могу Вам помочь?">⧉ Копировать</button></div>
+          <pre>Здравствуйте! Группа Компаний СКС!
+Меня зовут, [Имя]! Чем я могу Вам помочь?</pre>
+        </div>
+        <div class="prompt">
+          <div class="prompt-top"><span>Уточнение цели</span><button class="copy" data-c="Скажите, пожалуйста, у Вас вопрос по оплате, условиям или возникла какая-то сложность?">⧉ Копировать</button></div>
+          <pre>Скажите, пожалуйста, у Вас вопрос по оплате,
+условиям или возникла какая-то сложность?</pre>
+        </div>
+      </div>
+      <div class="grid cols-2" style="margin-top:6px">
+        <div class="std-block"><b>→ В операционный блок, если слышим:</b>
+          <ul>
+            <li>«хочу оформить / оценить / узнать условия»</li>
+            <li>«сколько платить / когда платить»</li>
+            <li>«не успеваю оплатить»</li>
+            <li>«какая сумма долга»</li>
+            <li>«хочу ещё займ»</li>
+          </ul>
+        </div>
+        <div class="std-block"><b>→ В сервисный блок, если слышим:</b>
+          <ul>
+            <li>«не понял / забыл условия», «мне никто не объяснил»</li>
+            <li>«почему так начислили»</li>
+            <li>«можно продлить / выкупить»</li>
+            <li>«проблема с залогом», «не согласен»</li>
+            <li>«жалоба», «выкупить лично / 3-е лицо»</li>
+          </ul>
+        </div>
+      </div>
+      <div class="std-block"><b>Скрипт передачи в сервис</b>
+        <div class="std-script"><em>«Поняла Вас, благодарю за уточнение, сейчас соединю со специалистом, который поможет Вам решить данный вопрос / данную проблему, оставайтесь, пожалуйста, на линии.»</em></div>
+        <p>Важно: не задерживать — сразу переводить.</p>
+      </div>
+      <div class="std-block"><b>Жалобы — приоритет внутри сервиса</b><p>Триггеры: «жалоба», «это безобразие», «буду жаловаться», «вы неправильно сделали».</p>
+        <div class="std-script"><em>«Понимаю Вас! Нам важно разобраться в данной ситуации, поэтому сейчас соединю Вас со специалистом, который поможет Вам, оставайтесь, пожалуйста, на линии.»</em></div>
+      </div>
+      <div class="std-block"><b>⚠️ Серая зона — где теряются деньги</b><p>Примеры: «не понимаю, сколько платить», «дорого, не хочу платить», «объясните условия». Здесь нельзя сразу в сервис — можно потерять клиента.</p>
+        <div class="std-script"><em>«Правильно понимаю, вопрос связан с оплатой или хотите понять, как можно уменьшить платёж?»</em></div>
+        <p>Клиент говорит «да» — в сервисный; «нет, просто объяснить» — оставляем в операционном.</p>
+      </div>
+      <div class="std-note">🚫 <b>Операторам блоков нельзя:</b> консультировать всё подряд без разделения; успокаивать и решать жалобу, если клиент с операционного блока — только перевод в сервисный.</div>
+    </div>
+    <div class="prof-panel">
+      <h3>Возврат клиентов — работа по «спящей базе»</h3>
+      <div class="std-note">🔄 Работаем в воронке «База спящих клиентов». Исходящий звонок в 2 касания; при недозвоне — повтор через 3 часа, затем стадия «Недозвон». Сомневается / «подумает» → стадия «Думает/дожать». Повторно взял трубку → «Повторная связь». <b>Отрабатываем до 3-х НЕТ!</b></div>
+      <div class="steps">
+        <div class="step"><div><h3>1. Открытие</h3><p>«Добрый день, [ИО клиента]. Это [Имя оператора], СКС Ломбард. Вы у нас уже оформляли залог, поэтому звоню лично — для Вас сейчас есть условия выгоднее, чем были раньше.» <em>(пауза)</em> «Скажите, Вы сейчас пользуетесь такими услугами?»</p></div></div>
+        <div class="step"><div><h3>2. Выявление</h3><p>Если «да»: «А сейчас где оформляетесь? Что там для Вас важнее всего?» Если «нет»: «Поняла. А в целом, если нужно быстро получить деньги — такой вариант рассматриваете?»</p></div></div>
+        <div class="step"><div><h3>3. Предложение</h3><p>«Тогда смотрите — для Вас сейчас можно получить больше денег, чем в прошлый раз, и оформление быстрее, потому что Вы уже есть в базе. Скажите, у Вас сейчас есть что-то, что можно рассмотреть? Я сразу посчитаю сумму.»</p></div></div>
+        <div class="step"><div><h3>4. Расчёт</h3><p>«Что планируете заложить?» — после ответа: «Примерно это будет около [сумма]. Точно скажем на месте.»</p></div></div>
+        <div class="step"><div><h3>5. Закрытие</h3><p>«Давайте сделаем просто — Вы подойдёте, мы бесплатно оценим, и Вы решите. Вам удобнее сегодня или завтра зайти?» Если да: «Отлично, приходите в [отделение], всё оформим быстро!»</p></div></div>
+      </div>
+      <h3 style="margin-top:24px">Отработка возражений</h3>
+      <div class="grid cols-2">
+        <div class="std-block"><b>«Не интересно»</b><div class="std-script"><em>«Поняла Вас. Скажите, если за то же изделие можно получить на 20–30% больше, чем раньше — это было бы интересно? Вы бы сравнили?»</em></div></div>
+        <div class="std-block"><b>«Не хочу»</b><div class="std-script"><em>«Хорошо. Тогда коротко — скажите, что у Вас было в прошлый раз, я скажу новую сумму, и Вы уже сами решите.»</em></div></div>
+        <div class="std-block"><b>«Не пользуюсь»</b><div class="std-script"><em>«Поняла Вас. Обычно клиенты возвращаются, когда нужно быстро решить вопрос с деньгами. Если такая ситуация возникнет — Вы бы обратились снова?» Если да: «Тогда давайте хотя бы зафиксируем, на какую сумму можно рассчитывать сейчас?»</em></div></div>
+        <div class="std-block"><b>«Некогда»</b><div class="std-script"><em>«Понимаю, тогда быстро: что у Вас было — золото или техника? Я скажу сумму и отпущу Вас.»</em></div></div>
+        <div class="std-block"><b>«Не устраивают условия»</b><div class="std-script"><em>«Поняла Вас. Что именно не понравилось в прошлый раз?» По сумме: «Сейчас оценка выше — давайте сравним». По %: «Вижу, у Вас есть статус лояльности — оценка будет +__% от рынка и в день __%!»</em></div></div>
+      </div>
+      <div class="tip">💡 <b>Ключевые принципы:</b> короткий заход = меньше сбросов; диалог вместо монолога — выше доверие; оффер после выявления — точное попадание; закрытие через выбор — больше визитов; короткие отработки — не раздражают.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SCRIPTS ================= -->
+<section id="scripts">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Речевые модули · рабочие скрипты</div>
+      <h2>Скрипты разговоров</h2>
+      <p>Четыре готовых сценария на каждый канал: телефон, чат, жалобы и акция по возврату клиентов. Нажми на карточку скрипта, чтобы раскрыть его целиком.</p>
+    </div>
+
+    <div class="scr-index reveal">
+      <div class="si"><span class="si-ic">📞</span><b>Входящий звонок</b><small>Приветствие, оценка, возражения, документы и СВО</small></div>
+      <div class="si"><span class="si-ic">💬</span><b>Ответы в чате</b><small>Открытые линии, 3 касания, онлайн-оценка</small></div>
+      <div class="si"><span class="si-ic">🛡️</span><b>Работа с жалобами</b><small>Как принять, отработать и компенсировать</small></div>
+      <div class="si"><span class="si-ic">🔥</span><b>Акция 10 000 ₽</b><small>Возврат «спящих» — 10 000 ₽ за 10-й грамм</small></div>
+    </div>
+
+    <div id="scriptsList">
+
+      <div class="faq-item reveal"><button class="faq-q">📞 Скрипт «Входящий и пропущенный звонок»<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>Приветствие</b>
+          <div class="prompt"><div class="prompt-top"><span>Приветствие</span><button class="copy" data-c="Здравствуйте! Группа Компаний СКС! Меня зовут, [Имя]! Чем я могу Вам помочь? / Какой у Вас вопрос?">⧉ Копировать</button></div><pre>Здравствуйте! Группа Компаний СКС!
+Меня зовут, [Имя]! Чем я могу Вам помочь?
+/ Какой у Вас вопрос?</pre></div>
+        </div>
+        <div class="std-block"><b>Сбор информации</b><p>Оператор уточняет цель (продать или оформить заём с последующим выкупом) и полностью собирает данные:</p>
+          <ul>
+            <li><b>Золото:</b> какое изделие, проба, вес;</li>
+            <li><b>Техника:</b> модель, марка, память, состояние.</li>
+          </ul>
+          <p>Затем презентует информацию клиенту и добавляет: «Давайте подберём ближайшее отделение для Вас, подскажите адрес?»</p>
+        </div>
+        <div class="std-block"><b>Завершение и приглашение в ОП</b>
+          <div class="std-script"><em>«Ожидаем Вас по адресу [адрес ОП, график работы в этот день]. Возьмите, пожалуйста, паспорт и залоговое имущество. Спасибо, что обратились к нам! Если у Вас появятся вопросы или потребуется дополнительная информация, свяжитесь с нами! Хорошего дня!»</em></div>
+        </div>
+        <div class="std-block"><b>Пропущенный звонок</b>
+          <div class="std-script"><em>«Здравствуйте! Группа Компаний СКС! Меня зовут, [Имя]! У нас был пропущенный звонок от Вас! Подскажите, для Вас ещё актуально? Чем я могу Вам помочь? / Какой у Вас вопрос?»</em></div>
+        </div>
+        <div class="std-block"><b>Вопрос о стоимости за грамм</b><p>Оператор озвучивает минимальную и максимальную стоимость за грамм и сразу уточняет статус лояльности.</p>
+          <div class="std-script"><em>«Подскажите, ранее пользовались услугами нашей компании? У Вас могут быть индивидуальные условия займа, давайте посмотрим! Назовите, пожалуйста, свою ФИО и дату рождения.»</em></div>
+          <p>Если клиенту присвоен статус лояльности — проговариваем условия, считаем на калькуляторе сумму максимальной оценки с учётом повышенной оценки (если есть) и сниженной процентной ставки.</p>
+        </div>
+        <div class="std-block"><b>Возражение «Я подумаю»</b>
+          <div class="std-script"><em>«Подскажите, в чём Вы сомневаетесь, я постараюсь Вам помочь?»</em></div>
+        </div>
+        <div class="std-block"><b>Возражение «В другом месте предлагают выше»</b>
+          <div class="std-script"><em>«Подскажите, Вы звонили или делали оценку на месте? Это очень важно! По телефону точную стоимость Вам никто не скажет, могут пообещать самую высокую стоимость, а на месте оценят намного ниже! У нас высокая оценка по городу, плюс у наших клиентов есть статус лояльности и для них действуют индивидуальные условия, а для держателей бонусных карт на все праздники предусмотрено начисление подарочных бонусов. Советую подойти в отделение — специалист осмотрит изделие, скажет точную стоимость, и Вы уже примете решение.»</em></div>
+        </div>
+        <div class="std-block"><b>Онлайн-оценка техники: «слишком низкая оценка»</b>
+          <div class="std-script"><em>«Понимаю Ваше удивление, что онлайн-оценка получилась ниже ожидаемой. Это не окончательная цена: чтобы узнать точную стоимость, нужен осмотр специалистом и диагностика состояния — это бесплатно и занимает всего 15 минут. Я смогу подобрать ближайшее удобное отделение. Подскажите, пожалуйста, Ваш адрес?»</em></div>
+        </div>
+        <div class="std-note">📄 <b>Документы и вопросы по СВО</b> — блок ниже.</div>
+        <div class="std-block"><b>«Почему нужен именно паспорт?»</b>
+          <p class="scr-q">Оператор: «Подскажите, Вы являетесь гражданином Российской Федерации?»</p>
+          <ul>
+            <li><b>Гражданин РФ:</b> паспорт РФ, временное удостоверение личности (на период замены паспорта) или загранпаспорт.</li>
+            <li><b>Иностранный гражданин:</b> паспорт/удостоверение личности + второй документ, подтверждающий право пребывания в РФ (виза, МК, РВП, вид на жительство).</li>
+            <li><b>Лицо без гражданства:</b> временное удостоверение личности, вид на жительство.</li>
+            <li><b>Беженец:</b> удостоверение беженца.</li>
+          </ul>
+        </div>
+        <div class="std-block"><b>Родственник спрашивает про чужой договор</b>
+          <p class="scr-q">«У мамы/брата/жены заём — сколько осталось / когда льготный период?»</p>
+          <div class="std-script"><em>«В соответствии с требованиями законодательства мы не имеем права разглашать подобную информацию третьим лицам.»</em></div>
+        </div>
+        <div class="std-block"><b>Выкуп по доверенности</b>
+          <div class="std-script"><em>«Да, конечно! В доверенности должно быть прописано, что можно выкупать и закладывать в ломбарды.»</em></div>
+        </div>
+        <div class="std-block"><b>Участник СВО: выкуп / приостановка процентов</b>
+          <p class="scr-q">Оператор: «Подскажите, Вы являетесь членом семьи участника СВО? Залог оформлен до отправки на СВО?»</p>
+          <div class="std-script"><em>Если да: «Да, конечно, Вы можете приостановить начисление процентов / выкупить залоговое имущество. Нужно обратиться в отделение с документом, подтверждающим дату отправки на СВО (контракт либо копия), паспортом и документом, доказывающим, что Вы член семьи.»</em></div>
+          <div class="std-script"><em>Если нет: «В соответствии с требованиями законодательства мы не можем предоставить такие условия третьим лицам, нужно обратиться членам семьи — и мы обязательно поможем.»</em></div>
+        </div>
+        <div class="std-block"><b>Участник СВО: льготные условия</b>
+          <div class="std-script"><em>Если да: «Для Вас предусмотрена возможность оформить кредитные каникулы, при этом проценты продолжают начисляться по ставке 2/3 от среднерыночного значения полной стоимости потребительского кредита на день направления требования. Для оформления подойдите в подразделение с паспортом и копией контракта / документа о дате отправки на СВО.»</em></div>
+          <div class="std-script"><em>Если нет: «К сожалению, не можем предоставить льготные условия, так как Вы не являетесь членом семьи / заём оформлен после отправки на СВО. Это предусмотрено законодательством.»</em></div>
+        </div>
+        <div class="std-block"><b>Родственник погиб на СВО</b>
+          <div class="std-script"><em>«Примите наши искренние соболезнования! Да, конечно! Все начисленные проценты будут аннулированы. Вам нужно подойти в отделение и предоставить паспорт, свидетельство о смерти и право на вступление в наследство. У Вас есть все эти документы?»</em></div>
+        </div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">💬 Скрипт «Ответы клиентам в чате»<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-note">💬 <b>Открытые линии с клиентами.</b> Приветствие и прощание оператор отправляет <b>только если автоматические сообщения не ушли</b> клиенту.</div>
+        <div class="steps">
+          <div class="step"><div><h3>Этап 1 — уточнение и оценка</h3><p>Клиент написал — оператор уточняет все детали (залоговое имущество, на продажу или в залог, город), делает онлайн-оценку и озвучивает её клиенту.</p></div></div>
+          <div class="step"><div><h3>Этап 2 — отработка возражений</h3><p>Если у клиента сомнения или отказ — оператор отрабатывает по скрипту, далее подбирает ближайшее ОП.</p></div></div>
+          <div class="step"><div><h3>Этап 3 — «спящий» чат</h3><p>Если клиент не отвечает после презентации/оценки (сделка не завершена) — чат не закрываем; пишем в конце дня / на следующий день.</p><div class="std-script"><em>«Добрый вечер! Это СКС Ломбард, меня зовут Анна! Вы ранее интересовались нашими услугами, подскажите, пожалуйста, вопрос ещё актуален?»</em></div></div></div>
+          <div class="step"><div><h3>Этап 4 — завершение сделки</h3><p>Оператор завершает сделку, полностью прописывая адрес ОП и время работы (сообщение по шаблону).</p></div></div>
+          <div class="step"><div><h3>Этап 5 — закрытие чата</h3><p>После ответа клиента («Спасибо/Ок/Понял») оператор закрывает чат и проверяет отправку автошаблона. Если клиент не ответил — чат закрывает оператор в конце смены (график 11 часов/день).</p></div></div>
+        </div>
+        <div class="std-note">👐 <b>Три касания до закрытия чата:</b> 1) клиент начал диалог — мы отвечаем; 2) через 2 часа молчит — спрашиваем актуальность; 3) молчит — в конце дня закрываем чат и проверяем автосообщение.</div>
+        <div class="std-block"><b>Приветствие — если авто-сообщения НЕ ушли</b>
+          <div class="std-script"><em>«Добро пожаловать в СКС Ломбард! Благодарим за доверие и обращение. Мы очень заботимся о наших клиентах, поэтому для индивидуального рассмотрения Вашего вопроса, подскажите, чем могу Вам помочь?»</em></div>
+        </div>
+        <div class="std-block"><b>Приветствие — если авто-сообщения ушли</b>
+          <div class="std-script"><em>«Здравствуйте, меня зовут [имя оператора], чем я могу Вам помочь?»</em></div>
+        </div>
+        <div class="std-block"><b>Уточнение и запрос оценки</b>
+          <div class="std-script"><em>«Для индивидуального рассмотрения вопроса уточните, пожалуйста: Вы планируете оформить в залог или продать? Что именно (золото/техника, марка, модель)? Благодарим за доверие! Ожидайте, пожалуйста, стоимость оценки!»</em></div>
+        </div>
+        <div class="std-block"><b>Озвучивание онлайн-оценки</b>
+          <div class="std-script"><em>«Стоимость онлайн-оценки _____, данная сумма не окончательная. Для более точной оценки Вы можете подойти в наше подразделение — это бесплатно и займёт не более 15 минут. Давайте подберём ближайшее отделение для Вас?»</em></div>
+        </div>
+        <div class="std-block"><b>Клиент согласен</b>
+          <div class="std-script"><em>«Ожидаем Вас по адресу [адрес ОП, график работы в этот день]. Возьмите, пожалуйста, паспорт и [изделие, которое писал клиент]!»</em></div>
+        </div>
+        <div class="std-block"><b>Клиент отказывается / «подумаю»</b>
+          <div class="std-script"><em>«Подскажите, в чём у Вас сомнения? Я постараюсь Вам помочь.»</em></div>
+          <div class="std-script"><em>«Вы можете подойти в ближайшее подразделение и произвести более точную оценку — это бесплатно и займёт не более 15 минут. Если появятся вопросы, свяжитесь с нами по телефону <a class="tel-link" href="tel:+78005508565">8-800-550-85-65</a> — мы с удовольствием Вас проконсультируем. Желаем хорошего дня!»</em></div>
+        </div>
+        <div class="std-block"><b>«Не устраивает онлайн-оценка»</b><p>Ставим задачу «Не устраивает онлайн-оценка» (исполнители — оценщики; наблюдатели — Гуторова Д.А., Соснин Р.М., Калмацкий С.Е.).</p>
+          <div class="std-script"><em>«Понимаю Ваше удивление, что онлайн-оценка получилась ниже ожидаемой. При дистанционной оценке мы не можем точно определить реальное состояние. Онлайн-оценка — это примерная стоимость, а не финальная цена. Чтобы узнать точную, нужен осмотр специалистом — это бесплатно и занимает 10–15 минут. Давайте подберём ближайшее отделение для Вас?»</em></div>
+        </div>
+        <div class="std-block"><b>Жалоба в чате</b>
+          <div class="std-script"><em>«Добрый день, меня зовут Анна! Благодарим Вас за обратную связь, нам очень важен комфорт наших клиентов! Оставьте, пожалуйста, свои контактные данные. Вашу жалобу зафиксировали и передали руководству. После её рассмотрения с Вами свяжутся. Желаем Вам хорошего дня!»</em></div>
+        </div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">🛡️ Скрипт «Работа с жалобами»<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-note">🛡️ <b>Оператор внимательно, не перебивая, выслушивает жалобу клиента.</b> Даже если проверка требует времени — получение претензии подтверждаем сразу.</div>
+        <div class="std-block"><b>1. Приняли претензию сразу</b>
+          <div class="std-script"><em>«[ИО клиента], доброе утро/день/вечер! Да, конечно, я понимаю Ваше недовольство! Зафиксировали обращение, обязательно передадим руководителю. В течение 14 дней рассмотрят и свяжутся с Вами! Ожидайте, пожалуйста!»</em></div>
+        </div>
+        <div class="std-block"><b>2. Клиент должен почувствовать, что его услышали</b>
+          <div class="std-script"><em>«[ИО клиента], понимаю, что Вы расстроены. Мы обязательно выясним причину сложившейся ситуации и разберёмся!»</em></div>
+        </div>
+        <div class="std-block"><b>3. Ответ на основе фактов</b>
+          <div class="std-script"><em>«[ИО клиента], по Вашему залоговому билету [указываем причину и ответ от супервайзера/руководителя подразделения, кто участвовал в конфликте].»</em></div>
+        </div>
+        <div class="std-block"><b>4. Предложение помощи (даже если вины клиента нет)</b>
+          <div class="std-script"><em>«[ИО клиента], понимаю, что доставили Вам дискомфорт! Приносим свои извинения, и в качестве компенсации начислим Вам подарочные бонусы в размере ___ (1 бонус = 1 рублю).»</em></div>
+        </div>
+        <div class="std-block"><b>5. Если клиент продолжает негативить</b>
+          <div class="std-script"><em>«[ИО клиента], благодарим Вас за обратную связь! Нам очень важен комфорт наших клиентов! Прямо сейчас передаём в работу, и по результату с Вами свяжутся!»</em></div>
+        </div>
+        <div class="std-block"><b>6. Вопрос по сумме добора в МП</b><p>Если сумма добора стояла больше до переоформления и клиент требует вернуть — ставим задачу на начисление подарочных бонусов и после согласования пишем:</p>
+          <div class="std-script"><em>«[ИО клиента], мы уточнили информацию: сумма добора стояла по старому залоговому билету, но оформить не могли — истёк срок. После переоформления сумма оценки — по текущей тарифной сетке. Предыдущую сумму добрать не получится. Мы работаем над этой опцией. В качестве извинения начислим 500 подарочных бонусов на погашение процентов (1 бонус = 1 рублю).»</em></div>
+        </div>
+        <div class="std-block"><b>7. Если бонусы не начислили вовремя (вина наша)</b>
+          <div class="std-script"><em>«[ИО клиента], прошу прощения за долгий ответ / длительное ожидание / доставленные неудобства! Бонусы начисляем в течение десяти рабочих дней по согласованию с руководителем. Вам согласовано, ожидайте, пожалуйста!»</em></div>
+          <p>Списать подарочные бонусы можно в размере 10% от начисленных процентов. Ответственного по задаче «долбим», чтобы согласовали и взяли в работу.</p>
+        </div>
+        <div class="std-block"><b>8. Отказ в оформлении в залог</b><p>Уточняем у товароведа причину отказа, клиенту отвечаем:</p>
+          <div class="std-script"><em>«[ИО клиента], благодарим за ожидание! Уточнили информацию. Да, действительно, в оформлении [предмет залога] в залог отказано, Вы можете оформить в скупку / продать (если одобрили скупку). Причину отказа, по регламенту компании, мы вправе не называть!»</em></div>
+        </div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">🔥 Скрипт-акция «10 000 ₽ за каждый 10-й грамм» (возврат спящих)<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-note">🔥 Работаем в воронке «База спящих клиентов». Звонок в 2 касания: 1-й недозвон → «Повторная связь» (комментарий + дело); 2-й недозвон → «Недозвон». «Подумает» → «Думает/дожать». Номер заблокирован → «Недоступен/заблокирован». Категорический отказ → «Отказ клиента». <b>Отрабатываем до 3–4-х НЕТ!</b></div>
+        <div class="steps">
+          <div class="step"><div><h3>1. Открытие</h3><p>«Добрый день, [ИО клиента]. Это [Имя оператора], СКС Ломбард. Вы у нас уже оформляли залог, поэтому звоню лично с приятным поводом — мы сделали самую высокую оценку для наших клиентов!» <em>(пауза)</em> «Скажите, Вы сейчас пользуетесь такими услугами?»</p></div></div>
+          <div class="step"><div><h3>2. Выявление</h3><p>Если «да»: «А сейчас где оформляетесь? Что там для Вас важнее всего? Какие условия важны при оформлении залога?» — слушаем триггеры и отвечаем: «Так как Вы уже наш клиент — оформление займёт не более 10 минут, есть статус лояльности: оценка выше, ставка ниже!» Если «нет»: «А в целом, если нужно быстро получить деньги — такой вариант рассматриваете?»</p></div></div>
+          <div class="step"><div><h3>3. Предложение</h3><p>«Для Вас сейчас каждый 10-й грамм в залоговом билете мы оцениваем не по стандартной ставке, а ровно в 10 000 рублей. Представляете, как выгодно?» <em>(пауза)</em> «Плюс статус лояльности — оценка выше, ставка ниже, оформление быстрее, ведь Вы уже в базе. Есть что-то, что можно рассмотреть? Сразу посчитаю сумму!»</p></div></div>
+          <div class="step"><div><h3>4. Расчёт</h3><p>«Что планируете заложить?» Если пока ничего: «Рассчитаю по прошлому разу. Вижу, за [изделие] Вы получили [тело займа], сегодня можете получить [сумма] ₽ + повышенная оценка по статусу и пониженная ставка. Как Вам предложение?»</p></div></div>
+          <div class="step"><div><h3>5. Закрытие</h3><p>«Давайте сделаем просто — Вы подойдёте, мы бесплатно осмотрим и оценим, а Вы решите. Вам удобнее сегодня или завтра?» Если да: «Отлично, приходите в [отделение], всё оформим быстро!»</p></div></div>
+        </div>
+        <h3 style="margin-top:22px">Отработка возражений</h3>
+        <div class="grid cols-2">
+          <div class="std-block"><b>«Не интересно»</b><div class="std-script"><em>«Поняла Вас. Скажите, если за 1 грамм того же изделия можно получить 10 000 — это было бы интересно? Вы бы сравнили?»</em></div></div>
+          <div class="std-block"><b>«Не хочу»</b><div class="std-script"><em>«Поняла Вас. Тогда коротко — скажите, что у Вас было в прошлый раз, я скажу новую сумму, и Вы уже сами решите.»</em></div></div>
+          <div class="std-block"><b>«Не пользуюсь»</b><div class="std-script"><em>«Обычно клиенты возвращаются, когда нужно быстро решить вопрос с деньгами. Если такая ситуация возникнет — Вы бы обратились снова?» Если да: «Тогда давайте сейчас зафиксируем предложение — когда сможете подойти?»</em></div></div>
+          <div class="std-block"><b>«Некогда»</b><div class="std-script"><em>«Понимаю, тогда быстро — скажу сумму и отпущу Вас. За [изделие] Вы получили [тело займа], сегодня можете получить [сумма] ₽ + повышенная оценка и пониженная ставка. Зафиксируем предложение за Вами?»</em></div></div>
+          <div class="std-block"><b>«Не устраивают условия»</b><div class="std-script"><em>«Нам это очень важно. Что именно не понравилось в прошлый раз?» По сумме: «Сейчас оценка выросла +10 000 ₽ за каждый 10-й грамм + повышенная оценка по статусу — давайте сравним?» По %: «Вижу статус лояльности — оценка +__% от рынка и пониженный процент в день __%!»</em></div></div>
+        </div>
+      </div></div></div>
+
+    </div>
+
+    <div class="tip adv reveal" data-min="2">⚡ <b>Уверенный уровень:</b> не читай скрипт дословно — используй его как каркас, а слова подбирай под конкретного клиента.</div>
+  </div>
+</section>
+
+<!-- ================= SERVICE STANDARDS (СКС-48) ================= -->
+<section id="service-standards">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Официальный документ · СКС-48</div>
+      <h2>Наши стандарты обслуживания клиентов</h2>
+      <p>Полный стандарт обслуживания клиентов сотрудниками колл-центра ГК «СКС». Обязателен для всех операторов. Нажмите на раздел, чтобы раскрыть содержание.</p>
+    </div>
+
+    <div class="std-doc-meta reveal">
+      <div class="sdm"><b>Документ</b>Распоряжение № СКС-48</div>
+      <div class="sdm"><b>Утверждён</b>22.04.2026, г. Уфа</div>
+      <div class="sdm"><b>Разделов</b>18</div>
+    </div>
+
+    <div class="std-note reveal">📞 <b>Общее правило обработки пропущенного звонка (для всех разделов):</b> пропущенный звонок с 9:00 до 21:00 — обратный звонок в течение 3 минут; звонок с 21:00 до 9:00 обрабатывается с 9:00. При обратном звонке оператор ведёт разговор по стандарту соответствующего типа обращения.</div>
+
+    <div id="stdList">
+
+      <div class="faq-item reveal"><button class="faq-q">1. Общие положения<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><p>1.1. Стандарт обслуживания клиентов сотрудниками колл-центра (далее — стандарт) разработан в целях унификации и стандартизации процессов обслуживания клиентов, обращающихся в колл-центр ГК «СКС» (далее — Компания).</p>
+        <p>1.2. Стандартизация обслуживания клиентов через колл-центр необходима для обеспечения единых, понятных и контролируемых требований к качеству коммуникации, скорости обработки обращений и порядку взаимодействия сотрудников с клиентами.</p>
+        <p>1.3. Применение настоящего Стандарта направлено на:</p>
+        <ul>
+          <li>обеспечение высокого уровня клиентского сервиса;</li>
+          <li>формирование положительного клиентского опыта;</li>
+          <li>снижение операционных и репутационных рисков;</li>
+          <li>повышение прозрачности и управляемости процессов обработки обращений;</li>
+          <li>обеспечение единых подходов к коммуникации во всех подразделениях Компании.</li>
+        </ul>
+        <p>1.4. Требования настоящего Стандарта обязательны для всех сотрудников, осуществляющих приём и обработку входящих и исходящих обращений клиентов по телефонной связи и иным каналам дистанционного взаимодействия.</p></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">2. Основные принципы работы колл-центра<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>2.1. Принципы работы с клиентами</b>
+        <ul>
+          <li>отсутствие установленного контакта с клиентом требует осуществления повторных попыток связи;</li>
+          <li>каждое обращение клиента, предполагающее отложенное взаимодействие, подлежит обязательной фиксации с постановкой задачи на последующий контакт;</li>
+          <li>отсутствие зарегистрированной задачи по обращению клиента рассматривается как нарушение регламента работы;</li>
+          <li>при отказе клиента от дальнейшего взаимодействия сотрудник обязан зафиксировать причину отказа;</li>
+          <li>целью каждого взаимодействия с клиентом является достижение конкретного следующего шага (назначение визита, повторный контакт, передача на следующий этап обработки и т.д.).</li>
+        </ul></div>
+        <div class="std-block"><b>2.2. Источники поступления обращений (лидов)</b>
+        <ul>
+          <li>заявки, поступившие с официального сайта Компании;</li>
+          <li>входящие телефонные обращения;</li>
+          <li>обращения через мессенджеры и иные цифровые каналы коммуникации.</li>
+        </ul></div>
+        <div class="std-block"><b>2.3. Базовая воронка обработки обращений</b>
+        <ul>
+          <li>обращение не обработано;</li>
+          <li>обращение в работе;</li>
+          <li>назначен следующий шаг (визит / повторный контакт);</li>
+          <li>обращение завершено.</li>
+        </ul></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">3. Контроль качества работы отдела колл-центра<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>3.1. Контроль качества осуществляется на основании показателей:</b>
+        <ul>
+          <li>соблюдение установленной структуры диалога;</li>
+          <li>корректность и полнота предоставляемой клиенту информации;</li>
+          <li>недопущение предоставления клиенту гарантий окончательной оценки по телефону;</li>
+          <li>обязательная отработка возражений клиента;</li>
+          <li>ориентация на перевод клиента к следующему этапу взаимодействия (в том числе визит в отделение);</li>
+          <li>соблюдение норм деловой коммуникации и корпоративных стандартов общения.</li>
+        </ul></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">4. Обработка входящего звонка (ломбард)<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>4.1. Приветствие</b><p>Оператор использует единый стандарт приветствия:</p>
+          <div class="std-script"><em>«Здравствуйте! Группа Компаний СКС. Меня зовут [Имя]. Чем я могу Вам помочь?»</em></div>
+          <p>Допустимая альтернатива:</p><div class="std-script"><em>«Какой у Вас вопрос?»</em></div>
+        </div>
+        <div class="std-block"><b>4.2. Выявление потребности</b><p>При обращении по вопросу приёма золота оператор уточняет цель обращения (продажа изделия или оформление займа с последующим выкупом), город обращения.</p>
+          <div class="std-script"><em>«Подскажите, Вы планируете продать ювелирное изделие или оформить заём с последующим выкупом залога?» «Из какого города Вы обращаетесь?»</em></div>
+        </div>
+        <div class="std-block"><b>4.3. Сбор первичной информации для предварительной оценки</b><p>Оператор уточняет: пробу изделия; состояние (новое/ношеное); ориентировочный вес (при возможности).</p>
+          <div class="std-script"><em>«Для предварительной оценки скажите, пожалуйста, изделия какой пробы Вы планируете оформить в залог? Изделия новые или ношеные?»</em></div>
+        </div>
+        <div class="std-block"><b>4.4. Информирование о стоимости онлайн-оценки</b><p>Оператор озвучивает минимальную и максимальную ставку за грамм в соответствии с действующими тарифами. <b>Запрещается:</b> гарантировать окончательную стоимость по телефону; обещать фиксированную сумму без осмотра изделия. Обязательно сообщает, что озвученная цена является предварительной.</p>
+          <div class="std-script"><em>«Это не окончательная стоимость. Для точной оценки необходимо подойти в отделение ломбарда. Наш специалист проведёт осмотр — это бесплатно и занимает не более 15 минут.»</em></div>
+        </div>
+        <div class="std-block"><b>4.5. Возражение «Меня не устраивает стоимость»</b><p>Оператор обязан: уточнить, пользовался ли клиент ранее услугами компании; проверить наличие статуса лояльности. При наличии — озвучить повышенную оценку (при сниженной процентной ставке); произвести расчёт максимальной суммы с учётом индивидуальных условий.</p>
+          <div class="std-script"><em>«Подскажите, ранее пользовались услугами нашей компании? У Вас могут быть индивидуальные условия займа, давайте посмотрим. Назовите, пожалуйста, ФИО и дату рождения.»</em></div>
+        </div>
+        <div class="std-block"><b>4.6. Возражение «В другом месте предлагают выше»</b><p>Алгоритм: уточнить способ получения информации (звонок или фактическая оценка); объяснить невозможность точной оценки без осмотра; подчеркнуть преимущества компании (бонусные программы, индивидуальные условия для постоянных клиентов).</p>
+          <div class="std-script"><em>«Подскажите, Вы звонили или уже делали оценку на месте? По телефону точную оценку произвести невозможно. Часто могут озвучить максимально высокую стоимость, а при фактическом осмотре она оказывается ниже. У нас одна из высоких оценок по городу, действуют индивидуальные условия для постоянных клиентов, а также бонусные программы. Рекомендую подойти в отделение — специалист проведёт точную бесплатную оценку.»</em></div>
+        </div>
+        <div class="std-block"><b>4.7. Возражение «Я подумаю»</b><p>Оператор обязан уточнить причину сомнений.</p>
+          <div class="std-script"><em>«Подскажите, пожалуйста, в чём Вы сомневаетесь? Я постараюсь Вам помочь.»</em></div>
+        </div>
+        <div class="std-block"><b>4.8. Завершение диалога и перевод на визит в отделение</b><p>После консультации оператор фиксирует параметры изделия (вид, проба, вес); подбирает ближайшее отделение (ОП); озвучивает точный адрес и график работы.</p>
+          <div class="std-script"><em>«Ожидаем Вас по адресу: [адрес ОП] до [время]. Возьмите, пожалуйста, паспорт и залоговое имущество. Спасибо, что обратились к нам! Если появятся вопросы — свяжитесь с нами. Хорошего дня!»</em></div>
+        </div>
+        <div class="std-block"><b>4.9. Обработка пропущенного звонка</b><p>По общему правилу (см. вверху раздела).</p>
+          <div class="std-script"><em>«Здравствуйте! Группа Компаний СКС. Меня зовут [Имя]. У нас был пропущенный звонок от Вас. Чем я могу Вам помочь?»</em></div>
+        </div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">5. Обработка входящего звонка по залогу/скупке техники<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>5.1–5.2. Приветствие и выявление потребности</b><p>Единый стандарт приветствия. Оператор уточняет цель (продажа техники или заём с последующим выкупом) и город.</p>
+          <div class="std-script"><em>«Подскажите, Вы планируете продать технику или оформить заём с последующим выкупом залога?» «Из какого города Вы обращаетесь?»</em></div>
+        </div>
+        <div class="std-block"><b>5.3. Сбор первичной информации</b><p>Оператор уточняет: марку техники; модель; состояние (новое/б/у); технические характеристики (вес, габариты — длина, ширина, высота; мощность и т.д.).</p>
+          <div class="std-script"><em>«Для онлайн-оценки подскажите, пожалуйста, марку, модель и технические характеристики.»</em></div>
+        </div>
+        <div class="std-block"><b>5.4. Информирование о стоимости</b><p>Оператор озвучивает стоимость, которую написали в «чате оценки для КЦ». Запрещается гарантировать окончательную стоимость по телефону и обещать фиксированную сумму без осмотра. Цена предварительная.</p>
+          <div class="std-script"><em>«Это не окончательная цена, для точной стоимости оценки лучше подойти в наше отделение и специалист проведёт осмотр. Это бесплатно и занимает не более 15 минут.»</em></div>
+        </div>
+        <div class="std-block"><b>5.5–5.6. Возражения</b><p>«Меня не устраивает стоимость» и «В другом месте предлагают выше» — отрабатываются аналогично разделу 4 (проверка статуса лояльности, бонусные программы, приглашение на бесплатный осмотр).</p>
+          <div class="std-script"><em>«…плюс у наших клиентов есть статус лояльности и для них действуют индивидуальные условия, а для держателей бонусных карт на все праздники у нас предусмотрено начисление подарочных бонусов…»</em></div>
+        </div>
+        <div class="std-block"><b>5.7–5.9. Завершение, перевод на визит, пропущенный звонок</b><p>Фиксация параметров, подбор ближайшего ОП, озвучивание адреса и графика; обработка пропущенного звонка по общему правилу.</p>
+        </div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">6. Обработка входящего звонка по залогу изделий с бриллиантами<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>6.1–6.2. Приветствие и выявление потребности</b><p>Единый стандарт приветствия; цель обращения и город.</p></div>
+        <div class="std-block"><b>6.3. Сбор первичной информации</b><p>Оператор уточняет: тип ювелирного украшения (кольцо, серьги, цепи и т.д.); характеристики (металл, проба, наличие иных камней, количество бриллиантов); состояние (новое/ношеное); ориентировочный вес (при возможности).</p>
+          <div class="std-script"><em>«Для предварительной оценки скажите, пожалуйста, какое изделие и какой пробы Вы планируете оформить в залог? Изделия новые или ношеные?»</em></div>
+          <div class="std-note">Оценка ювелирного изделия с бриллиантом — от 150 до 6000 рублей и выше в зависимости от каратности самого бриллианта.</div>
+        </div>
+        <div class="std-block"><b>Стоимость оценки зависит от семи ключевых параметров:</b>
+          <ul>
+            <li>вес камня в каратах (бриллианты бывают крупные, средние и мелкие);</li>
+            <li>закреп камня должен быть открытый, без сколов и плотно посажен;</li>
+            <li>российское клеймо на металле;</li>
+            <li>цвет (определяется на основании существующих эталонов оттенков);</li>
+            <li>чистота (камень проверяется на наличие посторонних включений, пузырей и трещин);</li>
+            <li>качество огранки (устанавливается на базе пропорций, симметрии и полировки);</li>
+            <li>соответственно, оценочная стоимость изделия с бриллиантом состоит из суммы оценки бриллианта и оценки драгоценного металла, из которого изготовлено ювелирное изделие.</li>
+          </ul>
+          <div class="std-script"><em>«Для точной оценки необходимо подойти в отделение ломбарда. Наш специалист проведёт осмотр — это бесплатно и занимает не более 15 минут.»</em></div>
+        </div>
+        <div class="std-block"><b>6.5–6.9. Возражения, завершение, пропущенный звонок</b><p>Отрабатываются аналогично разделу 4.</p></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">7. Обработка входящего звонка по залогу меховых изделий, брендовой одежды и аксессуаров<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>7.1–7.2. Приветствие и выявление потребности</b><p>Единый стандарт приветствия. При обращении по приёму меха, брендовой одежды, сумок и аксессуаров оператор информирует клиента, что данные вещи не подлежат залогу; уточняет наличие ювелирных изделий, золота, техники, электроинструментов, машины и пр., которые подлежат залогу.</p>
+          <div class="std-script"><em>«По регламенту компании данные вещи залогу не подлежат. Мы принимаем: золото, столовое серебро, монеты серебряные, технику, электроинструменты, машины под стоянку. Возможно, у Вас есть подходящий предмет для залога?»</em></div>
+        </div>
+        <div class="std-block"><b>7.3–7.4. Сбор информации и информирование о стоимости</b><p>Сбор информации и оценка производятся по правилам соответствующего вида имущества: драгоценные металлы — см. раздел 4; украшения с бриллиантами — см. раздел 6; техника — см. раздел 5.</p></div>
+        <div class="std-block"><b>7.5–7.7. Возражения, завершение, пропущенный звонок</b><p>Отрабатываются аналогично разделу 4.</p></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">8. Обработка входящего звонка по вопросу суммы процентов (ломбард)<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>8.1–8.2. Приветствие и сбор информации</b><p>Единый стандарт приветствия. При обращении по вопросу суммы процентов оператор уточняет ФИО клиента; дату рождения клиента; при возникновении сомнений — серию и номер паспорта.</p></div>
+        <div class="std-block"><b>8.3. Информирование по сумме процентов</b><p>Оператор заходит в ПО АРМ, проводит идентификацию данных, проверяет и озвучивает сумму начисленных процентов. Сообщает клиенту возможные способы для оплаты. При необходимости отправляет СМС со ссылкой на сайт, приложение или данные по договору.</p>
+          <div class="std-script"><em>«Сумма начисленных процентов на сегодняшний день составляет ___ руб. ___ копеек. Оплатить можете через: наше мобильное приложение <a class="tel-link" href="http://sks2.ru/pAPP" target="_blank" rel="noopener">http://sks2.ru/pAPP</a>; сайт компании <a class="tel-link" href="https://www.sks-lombard.ru" target="_blank" rel="noopener">www.sks-lombard.ru</a>; или в нашем отделении. Также мы можем соединить Вас с подразделением для формирования QR-кода для оплаты.»</em></div>
+        </div>
+        <div class="std-block"><b>8.4–8.5. Завершение и пропущенный звонок</b><p>Оператор уточняет, остались ли у клиента ещё вопросы/просьбы, благодарит за обращение. Пропущенный звонок — по общему правилу.</p>
+          <div class="std-script"><em>«Я могу Вам ещё чем-то помочь? Благодарим Вас за обращение! Хорошего дня! До свидания!»</em></div>
+        </div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">9. Обработка входящего звонка: адрес, график работы, контакты<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>9.1–9.2. Приветствие и выявление потребности</b><p>Единый стандарт приветствия. При обращении по вопросу адреса, графика работы ОП, номеру телефона, расположению оператор уточняет месторасположение клиента (город и район).</p>
+          <div class="std-script"><em>«У нас много отделений. Подскажите, где Вы сейчас находитесь, город и район?»</em></div>
+        </div>
+        <div class="std-block"><b>9.3. Информирование</b><p>После ответа клиента оператор перечисляет все удобные адреса, график работы (информация в справочнике КЦ).</p>
+          <div class="std-script"><em>«Ближайший офис/отделение находится по адресу: ___. График работы отделения: ___.»</em></div>
+        </div>
+        <div class="std-block"><b>9.4–9.5. Завершение и пропущенный звонок</b><p>Оператор уточняет наличие других вопросов, благодарит; дублирует СМС при необходимости и ставит задачу на ОП по регламенту. Пропущенный звонок — по общему правилу.</p></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">10. Обработка входящего звонка по вопросам качества обслуживания (жалобы)<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-note">Все жалобы фиксируются и регистрируются в журнале «Жалобы клиентов колл-центр» максимально подробно.</div>
+        <div class="std-block"><b>10.1–10.2. Приветствие и выслушивание жалобы</b><p>Единый стандарт приветствия. Оператор: внимательно, не перебивая, выслушивает жалобу клиента; фиксирует жалобу и передаёт руководителю информацию; в случае запроса официального ответа предлагает подойти в ОП и написать заявление, либо на официальном сайте.</p>
+          <div class="std-script"><em>«[ИО клиента], да, конечно, я понимаю Ваше недовольство. Передали всю информацию руководителю / зафиксировали обращение, обязательно передадим руководителю. В течение 15 рабочих дней рассмотрят и свяжутся с Вами! Ожидайте, пожалуйста!»</em></div>
+        </div>
+        <div class="std-block"><b>10.3. Выяснение причины</b><p>Клиент должен чувствовать, что его услышали и поняли. Оператор сообщает, что причина будет выяснена.</p>
+          <div class="std-script"><em>«[ИО клиента], понимаю, что Вы расстроены. Мы обязательно выясним причину сложившейся ситуации и разберёмся.»</em></div>
+        </div>
+        <div class="std-block"><b>10.4–10.5. Предоставление ответа и предложение помощи</b><p>После выяснения причины необходимо предоставить ответ клиенту без эмоций, на основе фактов. Даже если вины клиента нет — оператор предлагает помощь (например, компенсацию подарочными бонусами: 1 бонус = 1 рубль).</p></div>
+        <div class="std-block"><b>10.6. Негативные возражения клиента</b><p>Если клиент продолжает выражать негатив — не перебивать, внимательно выслушать; благодарить за обратную связь; сообщить, что с клиентом свяжутся по результатам.</p></div>
+        <div class="std-block"><b>10.7. Поддержка клиента</b><p>Если подарочные бонусы не начислили / не сделали, что обещали (вина с нашей стороны) — не подаём виду клиенту, но даём понять, что мы с ним, и продолжаем общение.</p>
+          <div class="std-script"><em>«[ИО клиента], прошу прощения за долгий ответ / за доставленное неудобство! Бонусы начислим в течение десяти рабочих дней по согласованию с руководителем. Ожидайте, пожалуйста!»</em></div>
+        </div>
+        <div class="std-block"><b>10.8–10.10. Отказ в залоге, завершение, пропущенный звонок</b><p>Если клиенту отказано в оформлении имущества в залог — уточняем у товароведа причину отказа, предоставляем клиенту соответствующий ответ (можно оформить в скупку/продать; причину отказа по регламенту не называть). Пропущенный звонок — по общему правилу.</p></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">11. Обработка входящего звонка: благодарности и положительные отзывы<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>11.1–11.2. Приветствие и благодарность клиенту</b><p>Единый стандарт приветствия. Оператор благодарит клиента за звонок и обратную связь; фиксирует отзыв; уточняет ФИО сотрудника, адрес по которому клиент обращался и какой был вопрос (обращение).</p>
+          <div class="std-script"><em>«Благодарим Вас за звонок и обратную связь! Сейчас зафиксируем Ваш отзыв! Подскажите, пожалуйста, по какому адресу обращались и ФИО сотрудника? Какой у Вас был вопрос?»</em></div>
+        </div>
+        <div class="std-block"><b>11.3–11.4. Фиксация отзыва, завершение, пропущенный звонок</b><p>Оператор фиксирует отзыв в журнале «Жалобы клиентов колл-центр», благодарит за обращение и сообщает о фиксации отзыва. Пропущенный звонок — по общему правилу.</p>
+          <div class="std-script"><em>«Ваш отзыв зафиксировали! Благодарим за доверие и обращение в нашу компанию, нам очень важен комфорт наших клиентов! Будем рады видеть Вас вновь.»</em></div>
+        </div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">12. Обработка входящего звонка: отсутствие паспорта или в процессе его переоформления<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>12.1–12.2. Приветствие и идентификация клиента</b><p>Единый стандарт приветствия. При обращении по вопросу оформления залога без паспорта, выкупа без паспорта, оплаты % без паспорта, паспорт на переоформлении — оператор устанавливает гражданство клиента. По регламенту все операции с залоговыми билетами производятся при наличии замены паспорта. В данном случае необходимо дождаться замены паспорта или получить временное удостоверение личности.</p>
+          <div class="std-script"><em>«Подскажите, Вы являетесь гражданином Российской Федерации?»</em></div>
+        </div>
+        <div class="std-block"><b>Документы, удостоверяющие личность:</b>
+          <ul>
+            <li><b>Гражданин РФ</b> — для оформления понадобится один из документов: паспорт РФ, временное удостоверение личности гражданина РФ, выдаваемое на период замены паспорта, или загранпаспорт.</li>
+            <li><b>Иностранный гражданин</b> — паспорт иностранного гражданина (в зависимости от страны) и второй документ, подтверждающий право законного пребывания на территории РФ (виза, миграционная карта, разрешение на временное пребывание, вид на жительство).</li>
+            <li><b>Лицо без гражданства</b> — временное удостоверение личности лица без гражданства, вид на жительство.</li>
+            <li><b>Беженец</b> — удостоверение беженца.</li>
+          </ul>
+        </div>
+        <div class="std-block"><b>12.3. Оплата % без паспорта</b><p>Если клиент хочет произвести оплату % по действующему залоговому билету — оператор консультирует обо всех возможных способах оплаты %.</p>
+          <div class="std-script"><em>«Проценты по действующему залоговому билету Вы можете оплачивать через мобильное приложение, также сайт компании, также третье лицо может оплатить за Вас проценты — со своим паспортом.»</em></div>
+        </div>
+        <div class="std-block"><b>12.4. Предложение помощи (несовершеннолетние)</b><p>Если клиент уточняет, может ли уплатить проценты ребёнок до 18 лет — оператор информирует о невозможности оплаты несовершеннолетними гражданами.</p>
+          <div class="std-script"><em>«К сожалению, нет, мы не принимаем оплату от несовершеннолетних.»</em></div>
+        </div>
+        <div class="std-block"><b>12.5–12.6. Завершение и пропущенный звонок</b><p>Оператор благодарит за обращение. Пропущенный звонок — по общему правилу.</p></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">13. Обработка входящего звонка по выкупу залога третьими лицами<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>13.1–13.2. Приветствие и консультация по выкупу 3-им лицом</b><p>Единый стандарт приветствия. Если клиент уточняет, может ли кто-либо (друг/родственник) выкупить залоговое имущество: оператор сообщает клиенту, что нужно подойти в обособленное подразделение, где оформляли залог, с паспортом и доверенностью; сообщает информацию, которая должна содержаться в доверенности; уточняет наличие данных документов.</p>
+          <div class="std-script"><em>«Да, конечно! Вашему другу / родственнику нужно будет подойти в отделение, где оформляли залог, со своим паспортом и доверенностью от Вас. В доверенности должно быть прописано, можно выкупать и закладывать имущество в ломбардах, также прописывается наименование ломбарда, адрес отделения, номер залогового билета. Подскажите, у Вас имеются данные документы?»</em></div>
+        </div>
+        <div class="std-block"><b>13.3. Вопрос клиента по доверенности</b><p>Если клиент говорит, что доверенность отсутствует/есть другая доверенность, и клиент уточняет, может ли она подойти — оператор сообщает клиенту о невозможности передачи имущества 3-им лицам без документов.</p>
+          <div class="std-script"><em>«По Закону мы не имеем право отдавать имущество 3-им лицам без данных документов! Вы как 3-е лицо можете оплатить % в отделении ломбарда при наличии паспорта.»</em></div>
+        </div>
+        <div class="std-block"><b>13.4–13.5. Завершение и пропущенный звонок</b><p>Оператор благодарит за обращение. Пропущенный звонок — по общему правилу.</p></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">14. Обработка входящего звонка по вопросам залогового обязательства третьими лицами<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>14.1–14.2. Приветствие и консультация 3-го лица по остатку процентов/льготного периода</b><p>Единый стандарт приветствия. Если 3-е лицо уточняет (кто-то из ближних родственников клиента, например, мама/брат/жена) остаток процентов до закрытия льготного периода — оператор сообщает клиенту о невозможности разглашения подобной информации третьим лицам в соответствии с требованиями законодательства РФ.</p>
+          <div class="std-script"><em>«В соответствии с требованиями законодательства мы не имеем права разглашать подобную информацию третьим лицам.»</em></div>
+        </div>
+        <div class="std-block"><b>14.3. Вопрос третьего лица по оплате процентов за клиента</b><p>Оператор даёт консультацию клиенту.</p>
+          <div class="std-script"><em>«Вы можете зайти в мобильное приложение или на сайт, там есть вся информация. Также оплатить проценты в нашем подразделении с паспортом.»</em></div>
+        </div>
+        <div class="std-block"><b>14.4–14.5. Завершение и пропущенный звонок</b><p>Оператор благодарит за обращение. Пропущенный звонок — по общему правилу.</p></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">15. Обработка входящего звонка по вопросам обслуживания участников СВО и членов их семей<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>15.1–15.2. Приветствие и сбор первичной информации</b><p>Единый стандарт приветствия. При обращении (самого клиента/его близкого родственника) по вопросу выкупа/приостановки начисления процентов участника СВО оператор: производит идентификацию (уточняет, является ли человек членом семьи участника СВО); уточняет, когда был оформлен залог (до отправки на СВО).</p>
+          <div class="std-script"><em>«Подскажите, Вы являетесь членом семьи участника СВО? Залог оформлен до отправки на СВО?»</em></div>
+        </div>
+        <div class="std-block"><b>Если человек является членом семьи участника СВО</b><p>Оператор консультирует о возможности приостановки начисления процентов / выкупа залогового имущества. Сообщает о необходимости предоставления соответствующих документов и уточняет наличие данных документов.</p>
+          <div class="std-script"><em>«Да, конечно, Вы можете приостановить начисление процентов / выкупить залоговое имущество. Вам нужно будет обратиться в отделение с документом, подтверждающим дату отправки на СВО: контракт, либо копия контракта, документ, доказывающий, что Вы член семьи его (доверенность, в которой должно быть прописано, что можете выкупать и закладывать имущество в ломбардах). Подскажите, имеются ли у Вас данные документы?»</em></div>
+        </div>
+        <div class="std-block"><b>Если человек не является членом семьи</b><p>Оператор сообщает клиенту о невозможности осуществления данной процедуры третьим лицом в соответствии с требованиями законодательства РФ.</p>
+          <div class="std-script"><em>«В соответствии с требованиями законодательства мы не можем предоставить такие условия третьим лицам, нужно будет обратиться членам семьи и мы обязательно поможем.»</em></div>
+        </div>
+        <div class="std-block"><b>15.3. Консультация в случае смерти клиента-участника СВО</b><p>При уточнении возможности получения залогового имущества клиента, погибшего в ходе СВО, оператор: приносит соболезнования родственникам; сообщает об аннуляции процентов; информирует о необходимости очного обращения в офис/отделение с пакетом данных документов (свидетельство о смерти и нотариальное свидетельство на вступление в наследство).</p>
+          <div class="std-script"><em>«Примите наши искренние соболезнования! Да, конечно! Все начисленные проценты будут аннулированы. Вам нужно будет подойти в наше отделение и предоставить паспорт, свидетельство о смерти и нотариальное свидетельство на вступление в наследство.»</em></div>
+        </div>
+        <div class="std-block"><b>15.4–15.5. Завершение и пропущенный звонок</b><p>Оператор благодарит за обращение. Пропущенный звонок — по общему правилу.</p></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">16. Обработка входящих сообщений в рамках открытой линии с клиентом (чаты)<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>16.1. Приветствие</b><p>Приветствие и прощание операторы отправляют клиентам только в том случае, когда автоматические сообщения не ушли. Если автоматические сообщения клиенту отправлены, оператор пишет приветствие.</p>
+          <div class="std-script"><em>«Добро пожаловать в СКС Ломбард!»</em></div>
+          <div class="std-script"><em>«Благодарим за доверие и обращение. Мы очень заботимся о наших клиентах, поэтому для индивидуального рассмотрения Вашего вопроса, подскажите, чем могу Вам помочь?»</em></div>
+        </div>
+        <div class="std-block"><b>16.2. Уточнение информации</b><p>Оператор уточняет у клиента предмет залога (что именно, золото/техника, марка, модель); подготавливает ответ.</p>
+          <div class="std-script"><em>«Для индивидуального рассмотрения вопроса, уточните, пожалуйста, Вы планируете оформить в залог или продать? / Вы планируете в скупку или под залог?»</em></div>
+        </div>
+        <div class="std-block"><b>16.3. Информирование о предварительной стоимости</b><p>Клиент написал — оператор уточняет все детали (залоговое имущество, на продажу или в залог, в каком городе находится клиент), делает онлайн-оценку, озвучивает предварительную стоимость. Формирует в одно сообщение и направляет клиенту благодарность за доверие и ожидание стоимости оценки.</p>
+          <div class="std-script"><em>«Стоимость онлайн-оценки ___, данная сумма не окончательная. Для более точной оценки Вы можете подойти в наше подразделение, это бесплатно и займёт не более 15 минут. Давайте подберём ближайшее отделение для Вас?»</em></div>
+        </div>
+        <div class="std-block"><b>16.4. Согласие/возражение клиента</b><p>Если клиент согласен — оператор уточняет его адрес и направляет в одном сообщении всю информацию, добавляет в сообщении ближайшее ОП. Если у клиента сомнения или возражения — отрабатывает с возражениями по скрипту.</p>
+        </div>
+        <div class="std-block"><b>16.5. Возражение «не устраивает онлайн-оценка»</b><p>Оператор ставит задачу по шаблону «Не устраивает онлайн-оценка», информирует, что онлайн-оценка — только предварительная стоимость, для точной необходимо обратиться в отделение для диагностики специалистом.</p>
+          <div class="std-script"><em>«Понимаю Ваше удивление, что онлайн-оценка получилась ниже ожидаемой. При дистанционной оценке мы не можем точно определить реальное состояние. Поэтому онлайн-оценка — это примерная стоимость, а не финальная цена. Чтобы узнать точную стоимость, нужен осмотр специалистом — это бесплатно и занимает в среднем 10–15 минут. Давайте подберём ближайшее отделение для Вас?»</em></div>
+        </div>
+        <div class="std-block"><b>16.6–16.7. Возражение «Я подумаю» / отсутствие ответа</b><p>Если клиент пишет, что подумает — оператор подбирает ближайшее подразделение. Если клиент ничего не отвечает после презентации продукта/оценки имущества (сделка не завершена) — эти чаты не закрываем; оператор пишет в конце дня / на следующий день и отрабатывает по скриптам.</p>
+          <div class="std-script"><em>«Вы можете подойти в ближайшее подразделение и произвести более точную оценку, это бесплатно и займёт не более 15 минут. Если у Вас появятся вопросы или потребуется дополнительная информация, пожалуйста, свяжитесь с нами по телефону <a class="tel-link" href="tel:+78005508565">8-800-550-85-65</a> — мы всегда рады помочь. Желаем вам хорошего дня!»</em></div>
+        </div>
+        <div class="std-block"><b>16.8. Жалоба клиента</b><p>Если клиент оставляет жалобу — оператор благодарит за обратную связь; просит оставить контактные данные для обратной связи.</p>
+          <div class="std-script"><em>«Добрый день, меня зовут Анна! Благодарим Вас за обратную связь, нам очень важен комфорт наших клиентов! Оставьте, пожалуйста, свои контактные данные. Вашу жалобу зафиксировали и передали руководству. После её рассмотрения с Вами свяжутся. Желаем Вам хорошего дня!»</em></div>
+        </div>
+        <div class="std-block"><b>16.9. Завершение диалога</b><p>После ответа клиента («Спасибо/Ок/Понял/хорошо» и т.д.) оператор закрывает чат и проверяет отправку автоматического шаблона. Если сообщения (ушло/не ушло), автоматические шаблоны должны уходить обязательно. Если клиент ничего не ответил — чат закрывает оператор в конце смены, кто работает по графику 11 часов в день. Оператор завершает сделку — полностью прописывая адрес ОП, время работы.</p>
+          <div class="std-note"><b>Три касания с клиентами в чатах до закрытия чата:</b> 1 касание — клиент начал диалог, мы отвечаем; 2 касание — через 2 часа, клиент молчит, мы спрашиваем актуальность запроса; 3 касание — в конце дня, клиент молчит, мы закрываем чат и проверяем отправку автоматического сообщения.</div>
+        </div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">17. Порядок приёма, регистрации и обработки обращений (от звонка/заявки до закрытия)<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block"><b>Этап 1 — «Не обработан»</b><p>Как сюда попадает клиент: оставил заявку на сайте; позвонил в колл-центр; онлайн-чат/мессенджер. Цель: связаться с клиентом максимально быстро и перевести в диалог. Касания: 1) Звонок 1-й — сразу; 2) Если не ответил — смс-уведомление №1. Срок: скорость ответа на входящий звонок до 20 сек; время реакции на заявку до 3 минут; обработка пропущенного звонка в течении рабочего графика КЦ до 3 минут; в период после 21:00 — до 14 часов.</p>
+          <div class="std-script"><em>«Добро пожаловать в СКС Ломбард! Благодарим за доверие и Ваше обращение. Если у Вас появятся вопросы или потребуется дополнительная информация, пожалуйста, свяжитесь с нами по телефону <a class="tel-link" href="tel:+78005508565">8-800-550-85-65</a> — мы с удовольствием вас проконсультируем.»</em></div>
+        </div>
+        <div class="std-block"><b>Задача «на перезвон»</b><p>Ставим задачу на перезвон, если клиент: не ответил; сбросил звонок; написал «позже» / «перезвоните позже» / «я подумаю, посоветуюсь, ещё пойму» / «не сейчас, завтра». <b>Важно:</b> нельзя оставлять без задачи, всегда необходимо фиксировать дату и время. Перевести лид на этап «Перезвон», указать конкретное время следующего контакта +1 день от обращения. В задаче «Исполнитель» и «Постановщик» — сам оператор; но, если выпадает на выходной, в «Исполнители» ставим всех операторов, кто будет в смене.</p></div>
+        <div class="std-block"><b>Этап 3 — «В работе»</b><p>Клиент установлен, заинтересован, идёт диалог и консультация. Цель: проведение консультации и диалога с клиентом. Выяснить: что за предмет (золото, техника, авто, часы и т.д.), озвучить оценку залогового имущества до максимума. Озвучить: условия; процент/срок (если интересуется); адрес и режим работы ближайшего подразделения; проговорить о необходимости документов и условий. Перевести в соответствующую воронку: Ломбард / Автоломбард / КМГ МТ/КМЗ. Касания: 1 основной звонок; 1–2 уточняющих касания (звонок или сообщение).</p></div>
+        <div class="std-block"><b>Этап 4 — «Приглашён в офис / Оценка назначена»</b><p>Цель: довести клиента до фактического визита. Обязательные действия: подтвердить адрес, время визита, что взять с собой (паспорт, предмет). Отправить сообщение с адресом и картой. Касания: звонок-приглашение; сообщение с адресом; напоминание за 1–2 часа (звонок или сообщение).</p></div>
+        <div class="std-block"><b>Этап 5 — «Пришёл в офис»</b><p>Цель: довести клиента до фактического визита. Действия колл-центра: отметить факт визита в CRM — если не дошёл → звонок уточнения причины. Если клиент не дошёл: перевод в воронку КЦ «Перезвон». Фиксация причины: передумал; нашёл лучше; не успел.</p></div>
+        <div class="std-block"><b>Этап 6 — «Сделка / Закрытие»</b><p>Цель: успешное проведение сделки. Варианты: выдан заём; отказ клиента; отказ ломбарда; нецелевой лид. После сделки (важно): SMS с благодарностью; задача на повторный контакт через: дата оплаты звонок + сообщение; дата окончания льготного периода звонок + сообщение; 2–3 месяца (повторный заём). Срок: дата окончания льготного периода, повторный заём через 2–3 месяца.</p></div>
+      </div></div></div>
+
+      <div class="faq-item reveal"><button class="faq-q">18. Заключительные положения<span class="chev">▾</span></button><div class="faq-a"><div>
+        <div class="std-block">
+          <p>18.1. Настоящий стандарт вступает в силу с момента его утверждения, если иное не предусмотрено в самом документе.</p>
+          <p>18.2. Действие настоящего стандарта распространяется на всех сотрудников колл-центра, в пределах их должностных обязанностей и компетенций.</p>
+          <p>18.3. Контроль за исполнением требований настоящего документа возлагается на уполномоченное должностное лицо структурного подразделения (колл-центра).</p>
+          <p>18.4. Изменения, дополнения и пересмотр в настоящий стандарт вносятся на основании решения руководителя Организации либо по инициативе заинтересованных структурных подразделений в установленном порядке.</p>
+        </div>
+      </div></div></div>
+
+    </div>
+
+    <div class="tip reveal">💡 Скрипты приведены как рекомендованный каркас разговора. Держи структуру и стандарты, но говори живым языком под конкретного клиента.</div>
+  </div>
+</section>
+
+<!-- ================= KB ================= -->
+<section id="kb">
+  <div class="wrap">
+    <div class="obs reveal">
+      <div class="eyebrow" style="color:var(--brand2)">Единый источник правды</div>
+      <h2>База знаний</h2>
+      <p class="muted" style="max-width:720px">Ответы на частые вопросы клиентов, регламенты и инструкции по системам — в одном месте.
+      Меняется условие или скрипт — правим один раз, и у всех операторов сразу актуальная версия.</p>
+      <div class="flow">
+        <div class="node">❓ Вопрос клиента</div><span class="arr">→</span>
+        <div class="node">🗂 База знаний</div><span class="arr">→</span>
+        <div class="node">✅ Точный ответ</div><span class="arr">→</span>
+        <div class="node">🙂 Довольный клиент</div>
+      </div>
+      <div class="grid cols-2" style="margin-top:26px">
+        <div class="card reveal"><div class="ic">❓</div><h3>Топ вопросов клиентов</h3><p>Частые вопросы и утверждённые ответы на них. <em>[Наполните по вашему продукту]</em></p></div>
+        <div class="card reveal"><div class="ic">📋</div><h3>Регламенты и процессы</h3><p>Как оформить заявку, эскалировать проблему, вернуть звонок. <em>[Вставьте регламенты]</em></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= QUIZ ================= -->
+<section id="quiz">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Закрепим</div>
+      <h2>Проверь свои знания</h2>
+      <p>Короткий тест для самопроверки. Правильность видно сразу — результаты никуда не отправляются.</p>
+    </div>
+    <div class="quiz reveal" id="quizBox">
+      <div class="q" data-correct="1">
+        <p class="qt">1. С чего начинается любой звонок по стандарту?</p>
+        <button class="opt">Сразу с презентации предложения</button>
+        <button class="opt">С приветствия и представления по стандарту</button>
+        <button class="opt">С вопроса «Что вы хотели?»</button>
+        <div class="qfb">Верно: приветствие и представление задают тон всему разговору.</div>
+      </div>
+      <div class="q" data-correct="2">
+        <p class="qt">2. Клиент говорит «Дорого». Что лучше сделать?</p>
+        <button class="opt">Сразу предложить скидку</button>
+        <button class="opt">Согласиться и завершить звонок</button>
+        <button class="opt">Показать ценность и что входит в стоимость</button>
+        <div class="qfb">Верно: сначала раскрываем ценность, а не бросаемся снижать цену.</div>
+      </div>
+      <div class="q" data-correct="0">
+        <p class="qt">3. Что обязательно сделать после звонка?</p>
+        <button class="opt">Зафиксировать результат в CRM</button>
+        <button class="opt">Ничего, звонок завершён</button>
+        <button class="opt">Позвонить снова через минуту</button>
+        <div class="qfb">Верно: фиксация в CRM сохраняет контекст для коллег и следующего контакта.</div>
+      </div>
+    </div>
+
+    <!-- ЭКЗАМЕН · внешняя аттестация -->
+    <div class="obs reveal" id="exam" style="margin-top:34px;text-align:center">
+      <div class="eyebrow" style="color:var(--brand2)">Аттестация оператора · СКС</div>
+      <h2 style="margin-bottom:8px">Проверим твои возможности?</h2>
+      <p class="muted" style="max-width:680px;margin:0 auto 8px">Мини-тест выше — для разминки. А это <b>настоящий экзамен</b>: скрипты звонков, стандарт обслуживания СКС-48, льготы СВО, путь клиента, работа в Битриксе, ведение чатов и обработка жалоб.</p>
+      <p class="muted" style="max-width:680px;margin:0 auto 24px;font-size:.9rem">Проходной балл — 80%. Результат по итогам отправь руководителю.</p>
+      <a href="https://gutorovadarclinic102-gif.github.io/sks-kc-academy/" target="_blank" rel="noopener" class="btn primary" style="font-size:1.06rem;padding:16px 34px">🎓 Проверь свои знания! →</a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
 <footer>
   <div class="wrap">
-    <div style="font-weight:800;margin-bottom:6px">Группа компаний СКС</div>
-    <div>Академия «Кол-центр» · портал адаптации новых сотрудников</div>
+    <div class="logo">
+      <span class="mark">СКС</span>
+      <span class="lg-txt"><b>Академия «Кол-центр»</b><small>Группа компаний СКС</small></span>
+    </div>
+    <p>Группа компаний СКС · портал адаптации новых сотрудников. Внутренний обучающий материал —<br>
+    скрипты и примеры адаптируй под свои задачи и утверждённые регламенты.</p>
   </div>
 </footer>
 
+<!-- ================= PROGRESS ================= -->
+<div class="prog">
+  <div class="ring" id="ring"><i id="ringPct">0%</i></div>
+  <small>Листай портал — прогресс копится</small>
+</div>
+
 <script>
-/* тема — общий с порталом ключ, чтобы выбор не сбрасывался при переходе */
-document.documentElement.dataset.theme = localStorage.getItem('cc_theme') || 'light';
+(function(){
+  var root=document.documentElement;
+
+  /* theme */
+  var themeBtn=document.getElementById('theme');
+  function setTheme(t){root.setAttribute('data-theme',t);themeBtn.textContent=t==='light'?'🌙':'☀️';try{localStorage.setItem('cc_theme',t);}catch(e){}}
+  var saved;try{saved=localStorage.getItem('cc_theme');}catch(e){}
+  setTheme(saved||root.getAttribute('data-theme')||'light');
+  themeBtn.addEventListener('click',function(){setTheme(root.getAttribute('data-theme')==='light'?'dark':'light');});
+
+  /* burger */
+  var burger=document.getElementById('burger'),navlinks=document.getElementById('navlinks');
+  burger.addEventListener('click',function(){navlinks.classList.toggle('show');});
+  navlinks.addEventListener('click',function(e){if(e.target.tagName==='A')navlinks.classList.remove('show');});
+
+  /* level switcher */
+  var seg=document.getElementById('levelseg');
+  seg.addEventListener('click',function(e){
+    var b=e.target.closest('button');if(!b)return;
+    root.setAttribute('data-level',b.dataset.lv);
+    [].forEach.call(seg.children,function(x){x.setAttribute('aria-pressed',x===b?'true':'false');});
+    document.querySelectorAll('[data-min]').forEach(function(el){
+      el.style.display=(+b.dataset.lv>=+el.getAttribute('data-min'))?'':'none';
+    });
+  });
+
+  /* reveal on scroll */
+  var io=new IntersectionObserver(function(es){es.forEach(function(en){if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}});},{threshold:.12});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el);});
+
+  /* progress bar + ring + nav active */
+  var bar=document.getElementById('bar'),ring=document.getElementById('ring'),ringPct=document.getElementById('ringPct');
+  var links=[].slice.call(document.querySelectorAll('.nav-links a'));
+  var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));});
+  function onScroll(){
+    var h=document.documentElement,sc=h.scrollTop,max=h.scrollHeight-h.clientHeight;
+    var p=max>0?Math.round(sc/max*100):0;
+    bar.style.width=p+'%';ring.style.setProperty('--p',p);ringPct.textContent=p+'%';
+    var idx=0;for(var i=0;i<secs.length;i++){if(secs[i]&&secs[i].getBoundingClientRect().top<140)idx=i;}
+    links.forEach(function(a,i){a.classList.toggle('active',i===idx);});
+  }
+  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
+
+  /* copy buttons */
+  document.querySelectorAll('.copy').forEach(function(btn){
+    btn.addEventListener('click',function(){
+      navigator.clipboard.writeText(btn.getAttribute('data-c')||'').then(function(){
+        var t=btn.textContent;btn.textContent='✓ Скопировано';btn.classList.add('done');
+        setTimeout(function(){btn.textContent=t;btn.classList.remove('done');},1600);
+      });
+    });
+  });
+
+  /* professions tabs */
+  var tabs=document.querySelectorAll('.prof-tab'),panels=document.querySelectorAll('.prof-panel');
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.classList.remove('active');});panels.forEach(function(x){x.classList.remove('active');});
+    t.classList.add('active');panels[+t.dataset.p].classList.add('active');
+  });});
+
+  /* quiz */
+  document.querySelectorAll('#quizBox .q').forEach(function(q){
+    var correct=+q.getAttribute('data-correct'),opts=q.querySelectorAll('.opt'),fb=q.querySelector('.qfb'),done=false;
+    opts.forEach(function(o,i){o.addEventListener('click',function(){
+      if(done)return;done=true;
+      opts[correct].classList.add('correct');
+      if(i!==correct)o.classList.add('wrong');
+      fb.style.display='block';
+    });});
+  });
+
+  /* faq */
+  document.querySelectorAll('.faq-item').forEach(function(it){
+    it.querySelector('.faq-q').addEventListener('click',function(){
+      var open=it.classList.contains('open');
+      it.classList.toggle('open');
+      var a=it.querySelector('.faq-a');a.style.maxHeight=open?'0':a.scrollHeight+40+'px';
+    });
+  });
+
+  /* slides deck */
+  var slides=document.querySelectorAll('#slidesWrap .slide'),dots=document.getElementById('dots'),cur=0;
+  slides.forEach(function(s,i){var d=document.createElement('i');if(i===0)d.className='on';d.addEventListener('click',function(){go(i);});dots.appendChild(d);});
+  function go(n){cur=(n+slides.length)%slides.length;
+    slides.forEach(function(s,i){s.classList.toggle('active',i===cur);});
+    [].forEach.call(dots.children,function(d,i){d.classList.toggle('on',i===cur);});}
+  document.getElementById('prevSlide').addEventListener('click',function(){go(cur-1);});
+  document.getElementById('nextSlide').addEventListener('click',function(){go(cur+1);});
+  document.getElementById('fsSlide').addEventListener('click',function(){var d=document.getElementById('deck');if(!document.fullscreenElement)d.requestFullscreen&&d.requestFullscreen();else document.exitFullscreen&&document.exitFullscreen();});
+  document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')go(cur-1);if(e.key==='ArrowRight')go(cur+1);});
+})();
 </script>
 </body>
 </html>

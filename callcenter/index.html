@@ -326,6 +326,14 @@ footer .logo{justify-content:center}
   .level-hint{display:none}
   .prog small{display:none}
 }
+/* ===== презентация КЦ: слайды с иллюстрациями ===== */
+.slide{overflow:auto}
+.slide.split .slide-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:26px;align-items:center;width:100%}
+.slide.split .slide-txt{min-width:0}
+.slide .slide-art{display:flex;align-items:center;justify-content:center;min-width:0}
+.slide .slide-art svg{width:100%;height:auto;max-height:min(48vh,380px)}
+.slide.split ul{margin-top:8px}
+@media(max-width:760px){.slide.split .slide-grid{grid-template-columns:1fr;gap:8px}.slide .slide-art{display:none}}
 </style>
 </head>
 <body>
@@ -610,55 +618,162 @@ footer .logo{justify-content:center}
   <div class="wrap">
     <div class="section-head reveal">
       <div class="eyebrow">Презентация</div>
-      <h2>Курс на слайдах</h2>
-      <p>Краткая версия для показа на планёрке или экране. Листай стрелками ← → или кнопками; можно открыть на весь экран.</p>
+      <h2>Кол-центр СКС за 7 слайдов</h2>
+      <p>Ёмкая презентация подразделения: путь клиента, структура, скрипты, стандарты и оценка. Листай стрелками ← → или кнопками; можно открыть на весь экран.</p>
     </div>
     <div class="deck reveal" id="deck">
       <div class="slides-wrap" id="slidesWrap">
-        <div class="slide active">
-          <div class="kicker">Академия «Кол-центр» · СКС</div>
-          <h3>Хороший звонок — это система, а не талант</h3>
-          <p>Любой оператор может звучать уверенно, если знает продукт, держит структуру разговора и следует стандартам. Этому и учит портал.</p>
+        <div class="slide split active">
+          <div class="slide-grid">
+            <div class="slide-txt">
+              <div class="kicker">Группа компаний СКС · Кол-центр</div>
+              <h3>Кол-центр СКС — первая линия общения с клиентом</h3>
+              <ul><li>Консультируем, проводим онлайн-оценку и приглашаем в отделение</li><li>Возвращаем клиентов и работаем со «спящей» базой</li><li>Единые скрипты, стандарты и обучение — в одном портале</li></ul>
+            </div>
+            <div class="slide-art"><svg viewBox="0 0 420 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="pg1" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e31e24"/><stop offset="1" stop-color="#e0a32a"/></linearGradient></defs>
+<circle cx="200" cy="150" r="122" fill="url(#pg1)" opacity=".10"/>
+<circle cx="200" cy="150" r="88" fill="var(--card)" stroke="url(#pg1)" stroke-width="4"/>
+<text x="200" y="184" text-anchor="middle" font-size="90">🎧</text>
+<g stroke="url(#pg1)" stroke-width="6" stroke-linecap="round"><path d="M322 96 q26 30 0 60" opacity=".85"/><path d="M348 78 q40 48 0 96" opacity=".5"/></g>
+<circle cx="92" cy="214" r="30" fill="url(#pg1)"/><text x="92" y="226" text-anchor="middle" font-size="30" font-weight="800" fill="#fff" font-family="Inter,sans-serif">₽</text>
+<rect x="66" y="66" width="80" height="36" rx="11" fill="var(--card)" stroke="url(#pg1)" stroke-width="3"/><text x="106" y="91" text-anchor="middle" font-size="17" font-weight="800" fill="var(--brand)" font-family="Inter,sans-serif">СКС</text>
+</svg></div>
+          </div>
         </div>
-        <div class="slide">
-          <div class="kicker">Три уровня — заходи со своего</div>
-          <h3>Новичок → Уверенный → Наставник</h3>
-          <ul>
-            <li><b>🌱 Новичок</b> — учу продукт, скрипты и систему, принимаю первые звонки.</li>
-            <li><b>⚡ Уверенный</b> — веду сложные разговоры, работаю с возражениями, держу KPI.</li>
-            <li><b>🚀 Наставник</b> — обучаю новичков и улучшаю процессы.</li>
-          </ul>
+        <div class="slide split">
+          <div class="slide-grid">
+            <div class="slide-txt">
+              <div class="kicker">Воронка КЦ · от звонка до сделки</div>
+              <h3>Путь нашего клиента — 6 шагов</h3>
+              <ul><li><b>📞 Обращение</b> — тёплая встреча: звонок, заявка или чат</li><li><b>🔁 Не дозвонился</b> — всегда перезвоним, ни один лид не теряется</li><li><b>💬 Консультация</b> → <b>🗺️ приглашение в ОП</b> → <b>🏢 визит и оценка</b></li><li><b>💰 Сделка</b> — заём выдан, а дальше заботливые касания</li></ul>
+            </div>
+            <div class="slide-art"><svg viewBox="0 0 440 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="pg2" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e31e24"/><stop offset="1" stop-color="#e0a32a"/></linearGradient></defs>
+<path d="M36 242 C 130 82, 310 82, 404 214" stroke="var(--line)" stroke-width="12" fill="none" stroke-linecap="round"/>
+<path d="M36 242 C 130 82, 310 82, 404 214" stroke="url(#pg2)" stroke-width="5" fill="none" stroke-linecap="round" stroke-dasharray="5 13"/>
+<g text-anchor="middle" font-family="Inter,sans-serif">
+<circle cx="36" cy="242" r="22" fill="var(--card)" stroke="var(--brand)" stroke-width="3"/><text x="36" y="251" font-size="24">📞</text>
+<circle cx="122" cy="150" r="20" fill="var(--card)" stroke="url(#pg2)" stroke-width="3"/><text x="122" y="159" font-size="21">🔁</text>
+<circle cx="215" cy="116" r="20" fill="var(--card)" stroke="url(#pg2)" stroke-width="3"/><text x="215" y="125" font-size="21">💬</text>
+<circle cx="308" cy="150" r="20" fill="var(--card)" stroke="url(#pg2)" stroke-width="3"/><text x="308" y="159" font-size="21">🏢</text>
+<circle cx="404" cy="214" r="27" fill="url(#pg2)"/><text x="404" y="225" font-size="27">💰</text>
+</g>
+</svg></div>
+          </div>
         </div>
-        <div class="slide">
-          <div class="kicker">Структура звонка</div>
-          <h3>Пять этапов любого разговора</h3>
-          <ul>
-            <li>Приветствие и установление контакта</li>
-            <li>Выявление потребности — слушаем и уточняем</li>
-            <li>Презентация решения на языке клиента</li>
-            <li>Работа с возражениями</li>
-            <li>Завершение и фиксация в CRM</li>
-          </ul>
+        <div class="slide split">
+          <div class="slide-grid">
+            <div class="slide-txt">
+              <div class="kicker">Оргструктура · 8 человек</div>
+              <h3>Два блока плюс взаимозаменяемость</h3>
+              <ul><li><b>⚙️ Операционный</b> (1 ст. + 3): продажа, оценка, деньги, конверсия</li><li><b>🎧 Сервисный</b> (1 ст. + 3): жалобы, разъяснения, лояльность, спящие</li><li><b>🔁 В часы пик</b> операторы подстраховывают друг друга</li></ul>
+            </div>
+            <div class="slide-art"><svg viewBox="0 0 440 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="pg3" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e31e24"/><stop offset="1" stop-color="#e0a32a"/></linearGradient></defs>
+<rect x="26" y="58" width="172" height="118" rx="18" fill="var(--brand)" opacity=".10"/>
+<rect x="26" y="58" width="172" height="118" rx="18" fill="none" stroke="var(--brand)" stroke-width="3"/>
+<text x="112" y="118" text-anchor="middle" font-size="42">⚙️</text>
+<text x="112" y="156" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)" font-family="Inter,sans-serif">Операционный</text>
+<rect x="242" y="58" width="172" height="118" rx="18" fill="var(--brand2)" opacity=".14"/>
+<rect x="242" y="58" width="172" height="118" rx="18" fill="none" stroke="var(--brand2)" stroke-width="3"/>
+<text x="328" y="118" text-anchor="middle" font-size="42">🎧</text>
+<text x="328" y="156" text-anchor="middle" font-size="15" font-weight="700" fill="var(--ink)" font-family="Inter,sans-serif">Сервисный</text>
+<g stroke="url(#pg3)" stroke-width="4" stroke-linecap="round"><path d="M206 106 H234"/><path d="M234 128 H206"/></g>
+<path d="M206 106 l10 -6 v12 z" fill="var(--brand)"/><path d="M234 128 l-10 -6 v12 z" fill="var(--brand2)"/>
+<g fill="url(#pg3)"><circle cx="58" cy="208" r="9"/><circle cx="88" cy="208" r="9"/><circle cx="118" cy="208" r="9"/><circle cx="148" cy="208" r="9"/><circle cx="292" cy="208" r="9"/><circle cx="322" cy="208" r="9"/><circle cx="352" cy="208" r="9"/><circle cx="382" cy="208" r="9"/></g>
+<text x="220" y="250" text-anchor="middle" font-size="13" fill="var(--muted)" font-family="Inter,sans-serif">8 человек · взаимозаменяемость</text>
+</svg></div>
+          </div>
         </div>
-        <div class="slide">
-          <div class="kicker">Стандарт качества</div>
-          <h3>Как звучит звонок СКС</h3>
-          <ul>
-            <li>Доброжелательный тон и обращение по имени</li>
-            <li>Чёткая речь без слов-паразитов</li>
-            <li>Ответ по существу, без «я не знаю»</li>
-            <li>Клиент понимает следующий шаг</li>
-          </ul>
+        <div class="slide split">
+          <div class="slide-grid">
+            <div class="slide-txt">
+              <div class="kicker">Маршрутизация звонка</div>
+              <h3>Куда направить клиента — за секунды</h3>
+              <ul><li><b>💰 Деньги / продажа / оценка / риск оплаты</b> → операционный блок</li><li><b>😟 Эмоция / жалоба / разъяснение</b> → сервисный блок</li><li><b>⚠️ «Серая зона»</b> — сначала уточни, потом переводи</li></ul>
+            </div>
+            <div class="slide-art"><svg viewBox="0 0 440 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="pg4" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e31e24"/><stop offset="1" stop-color="#e0a32a"/></linearGradient></defs>
+<path d="M22 150 H150" stroke="url(#pg4)" stroke-width="8" stroke-linecap="round"/>
+<circle cx="150" cy="150" r="20" fill="url(#pg4)"/><text x="150" y="158" text-anchor="middle" font-size="18">☎️</text>
+<path d="M170 150 C 232 150, 250 84, 318 84" stroke="var(--brand)" stroke-width="7" fill="none" stroke-linecap="round"/>
+<path d="M170 150 C 232 150, 250 216, 318 216" stroke="var(--brand2)" stroke-width="7" fill="none" stroke-linecap="round"/>
+<rect x="316" y="54" width="106" height="60" rx="15" fill="var(--brand)" opacity=".10"/>
+<rect x="316" y="54" width="106" height="60" rx="15" fill="none" stroke="var(--brand)" stroke-width="2"/>
+<text x="342" y="92" font-size="24">💰</text><text x="372" y="82" font-size="12" font-weight="700" fill="var(--ink)" font-family="Inter,sans-serif">Опера-</text><text x="372" y="97" font-size="12" font-weight="700" fill="var(--ink)" font-family="Inter,sans-serif">ционный</text>
+<rect x="316" y="188" width="106" height="60" rx="15" fill="var(--brand2)" opacity=".14"/>
+<rect x="316" y="188" width="106" height="60" rx="15" fill="none" stroke="var(--brand2)" stroke-width="2"/>
+<text x="342" y="226" font-size="24">😟</text><text x="372" y="216" font-size="12" font-weight="700" fill="var(--ink)" font-family="Inter,sans-serif">Сервис-</text><text x="372" y="231" font-size="12" font-weight="700" fill="var(--ink)" font-family="Inter,sans-serif">ный</text>
+</svg></div>
+          </div>
         </div>
-        <div class="slide">
-          <div class="kicker">Старт</div>
-          <h3>Как начать за 4 шага</h3>
-          <ul>
-            <li>Пройди раздел «Для новичков»</li>
-            <li>Выучи приветствие из «Скриптов»</li>
-            <li>Прочитай топ вопросов в «Базе знаний»</li>
-            <li>Пройди «Проверку знаний»</li>
-          </ul>
+        <div class="slide split">
+          <div class="slide-grid">
+            <div class="slide-txt">
+              <div class="kicker">Разговор по структуре</div>
+              <h3>Скрипты на каждый этап</h3>
+              <ul><li>Приветствие → потребность → онлайн-оценка → возражения → визит в ОП</li><li>Готовые ответы: «дорого», «в другом месте выше», «я подумаю»</li><li>Скрипт — это каркас, а не текст: говорим живо и по имени</li></ul>
+            </div>
+            <div class="slide-art"><svg viewBox="0 0 420 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="pg5" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e31e24"/><stop offset="1" stop-color="#e0a32a"/></linearGradient></defs>
+<rect x="34" y="52" width="250" height="92" rx="20" fill="var(--brand)" opacity=".10"/>
+<path d="M74 144 l0 26 l26 -26 z" fill="var(--brand)" opacity=".10"/>
+<text x="56" y="92" font-size="15" fill="var(--ink)" font-family="Inter,sans-serif">Здравствуйте! ГК СКС,</text>
+<text x="56" y="116" font-size="15" fill="var(--ink)" font-family="Inter,sans-serif">чем могу помочь?</text>
+<rect x="150" y="176" width="236" height="82" rx="20" fill="var(--brand2)" opacity=".14"/>
+<path d="M356 258 l0 24 l-26 -24 z" fill="var(--brand2)" opacity=".14"/>
+<text x="170" y="210" font-size="15" fill="var(--ink)" font-family="Inter,sans-serif">А сколько я получу</text>
+<text x="170" y="234" font-size="15" fill="var(--ink)" font-family="Inter,sans-serif">за изделие?</text>
+<circle cx="384" cy="64" r="22" fill="url(#pg5)"/><path d="M374 64 l7 8 l14 -16" stroke="#fff" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+</svg></div>
+          </div>
+        </div>
+        <div class="slide split">
+          <div class="slide-grid">
+            <div class="slide-txt">
+              <div class="kicker">Качество под контролем</div>
+              <h3>Стандарты обслуживания и KPI</h3>
+              <ul><li>Утверждённый документ — единые правила для всех блоков</li><li>Ответ на звонок ≤ 20 сек · реакция на заявку ≤ 3 мин</li><li>Оценка звонка по чек-листу: приветствие, потребность, возражения, визит</li></ul>
+            </div>
+            <div class="slide-art"><svg viewBox="0 0 420 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="pg6" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e31e24"/><stop offset="1" stop-color="#e0a32a"/></linearGradient></defs>
+<path d="M150 62 L232 62 L232 152 C232 200 191 232 191 232 C191 232 150 200 150 152 Z" fill="url(#pg6)" opacity=".14"/>
+<path d="M150 62 L232 62 L232 152 C232 200 191 232 191 232 C191 232 150 200 150 152 Z" fill="none" stroke="url(#pg6)" stroke-width="3"/>
+<path d="M170 150 l16 18 l30 -42" stroke="url(#pg6)" stroke-width="9" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+<circle cx="316" cy="122" r="48" fill="var(--card)" stroke="var(--brand)" stroke-width="4"/>
+<path d="M316 122 V88" stroke="var(--brand)" stroke-width="5" stroke-linecap="round"/>
+<path d="M316 122 L340 134" stroke="var(--brand)" stroke-width="5" stroke-linecap="round"/>
+<text x="316" y="200" text-anchor="middle" font-size="16" font-weight="800" fill="var(--brand)" font-family="Inter,sans-serif">≤ 20 сек</text>
+</svg></div>
+          </div>
+        </div>
+        <div class="slide split">
+          <div class="slide-grid">
+            <div class="slide-txt">
+              <div class="kicker">Инструмент оператора</div>
+              <h3>Онлайн-оценка и калькулятор</h3>
+              <ul><li>Тарифные сетки 1–7 в зависимости от отделения</li><li><b>Акция «10-й грамм»</b> — каждый 10-й грамм по 10 000 ₽</li><li>Статус лояльности повышает тариф · выдача на карту по СБП</li></ul>
+            </div>
+            <div class="slide-art"><svg viewBox="0 0 440 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+<defs><linearGradient id="pg7" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#e31e24"/><stop offset="1" stop-color="#e0a32a"/></linearGradient></defs>
+<g fill="url(#pg7)" stroke="#a9761b" stroke-width="2">
+<path d="M40 214 l18 -28 h74 l18 28 z"/>
+<path d="M60 182 l15 -26 h54 l15 26 z"/>
+<path d="M80 152 l13 -24 h34 l13 24 z"/>
+</g>
+<rect x="248" y="112" width="126" height="158" rx="16" fill="var(--card)" stroke="var(--ink)" stroke-width="3"/>
+<rect x="264" y="128" width="94" height="36" rx="7" fill="var(--bg2)" stroke="var(--line)"/>
+<text x="350" y="153" text-anchor="end" font-size="17" font-weight="800" fill="var(--brand)" font-family="'JetBrains Mono',monospace">10 000 ₽</text>
+<g fill="var(--bg2)" stroke="var(--line)">
+<rect x="264" y="176" width="26" height="22" rx="5"/><rect x="298" y="176" width="26" height="22" rx="5"/><rect x="332" y="176" width="26" height="22" rx="5"/>
+<rect x="264" y="206" width="26" height="22" rx="5"/><rect x="298" y="206" width="26" height="22" rx="5"/><rect x="332" y="206" width="26" height="22" rx="5"/>
+<rect x="264" y="236" width="60" height="22" rx="5"/></g>
+<rect x="332" y="236" width="26" height="22" rx="5" fill="url(#pg7)"/>
+<rect x="226" y="66" width="164" height="40" rx="20" fill="url(#pg7)"/>
+<text x="308" y="92" text-anchor="middle" font-size="15" font-weight="800" fill="#fff" font-family="Inter,sans-serif">10-й грамм · 10 000 ₽</text>
+</svg></div>
+          </div>
         </div>
       </div>
       <div class="deck-ctrl">

@@ -334,6 +334,44 @@ footer .logo{justify-content:center}
 .slide .slide-art svg{width:100%;height:auto;max-height:min(48vh,380px)}
 .slide.split ul{margin-top:8px}
 @media(max-width:760px){.slide.split .slide-grid{grid-template-columns:1fr;gap:8px}.slide .slide-art{display:none}}
+.kc-tabs{display:flex;gap:10px;flex-wrap:wrap;margin:30px 0 26px}
+.kc-tab{background:var(--card);border:1px solid var(--line);border-radius:13px;padding:12px 16px;cursor:pointer;font-weight:600;font-size:.9rem;display:flex;align-items:center;gap:9px;transition:.2s;color:var(--muted)}
+.kc-tab:hover{transform:translateY(-2px);color:var(--ink)}
+.kc-tab.active{background:var(--grad);color:#fff;border-color:transparent;box-shadow:0 10px 26px -10px var(--brand)}
+.kc-panel{display:none}
+.kc-panel.active{display:block;animation:fade .4s ease}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kc-podium{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:26px}
+.kc-place{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:20px;text-align:center}
+.kc-place.p1{border-color:var(--brand2);box-shadow:0 16px 40px -18px var(--brand2);order:2;transform:translateY(-10px)}
+.kc-place.p2{order:1}
+.kc-place.p3{order:3}
+.kc-place .kc-rank{font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--brand2);margin-bottom:6px}
+.kc-place .kc-name{font-weight:700;margin-bottom:8px}
+.kc-place .kc-val{font-size:1.5rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.kc-place .kc-val span{display:block;font-size:.72rem;font-weight:600;color:var(--muted);background:none;-webkit-text-fill-color:var(--muted)}
+.kc-place{cursor:pointer;transition:transform .2s,border-color .2s,box-shadow .2s}
+.kc-place:hover{border-color:var(--brand)}
+.kc-place.open{border-color:var(--brand);box-shadow:0 16px 40px -18px var(--brand)}
+.kc-more{margin-top:12px;font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brand)}
+.kc-detail{margin:-4px 0 26px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px;box-shadow:var(--shadow);overflow:auto;animation:fade .3s ease}
+.kc-detail-head{font-weight:800;font-size:1.05rem;margin-bottom:14px}
+.kc-detail-head span{color:var(--brand2)}
+table.kc-table{width:100%;border-collapse:collapse;font-size:.92rem;min-width:520px}
+table.kc-table th{text-align:left;font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--brand2);padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap}
+table.kc-table td{padding:10px 12px;border-bottom:1px solid var(--line);color:var(--ink)}
+table.kc-table td:first-child,table.kc-table th:first-child{color:var(--muted);font-weight:700}
+table.kc-table tbody tr:last-child td{border-bottom:0}
+table.kc-table tbody tr:hover{background:var(--bg2)}
+.kc-month-picker{position:relative;display:inline-block;margin-bottom:18px}
+.kc-mbtn{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);font-family:inherit;font-weight:700;font-size:.9rem;padding:10px 18px;border-radius:11px;cursor:pointer;display:flex;align-items:center;gap:10px}
+.kc-mbtn:hover{border-color:var(--brand)}
+.kc-mmenu{display:none;position:absolute;top:calc(100% + 6px);left:0;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:6px;box-shadow:var(--shadow);z-index:5;min-width:180px}
+.kc-mmenu.open{display:block}
+.kc-mmenu button{display:block;width:100%;text-align:left;appearance:none;border:0;background:transparent;color:var(--ink);font-family:inherit;font-size:.88rem;padding:9px 12px;border-radius:8px;cursor:pointer}
+.kc-mmenu button:hover{background:var(--bg2)}
+.kc-mmenu button.current{color:var(--brand);font-weight:700}
+@media(max-width:880px){.kc-podium{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -364,6 +402,7 @@ footer .logo{justify-content:center}
       <a href="#quiz">Проверка</a>
       <a href="#exam">Экзамен</a>
       <a href="#calculator">Калькулятор</a>
+      <a href="#leaders">Лидеры</a>
     </div>
   </div>
 </nav>
@@ -1525,6 +1564,36 @@ footer .logo{justify-content:center}
     <div class="std-note reveal" style="max-width:640px;margin:18px auto 0">💰 Тарифы — по приказу № С-116 от 05.08.2026, действуют с 06.08.2026. Акция «10-й грамм»: каждые полные 10 г в заявке — 1 грамм оценивается фиксированно по 10 000 ₽, остальные граммы — по тарифу сетки. Статус лояльности увеличивает только тарифную часть. Сетка 8 (онлайн-добор) в калькулятор не входит.</div>
   </div>
 </section>
+
+<!-- ================= LEADERS (На согласование) ================= -->
+<section id="leaders">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">Битрикс24 + чат «КЦ База СКС» + телефония</div>
+      <h2>Наши лидеры</h2>
+      <p>Отчёт для встречи: звонки, задачи и сделки, лидеры по месяцам и отдельно — обзвон спящей базы (дозвон/недозвон). Нажми на место в тройке — раскроется помесячная разбивка.</p>
+    </div>
+    <div id="kc-leaders">
+      <div class="kc-tabs" id="kcTabs">
+    <div class="kc-tab active" data-k="1">📞 КЦ входящие</div>
+    <div class="kc-tab" data-k="0">☎️ База спящие</div>
+  </div>
+
+  <div class="kc-panel">
+    <div class="std-note" id="kcCallNote"></div>
+    <div class="kc-podium" id="kcPodium"></div>
+    <div class="kc-detail" id="kcPodiumDetail" style="display:none"></div>
+  </div>
+
+  <div class="kc-panel active">
+    <div class="std-note">📞 Топ-3 операторов по входящим звонкам КЦ, <b>суммарно за Май–Август 2026</b>. Нажмите на место — раскроется помесячная разбивка.</div>
+    <div class="kc-podium" id="kcIncomingPodium"></div>
+    <div class="kc-detail" id="kcIncomingDetail" style="display:none"></div>
+  </div>
+    </div>
+  </div>
+</section>
+
 <script>
 (function(){
   var grids={
@@ -1700,6 +1769,64 @@ footer .logo{justify-content:center}
   document.getElementById('nextSlide').addEventListener('click',function(){go(cur+1);});
   document.getElementById('fsSlide').addEventListener('click',function(){var d=document.getElementById('deck');if(!document.fullscreenElement)d.requestFullscreen&&d.requestFullscreen();else document.exitFullscreen&&document.exitFullscreen();});
   document.addEventListener('keydown',function(e){if(e.key==='ArrowLeft')go(cur-1);if(e.key==='ArrowRight')go(cur+1);});
+})();
+</script>
+
+<script id="kcWeekData" type="application/json">{"weekFrom":"2026-07-27","weekTo":"2026-08-02","teamCalls":1922,"teamTasks":52,"teamMoved":2235,"teamLose":284,"operators":[{"id":"3536","name":"Эльза Хайруллина","calls":565,"tasks":22,"dealsMoved":695},{"id":"102","name":"Байрамова Регина","calls":529,"tasks":7,"dealsMoved":571},{"id":"32249","name":"Юсаева Ксения","calls":428,"tasks":12,"dealsMoved":483},{"id":"29471","name":"Галимова Алина","calls":340,"tasks":10,"dealsMoved":413},{"id":"9742","name":"Мамбетова Саманта","calls":60,"tasks":1,"dealsMoved":73}]}</script>
+<script id="kcMonthData" type="application/json">{"2026-05":[{"name":"Зинфира КЦ","incoming":725,"calls":null,"tasks":null,"dealsMoved":null},{"name":"Александра КЦ","incoming":640,"calls":null,"tasks":null,"dealsMoved":null},{"name":"Юсаева Ксения","incoming":558,"calls":1100,"tasks":30,"dealsMoved":482},{"name":"Мамбетова Саманта","incoming":535,"calls":2638,"tasks":35,"dealsMoved":1403},{"name":"Галимова Алина","incoming":384,"calls":2684,"tasks":36,"dealsMoved":1498},{"name":"Эльза Хайруллина","incoming":305,"calls":2800,"tasks":35,"dealsMoved":1642},{"name":"Байрамова Регина","incoming":209,"calls":2894,"tasks":31,"dealsMoved":1123}],"2026-05_team":{"total":3356,"avg":479},"2026-06":[{"name":"Александра КЦ","incoming":665,"calls":null,"tasks":null,"dealsMoved":null},{"name":"Зинфира КЦ","incoming":634,"calls":null,"tasks":null,"dealsMoved":null},{"name":"Галимова Алина","incoming":431,"calls":1894,"tasks":20,"dealsMoved":1188},{"name":"Мамбетова Саманта","incoming":426,"calls":1911,"tasks":19,"dealsMoved":1228},{"name":"Юсаева Ксения","incoming":361,"calls":2391,"tasks":27,"dealsMoved":1662},{"name":"Эльза Хайруллина","incoming":273,"calls":2481,"tasks":34,"dealsMoved":1719},{"name":"Байрамова Регина","incoming":205,"calls":2526,"tasks":13,"dealsMoved":1681}],"2026-06_team":{"total":2995,"avg":428},"2026-07":[{"name":"Зинфира КЦ","incoming":515,"calls":null,"tasks":null,"dealsMoved":null},{"name":"Александра КЦ","incoming":465,"calls":null,"tasks":null,"dealsMoved":null},{"name":"Мамбетова Саманта","incoming":463,"calls":857,"tasks":16,"dealsMoved":595},{"name":"Розалия КЦ","incoming":374,"calls":null,"tasks":null,"dealsMoved":null},{"name":"Юсаева Ксения","incoming":360,"calls":927,"tasks":38,"dealsMoved":717},{"name":"Эльза Хайруллина","incoming":278,"calls":2029,"tasks":58,"dealsMoved":1655},{"name":"Галимова Алина","incoming":210,"calls":1194,"tasks":33,"dealsMoved":1051},{"name":"Байрамова Регина","incoming":175,"calls":689,"tasks":10,"dealsMoved":780}],"2026-07_team":{"total":2840,"avg":355},"2026-08":[{"name":"Зинфира КЦ","incoming":92,"calls":null,"tasks":null,"dealsMoved":null},{"name":"Александра КЦ","incoming":80,"calls":null,"tasks":null,"dealsMoved":null},{"name":"Юсаева Ксения","incoming":57,"calls":215,"tasks":4,"dealsMoved":270},{"name":"Эльза Хайруллина","incoming":50,"calls":0,"tasks":0,"dealsMoved":0},{"name":"Розалия КЦ","incoming":48,"calls":null,"tasks":null,"dealsMoved":null},{"name":"Байрамова Регина","incoming":34,"calls":0,"tasks":0,"dealsMoved":0},{"name":"Вебер Эльвира","incoming":24,"calls":null,"tasks":null,"dealsMoved":null},{"name":"Мамбетова Саманта","incoming":12,"calls":0,"tasks":0,"dealsMoved":0},{"name":"Галимова Алина","incoming":8,"calls":0,"tasks":0,"dealsMoved":0}],"2026-08_team":{"total":405,"avg":45}}</script>
+<script>
+(function(){
+  var fmt=function(n){return n.toLocaleString('ru-RU');};
+  var short=function(d){var p=d.split('-');return p[2]+'.'+p[1];};
+  var dash=function(v){return v==null?'<span class="muted">—</span>':fmt(v);};
+
+  var tabs=document.querySelectorAll('#kcTabs .kc-tab'),panels=document.querySelectorAll('#kc-leaders .kc-panel');
+  tabs.forEach(function(t){t.addEventListener('click',function(){
+    tabs.forEach(function(x){x.classList.remove('active');});panels.forEach(function(x){x.classList.remove('active');});
+    t.classList.add('active');panels[+t.dataset.k].classList.add('active');
+  });});
+
+  var placeCls=['p1','p2','p3'],placeLbl=['1 место','2 место','3 место'];
+  var months=JSON.parse(document.getElementById('kcMonthData').textContent);
+  var monthOrder=["2026-05","2026-06","2026-07","2026-08"];
+  var mLabels={"2026-05":"Май","2026-06":"Июнь","2026-07":"Июль","2026-08":"Август (1–5)"};
+
+  function collect(field){
+    var map={};
+    monthOrder.forEach(function(k){(months[k]||[]).forEach(function(o){
+      if(!map[o.name])map[o.name]={name:o.name,val:0,has:false,m:{}};
+      map[o.name].m[k]=o[field];
+      if(o[field]!=null){map[o.name].val+=o[field];map[o.name].has=true;}
+    });});
+    return Object.keys(map).map(function(n){var r=map[n];
+      return {name:n,val:r.val,months:monthOrder.map(function(k){return {label:mLabels[k],value:(k in r.m)?r.m[k]:null};}),has:r.has};
+    }).filter(function(r){return r.has;}).sort(function(a,b){return b.val-a.val;});
+  }
+
+  function buildPodium(podiumId,detailId,items,unit,col){
+    var el=document.getElementById(podiumId),detail=document.getElementById(detailId),top=items.slice(0,3);
+    el.innerHTML=top.map(function(o,i){
+      return '<div class="kc-place '+placeCls[i]+'" data-idx="'+i+'"><div class="kc-rank">'+placeLbl[i]+'</div><div class="kc-name">'+o.name+'</div><div class="kc-val">'+fmt(o.val)+'<span>'+unit+'</span></div><div class="kc-more">Показать ▾</div></div>';
+    }).join('');
+    el.querySelectorAll('.kc-place').forEach(function(place){
+      place.addEventListener('click',function(){
+        var idx=+place.dataset.idx,o=top[idx],isOpen=place.classList.contains('open');
+        el.querySelectorAll('.kc-place').forEach(function(p){p.classList.remove('open');p.querySelector('.kc-more').textContent='Показать ▾';});
+        if(isOpen){detail.style.display='none';return;}
+        place.classList.add('open');place.querySelector('.kc-more').textContent='Скрыть ▴';
+        detail.innerHTML='<div class="kc-detail-head">'+placeLbl[idx]+' · <span>'+o.name+'</span> — '+fmt(o.val)+' '+unit+' за Май–Август</div>'+
+          '<table class="kc-table"><thead><tr><th>Месяц</th><th>'+col+'</th></tr></thead><tbody>'+
+          o.months.map(function(m){return '<tr><td>'+m.label+'</td><td>'+dash(m.value)+'</td></tr>';}).join('')+
+          '<tr style="background:var(--bg2)"><td><b>Итого</b></td><td><b>'+fmt(o.val)+'</b></td></tr></tbody></table>';
+        detail.style.display='block';
+      });
+    });
+  }
+
+  document.getElementById('kcCallNote').innerHTML='📞 Топ-3 операторов по обзвону спящей базы (звонки), <b>суммарно за Май–Август 2026</b>. Нажмите на место — раскроется помесячная разбивка.';
+  buildPodium('kcIncomingPodium','kcIncomingDetail',collect('incoming'),'входящих','Входящие');
+  buildPodium('kcPodium','kcPodiumDetail',collect('calls'),'звонков','Звонки');
+
 })();
 </script>
 </body>
